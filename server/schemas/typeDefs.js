@@ -26,9 +26,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    movie: [Movie]
-    user: [User]
-    review: [Review]
+    movies: [Movie]
+    movie(_id: String!): [Movie]
+    users: [User]
+    user(_id: String!): [User]
+    reviews: [Review]
+    review(_id: String!): [Review]
+    
   }
 
   type Mutation {

@@ -2,17 +2,32 @@ const { Movie, User, Review } = require('../models');
 
 const resolvers = {
   Query: {
-   movie: async () => {
+   movies: async () => {
     return Movie.find({});
    },
 
-   user: async () => {
+   movie: async (parent, {_id}) => {
+    const movie = _id ? {_id}: {};
+    return Movie.find(movie)
+   },
+
+   users: async () => {
     return User.find({});
    },
 
-   review: async () => {
+   user: async (parent, {_id}) => {
+    const user = _id ? {_id}: {};
+    return User.find(user)
+   },
+
+   reviews: async () => {
     return Review.find({})
-   }
+   },
+
+   review: async (parent, {_id}) => {
+    const review = _id ? {_id}: {};
+    return Review.find(review)
+   },
   },
   Mutation: {
     createMovie: async (parent, args) => {
