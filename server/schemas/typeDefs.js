@@ -1,27 +1,51 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type PLACEHOLDER {
+  type Movie {
     _id: ID!
-    name: String!
+    movie_name: String!
+    imdb_id: String!
+    reviews: [Review]
   }
 
-  type Matchup {
+  type User {
     _id: ID!
-    tech1: String!
-    tech2: String!
-    tech1_votes: Int
-    tech2_votes: Int
+    username: String!
+    email: String!
+    password: String!
+    reviews: [Review]
+    friends: [User]
+  }
+
+  type Review {
+    _id: ID!
+    user_id: String!
+    movie_id: String!
+    review_score: String!
+    review_text: String!
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    movie: [Movie]
+    user: [User]
+    review: [Review]
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    createUser(
+      username: String!,
+      email: String!,
+      password: String!): User
+    
+    createReview(
+      user_id:String!,
+      movie_id: String!,
+      review_score: String!,
+      review_text: String!): Review
+
+    createMovie(
+      movie_name: String!
+      imdb_id: String!): Movie
   }
 `;
 
