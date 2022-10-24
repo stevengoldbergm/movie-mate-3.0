@@ -13,11 +13,15 @@ const movieSchema = new Schema({
       },
   reviews: [
     {
-      type: Schema.Types.ObjecId,
+      type: Schema.Types.ObjectId,
       ref: 'Review'
     },
   ],
-});
+},{
+  toJSON: {
+    virtuals: true,
+  }},
+);
 
 const Movie = model('Movie', movieSchema)
 

@@ -18,17 +18,21 @@ const userSchema = new Schema({
   },
   reviews: [
     {
-      type: Schema.Types.ObjecId,
+      type: Schema.Types.ObjectId,
       ref: 'Review'
     },
   ],
   friends: [
     {
-      type: Schema.Types.ObjecId,
+      type: Schema.Types.ObjectId,
       ref: 'User'
     },
   ],
-});
+},{
+  toJSON: {
+    virtuals: true,
+  }},
+);
 
 const User = model('User', userSchema)
 
