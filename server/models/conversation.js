@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose')
+const dateFormat = require("../utils/dateFormat")
 
 const conversationSchema = new Schema({
   conversation_name: {
@@ -13,8 +14,22 @@ const conversationSchema = new Schema({
   ],
   messages: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Message'
+      message_text: {
+        type: String,
+        required: true,
+        unique: false,
+        },
+      time_sent: {
+        type: Date,
+        required: true,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp),
+      },
+      sender: {
+        type: String,
+        required: true,
+        unique: false,
+      },
     },
   ],
 },{

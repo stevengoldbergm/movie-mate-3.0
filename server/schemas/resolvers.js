@@ -37,15 +37,6 @@ const resolvers = {
     const conversation = _id ? {_id}: {}
     return Conversation.find(conversation)
    },
-
-   messages: async () => {
-    return Message.find({})
-   },
-
-   message: async (parent, {_id}) => {
-    const message = _id ? {_id}: {}
-    return Message.find(message)
-   },
   },
   Mutation: {
     createMovie: async (parent, args) => {
@@ -68,12 +59,11 @@ const resolvers = {
       return conversation
     },
 
-    createMessage: async (parent, {conversation_id, message_text}) => {
+    sendMessage: async (parent, {conversation_id, message_text, sender}) => {
       // const message = await Message.create(conversation_id, message_text);
-
       return Conversation.findOneAndUpdate(
         {_id: conversation_id},
-        {$addToSet: {messages: { message_text }},
+        {$addToSet: {messages: { message_text, sender }},
       },
       {
         new: true,

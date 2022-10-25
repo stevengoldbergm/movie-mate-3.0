@@ -37,6 +37,7 @@ const typeDefs = gql`
     conversation_id: String!
     message_text: String!
     time_sent: String!
+    sender: String!
   }
 
   type Query {
@@ -48,8 +49,6 @@ const typeDefs = gql`
     review(_id: String!): [Review]
     conversations: [Conversation]
     conversation(_id: String!): [Conversation]
-    messages: [Message]
-    message(_id: String!): [Message]
   }
 
   type Mutation {
@@ -70,9 +69,10 @@ const typeDefs = gql`
 
     createConversation(conversation_name: String!) : Conversation
     
-    createMessage(
+    sendMessage(
       conversation_id: String!,
-      message_text: String!): Message
+      message_text: String!,
+      sender: String!): Message
   }
 `;
 
