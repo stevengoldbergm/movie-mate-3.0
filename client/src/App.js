@@ -1,14 +1,22 @@
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Profile from './pages/Profile'
+// import FriendList from './pages/Friendlist'
+// import Homepage from './pages/Homepage'
+// import Login from './pages/Login'
+// import SignUp from './pages/SignUp'
+// import PartyInvites from './pages/PartyInvites'
+// import Review from './pages/Review'
+// import Wishlist from './pages/Wishlist'
 import {
   ApolloClient,
-  ApolloProvider,
+  // ApolloProvider,
   InMemoryCache,
   createHttpLink
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import {BrowserRouter as Router, Routes} from 'react-router-dom';
+// import {BrowserRouter as Router, Routes} from 'react-router-dom';
 
 const httpLink = createHttpLink({
   url: '/graphql',
@@ -36,6 +44,7 @@ function App() {
     <>
     {/* ApolloProvider client={client}*/}
     <Header />
+    <Profile />
     <Footer />
     {/* ApolloProvider */}
     </>
