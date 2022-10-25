@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 // Make a search to oMDB
-export const searchOMDB = async (query) => {
+export const searchMovie = async (query) => {
     // ---------- Search OMDB for data ---------- //
 
     // OMDB Key Variables
@@ -53,6 +53,12 @@ export const searchOMDB = async (query) => {
     
             // console.log('\n\ndata.items:',ytResult.data.items[0].id.videoId,'\n\n'); // Working
             // console.log(ytResult); // Working
+            const ytData = {
+              ytResult,
+              ytEmbedId,
+              ytEmbed
+            }
+            return {movieData, rtScore, ytData};
     
             // Page won't be rendered in this way - can delete once the code is working.
             // res.render('movieDetails', { search: false, movieDetails: true, movieData, rtScore, ytEmbed, loggedIn: req.session.logged_in, imdbID: query }); 
@@ -73,12 +79,4 @@ export const searchOMDB = async (query) => {
             return;
         };
     };
-}
-
-// Make a search to YouTube
-
-export const searchYouTube = (query) => {
-  return {
-    
-  }
 }
