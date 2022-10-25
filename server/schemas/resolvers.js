@@ -1,4 +1,4 @@
-const { Movie, User, Review } = require('../models');
+const { Movie, User, Review, Conversation, Message } = require('../models');
 
 const resolvers = {
   Query: {
@@ -28,6 +28,15 @@ const resolvers = {
     const review = _id ? {_id}: {};
     return Review.find(review)
    },
+
+   conversations: async () => {
+    return Conversation.find({})
+   },
+
+   conversation: async (parent, {_id}) => {
+    const conversation = _id ? {_id}: {}
+    return Conversation.find(conversation)
+   },
   },
   Mutation: {
     createMovie: async (parent, args) => {
@@ -35,7 +44,7 @@ const resolvers = {
       return movie;
     },
    
-    createUser: async (parent ,args) => {
+    createUser: async (parent, args) => {
       const user  = await User.create(args);
       return user;
     },
@@ -44,9 +53,25 @@ const resolvers = {
       const review = await Review.create(args);
       return review;
     },
+
+    createConversation: async (parent, args) => {
+      const conversation = await Conversation.create(args);
+      return conversation
+    },
+
+    sendMessage: async (parent, {conversation_id, message_text, sender}) => {
+      // const message = await Message.create(conversation_id, message_text);
+      return Conversation.findOneAndUpdate(
+        {_id: conversation_id},
+        {$addToSet: {messages: { message_text, sender }},
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+      );
+    },
   },
 };
-
-module.exports = resolvers;
 
 module.exports = resolvers;
