@@ -73,6 +73,15 @@ const typeDefs = gql`
       conversation_id: String!,
       message_text: String!,
       sender: String!): Message
+
+    addFriend(
+      _id: ID!
+    username: String!
+    email: String!
+    password: String!
+    reviews: [Review]
+    friends: [User]
+     ): User
   }
 `;
 

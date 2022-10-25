@@ -71,6 +71,15 @@ const resolvers = {
       }
       );
     },
+
+    addFriend: async (parent, {username, _id, email, password, reviews, friends}) => {
+      return User.findOneAndUpdate (
+        {_id: "63582357c4c2e15f90c5d4b2"},
+        {$addToSet: {friends: {username, _id, email, password, reviews, friends}},
+      },
+      {new: true,}
+      );
+    },
   },
 };
 
