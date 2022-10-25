@@ -1,4 +1,5 @@
-const { Movie, User, Review } = require('../models');
+const { args } = require('mongoose/lib/utils');
+const { Movie, User, Review, Conversation, Message } = require('../models');
 
 const resolvers = {
   Query: {
@@ -28,6 +29,24 @@ const resolvers = {
     const review = _id ? {_id}: {};
     return Review.find(review)
    },
+
+   conversations: async () => {
+    return Conversation.find({})
+   },
+
+   conversation: async (parent, {_id}) => {
+    const conversation = _id ? {_id}: {}
+    return Conversation.find(conversation)
+   },
+
+   messages: async () => {
+    return Message.find({})
+   },
+
+   message: async (parent, {_id}) => {
+    const message = _id ? {_id}: {}
+    return Message.find(message)
+   },
   },
   Mutation: {
     createMovie: async (parent, args) => {
@@ -44,9 +63,18 @@ const resolvers = {
       const review = await Review.create(args);
       return review;
     },
+
+    createConversation: async (parent,args) =>{
+      const conversation = await Conversation.create(args);
+      return conversation
+    },
+
+    createMessage: async (parent, args) => {
+      const message = await Message.create(args);
+      
+      return message;
+    }
   },
 };
-
-module.exports = resolvers;
 
 module.exports = resolvers;

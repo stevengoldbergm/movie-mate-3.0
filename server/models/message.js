@@ -11,6 +11,11 @@ const messageSchema = new Schema({
     required: true,
     unique: false,
     },
+  time_sent: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
 },{
   toJSON: {
     virtuals: true,
