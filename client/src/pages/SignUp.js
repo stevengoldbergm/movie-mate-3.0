@@ -53,10 +53,10 @@ function SignUp() {
               </div>
             </div>
             <div className="field">
-              <label className="label">
+              {/* <label className="label">
                 <input type="checkbox" className="checkbox" />
                 Remember me
-              </label>
+              </label> */}
             </div>
             <div className="field">
               <button className="button is-info is-fullwidth">Create Account</button>
