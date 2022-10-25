@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -26,6 +27,28 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('id_token');
+=======
+import React from 'react';
+import { 
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Test from './pages/test'
+import MovieData from './pages/MovieData';
+
+// Set up HTTP for GQL to attach to Apollo
+const httpLink = createHttpLink({
+  uri: '/graphql',
+})
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItme('id_token');
+>>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
   return {
     headers: {
       ...headers,
@@ -33,11 +56,16 @@ const authLink = setContext((_, {headers}) => {
     }
   }
 });
+<<<<<<< HEAD
 // eslint-disable-next-line
+=======
+
+>>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
+<<<<<<< HEAD
 
 function App() {
   return (
@@ -49,6 +77,18 @@ function App() {
     {/* ApolloProvider */}
     </>
    
+=======
+
+
+function App() {
+  return (
+    // <ApolloProvider client={client}>
+    <>
+      <Test />
+      <MovieData />
+    </>
+    //  </ApolloProvider>
+>>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
   );
 }
 

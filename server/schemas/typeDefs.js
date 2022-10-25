@@ -25,6 +25,21 @@ const typeDefs = gql`
     review_text: String!
   }
 
+  type Conversation {
+    _id: ID!
+    conversation_name: String!
+    participants: [User]
+    messages: [Message]
+  }
+
+  type Message {
+    _id: ID!
+    conversation_id: String!
+    message_text: String!
+    time_sent: String!
+    sender: String!
+  }
+
   type Query {
     movies: [Movie]
     movie(_id: String!): [Movie]
@@ -32,7 +47,8 @@ const typeDefs = gql`
     user(_id: String!): [User]
     reviews: [Review]
     review(_id: String!): [Review]
-    
+    conversations: [Conversation]
+    conversation(_id: String!): [Conversation]
   }
 
   type Mutation {
@@ -48,8 +64,15 @@ const typeDefs = gql`
       review_text: String!): Review
 
     createMovie(
-      movie_name: String!
+      movie_name: String!,
       imdb_id: String!): Movie
+
+    createConversation(conversation_name: String!) : Conversation
+    
+    sendMessage(
+      conversation_id: String!,
+      message_text: String!,
+      sender: String!): Message
   }
 `;
 
