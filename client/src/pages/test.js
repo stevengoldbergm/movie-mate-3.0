@@ -1,10 +1,9 @@
 import React from "react";
-import 
 
 const test = () => {
     return (
         <>
+        <h1> hi </h1>
         </>
     )
 }
-    return 

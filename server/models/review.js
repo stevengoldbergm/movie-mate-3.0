@@ -21,7 +21,11 @@ const reviewSchema = new Schema({
     required: true,
     unique: false,
   }
-})
+},{
+  toJSON: {
+    virtuals: true,
+  }},
+)
 
 const Review = model('Review', reviewSchema)   
 
