@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './components/Header'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 // import Profile from './pages/Profile'
 // import FriendList from './pages/Friendlist'
@@ -43,7 +43,7 @@ function App() {
   return (
     <>
     {/* ApolloProvider client={client}*/}
-    <Header />
+    <Navbar />
     <Review />
     <Footer />
     {/* ApolloProvider */}

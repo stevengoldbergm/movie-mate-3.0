@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Header() {
+function Navbar() {
   return (
     <>
   <section className="hero is-white is-fullheight-with-navbar is-fullheight block has-background-info">
@@ -62,4 +62,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Navbar
