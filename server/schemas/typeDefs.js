@@ -27,6 +27,7 @@ const typeDefs = gql`
 
   type Conversation {
     _id: ID!
+    conversation_name: String!
     participants: [User]
     messages: [Message]
   }
@@ -35,6 +36,7 @@ const typeDefs = gql`
     _id: ID!
     conversation_id: String!
     message_text: String!
+    time_sent: String!
   }
 
   type Query {
@@ -63,18 +65,14 @@ const typeDefs = gql`
       review_text: String!): Review
 
     createMovie(
-      movie_name: String!
+      movie_name: String!,
       imdb_id: String!): Movie
 
-    createConversation(
-      participants:[User],
-      messages: [Message] : Conversation
-    )
-
+    createConversation(conversation_name: String!) : Conversation
+    
     createMessage(
       conversation_id: String!,
-      message_text: String!: Message
-    )
+      message_text: String!): Message
   }
 `;
 

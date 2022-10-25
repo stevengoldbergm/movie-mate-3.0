@@ -1,4 +1,3 @@
-const { args } = require('mongoose/lib/utils');
 const { Movie, User, Review, Conversation, Message } = require('../models');
 
 const resolvers = {
@@ -54,7 +53,7 @@ const resolvers = {
       return movie;
     },
    
-    createUser: async (parent ,args) => {
+    createUser: async (parent, args) => {
       const user  = await User.create(args);
       return user;
     },
@@ -64,16 +63,24 @@ const resolvers = {
       return review;
     },
 
-    createConversation: async (parent,args) =>{
+    createConversation: async (parent, args) => {
       const conversation = await Conversation.create(args);
       return conversation
     },
 
-    createMessage: async (parent, args) => {
-      const message = await Message.create(args);
-      
-      return message;
-    }
+    createMessage: async (parent, {conversation_id, message_text}) => {
+      // const message = await Message.create(conversation_id, message_text);
+
+      return Conversation.findOneAndUpdate(
+        {_id: conversation_id},
+        {$addToSet: {messages: { message_text }},
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+      );
+    },
   },
 };
 
