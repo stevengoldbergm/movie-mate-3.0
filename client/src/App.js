@@ -9,6 +9,7 @@ import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Test from './pages/test'
+import MovieData from './pages/MovieData';
 
 // Set up HTTP for GQL to attach to Apollo
 const httpLink = createHttpLink({
@@ -35,12 +36,9 @@ function App() {
   return (
     // <ApolloProvider client={client}>
     <>
-      <div className="App">
-        blahbababasdasd
-      </div>
       <Test />
+      <MovieData />
     </>
-
     //  </ApolloProvider>
   );
 }
