@@ -39,6 +39,9 @@ function Header() {
           <a className="navbar-item" href="/sign-up">
             Friend Requests
           </a>
+          <a className="navbar-item" href="/sign-up">
+            Watch Party Invites
+          </a>
           <a id="logout" className="navbar-item">
             Logout
           </a>

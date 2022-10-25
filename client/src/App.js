@@ -4,10 +4,10 @@ import Footer from './components/Footer'
 // import Profile from './pages/Profile'
 // import FriendList from './pages/Friendlist'
 // import Homepage from './pages/Homepage'
-import Login from './pages/Login'
+// import Login from './pages/Login'
 // import SignUp from './pages/SignUp'
 // import PartyInvites from './pages/PartyInvites'
-// import Review from './pages/Review'
+import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
 import {
   ApolloClient,
@@ -44,7 +44,7 @@ function App() {
     <>
     {/* ApolloProvider client={client}*/}
     <Header />
-    <Login />
+    <Review />
     <Footer />
     {/* ApolloProvider */}
     </>
