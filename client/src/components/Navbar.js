@@ -3,7 +3,7 @@ import React from 'react'
 function Navbar() {
   return (
     <>
-  <section className="hero is-white is-fullheight-with-navbar is-fullheight block has-background-info">
+  <section className="hero is-white block has-background-info">
   <div className="hero-head has-background-white">
     <nav className="navbar card">
       <div className="container pl-3 is-fullwidth"> 
