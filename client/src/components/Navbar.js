@@ -11,7 +11,7 @@ function Navbar() {
         <a className="navbar-item p-3" href="/">
           <h1 className="title tangerine has-text-info animate__animated animate__rubberband p-3">
             <span className="icon is-small mr-5">
-              <i className="fas fa-ticket-alt" />
+              {/* <i className="fas fa-ticket-alt" /> */}
             </span>
             MovieMate    
             <span className="icon is-small ml-5">

@@ -3,7 +3,7 @@ import React from 'react'
 function Footer() {
   return (
     <div>
-       <footer className="has-background-white has-text-centered has-text-black py-3 is-bottom">
+    <footer className="has-background-white has-text-centered has-text-black py-3 is-bottom">
   <p>
     Movie Mate 2.0 © Group 3
   </p>
