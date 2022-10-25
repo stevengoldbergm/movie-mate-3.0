@@ -10,14 +10,14 @@ export const searchMovie = async (query) => {
     const omdbPlot = '&plot=full'
 
     const searchValue = query // Working
-    // console.log(searchValue); // Working
+    console.log(searchValue); // Working
 
     const searchResult = omdbSearch + searchValue + omdbPlot + omdbApiKey
 
     try {
         let movieData = await axios.get(searchResult);
         movieData = movieData.data;
-        // console.log(movieData) // Working
+        console.log(movieData) // NOT Working
 
         // Pull Rotten Tomatoes from movieData.Ratings
         let rtScore = movieData.Ratings[1]
