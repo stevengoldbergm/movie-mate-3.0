@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from 'axios';
 
 // Make a search to oMDB
 export const searchMovie = async (query) => {
@@ -12,12 +12,14 @@ export const searchMovie = async (query) => {
     const searchValue = query // Working
     console.log(searchValue); // Working
 
-    const searchResult = omdbSearch + searchValue + omdbPlot + omdbApiKey
+    const searchResult = omdbSearch + searchValue + omdbPlot + omdbApiKey;
+    console.log(searchResult);
 
     try {
-        let movieData = await axios.get(searchResult);
-        movieData = movieData.data;
-        console.log(movieData) // NOT Working
+        const movieDataObject = await axios.get(searchResult);
+        console.log(movieDataObject)
+        const movieData = movieDataObject.data;
+        console.log(movieData) // Working
 
         // Pull Rotten Tomatoes from movieData.Ratings
         let rtScore = movieData.Ratings[1]
@@ -52,26 +54,25 @@ export const searchMovie = async (query) => {
             const ytEmbed = ytEmbedBase + ytEmbedId;
     
             // console.log('\n\ndata.items:',ytResult.data.items[0].id.videoId,'\n\n'); // Working
-            // console.log(ytResult); // Working
-            const ytData = {
-              ytResult,
-              ytEmbedId,
-              ytEmbed
-            }
-            return {movieData, rtScore, ytData};
-    
-            // Page won't be rendered in this way - can delete once the code is working.
-            // res.render('movieDetails', { search: false, movieDetails: true, movieData, rtScore, ytEmbed, loggedIn: req.session.logged_in, imdbID: query }); 
+
+            return {movieData, rtScore, ytEmbed};
         } catch (err) {
+            console.log(err)
+
             if (err.response) {
                 console.log(err.response.data);
                 console.log(err.response.status);
                 console.log(err.response.headers);
-                return;
+                if (err.response.status === 403) {
+                  const ytEmbed = ''
+                  return {movieData, rtScore, ytEmbed};
+                }
+                return
             };
         };
 
     } catch (err) {
+      console.log(err)
         if (err.response) {
             console.log(err.response.data);
             console.log(err.response.status);
