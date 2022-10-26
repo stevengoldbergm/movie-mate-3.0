@@ -1,5 +1,7 @@
 import React from 'react'
 
+// Add JSX to Profile
+
 function Profile() {
   return (
     <div>
