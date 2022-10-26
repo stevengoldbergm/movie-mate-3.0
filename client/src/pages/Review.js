@@ -1,5 +1,8 @@
 import React from 'react'
 
+// Add OMDB search to Review page
+// Add JSX to Review page
+
 function Review() {
   return (
     <div>

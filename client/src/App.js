@@ -1,13 +1,15 @@
 import React from 'react'
-// import Navbar from './components/Navbar'
-// import Footer from './components/Footer'
-// import Profile from './pages/Profile'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Profile from './pages/Profile'
+import SignUpForm from './pages/SignUp'
+
 // import FriendList from './pages/Friendlist'
 import Homepage from './pages/Homepage'
-// import Login from './pages/Login'
-// import SignUp from './pages/SignUp'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 // import PartyInvites from './pages/PartyInvites'
-// import Review from './pages/Review'
+import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
 import Test from './pages/test'
 import MovieData from './pages/MovieData'
@@ -45,12 +47,13 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    // <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
     <>
-      <Test />
-      <Homepage />
+      <Navbar />
+      <SignUpForm />
+      <Footer />
     </>
-    // </ApolloProvider>
+    </ApolloProvider>
   );
 }
 
