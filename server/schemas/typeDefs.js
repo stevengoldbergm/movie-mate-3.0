@@ -77,10 +77,6 @@ const typeDefs = gql`
     addFriend(
       _id: ID!
     username: String!
-    email: String!
-    password: String!
-    reviews: [Review]
-    friends: [User]
      ): User
   }
 `;

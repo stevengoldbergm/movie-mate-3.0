@@ -60,7 +60,6 @@ const resolvers = {
     },
 
     sendMessage: async (parent, {conversation_id, message_text, sender}) => {
-      // const message = await Message.create(conversation_id, message_text);
       return Conversation.findOneAndUpdate(
         {_id: conversation_id},
         {$addToSet: {messages: { message_text, sender }},
@@ -72,10 +71,10 @@ const resolvers = {
       );
     },
 
-    addFriend: async (parent, {username, _id, email, password, reviews, friends}) => {
+    addFriend: async (parent, {_id, username}) => {
       return User.findOneAndUpdate (
         {_id: "63582357c4c2e15f90c5d4b2"},
-        {$addToSet: {friends: {username, _id, email, password, reviews, friends}},
+        {$addToSet: {friends: {_id, username}},
       },
       {new: true,}
       );
