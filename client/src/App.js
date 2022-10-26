@@ -3,7 +3,7 @@ import React from 'react'
 // import Footer from './components/Footer'
 // import Profile from './pages/Profile'
 // import FriendList from './pages/Friendlist'
-// import Homepage from './pages/Homepage'
+import Homepage from './pages/Homepage'
 // import Login from './pages/Login'
 // import SignUp from './pages/SignUp'
 // import PartyInvites from './pages/PartyInvites'
@@ -48,7 +48,7 @@ function App() {
     // <ApolloProvider client={client}>
     <>
       <Test />
-      <MovieData />
+      <Homepage />
     </>
     // </ApolloProvider>
   );
