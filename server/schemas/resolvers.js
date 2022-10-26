@@ -66,6 +66,10 @@ const resolvers = {
     createReview: async (parent, args, context) => {
       if (context.user) {
       const review = await Review.create({...args, user_id: context.user._id});
+      const user = await User.findOneAndUpdate(
+        {_id: context.user._id},
+        {$addToSet:{reviews: {...review}}},
+        {new:true,})
       return review}
       throw new AuthenticationError('Please login or signup!');
     },
