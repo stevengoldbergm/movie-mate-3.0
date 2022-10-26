@@ -40,25 +40,30 @@ const typeDefs = gql`
     sender: String!
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
-    movies: [Movie]
-    movie(_id: String!): [Movie]
-    users: [User]
-    user(_id: String!): [User]
-    reviews: [Review]
-    review(_id: String!): [Review]
-    conversations: [Conversation]
-    conversation(_id: String!): [Conversation]
+    movies(_id: String): [Movie]
+    users(_id: String): [User]
+    reviews(_id: String): [Review]
+    conversations(_id: String): [Conversation]
+    me: User
   }
 
   type Mutation {
     createUser(
       username: String!,
       email: String!,
-      password: String!): User
+      password: String!): Auth
+    
+    login(
+      email: String!, 
+      password: String!): Auth
     
     createReview(
-      user_id:String!,
       movie_id: String!,
       review_score: String!,
       review_text: String!): Review
@@ -71,13 +76,11 @@ const typeDefs = gql`
     
     sendMessage(
       conversation_id: String!,
-      message_text: String!,
-      sender: String!): Message
+      message_text: String!): Message
 
     addFriend(
       _id: ID!
-    username: String!
-     ): User
+      username: String!): User
   }
 `;
 

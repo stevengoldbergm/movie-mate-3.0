@@ -1,68 +1,91 @@
-const { Movie, User, Review, Conversation, Message } = require('../models');
+const { Movie, User, Review, Conversation} = require('../models');
+const {AuthenticationError} = require('apollo-server-express')
+const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
-   movies: async () => {
-    return Movie.find({});
-   },
-
-   movie: async (parent, {_id}) => {
+   
+   movies: async (parent, {_id}) => {
     const movie = _id ? {_id}: {};
     return Movie.find(movie)
    },
 
-   users: async () => {
-    return User.find({});
-   },
-
-   user: async (parent, {_id}) => {
+   users: async (parent, {_id}) => {
     const user = _id ? {_id}: {};
     return User.find(user)
    },
 
-   reviews: async () => {
-    return Review.find({})
-   },
+   me: async (parent,args,context) => {
+    if (context.user) {
+      return User.findOne({_id: context.user._id})
+    }
+      throw new AuthenticationError('Please login or signup!');
+    },
 
-   review: async (parent, {_id}) => {
+   reviews: async (parent, {_id}) => {
     const review = _id ? {_id}: {};
     return Review.find(review)
    },
 
-   conversations: async () => {
-    return Conversation.find({})
-   },
-
-   conversation: async (parent, {_id}) => {
+   conversations: async (parent, {_id}) => {
     const conversation = _id ? {_id}: {}
     return Conversation.find(conversation)
    },
   },
+
   Mutation: {
     createMovie: async (parent, args) => {
       const movie = await Movie.create(args);
       return movie;
     },
    
-    createUser: async (parent, args) => {
-      const user  = await User.create(args);
-      return user;
+    createUser: async (parent, {username, email, password}) => {
+      const user  = await User.create({username, email, password});
+      const token = signToken(user)
+      return {token, user};
     },
 
-    createReview: async (parent, args) => {
-      const review = await Review.create(args);
-      return review;
+    login: async (parent, {email, password}) => {
+      const user = await User.findOne({ email });
+
+      if(!user) {
+        throw new AuthenticationError('No user found with this email')
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if(!correctPw) {
+        throw new AuthenticationError('Incorrect Password');
+      }
+
+      const token = signToken(user);
+
+      return {token, user};
     },
 
-    createConversation: async (parent, args) => {
+    createReview: async (parent, args, context) => {
+      if (context.user) {
+      const review = await Review.create({...args, user_id: context.user._id});
+      return review}
+      throw new AuthenticationError('Please login or signup!');
+    },
+
+    createConversation: async (parent, args, context) => {
       const conversation = await Conversation.create(args);
-      return conversation
+      console.log(conversation)
+      console.log(context.user)
+      const convo = Conversation.findOneAndUpdate(
+        {_id: conversation._id},
+        {$addToSet: {participants: context.user}},
+        {new: true,})
+      console.log(convo)
+        return convo
     },
 
-    sendMessage: async (parent, {conversation_id, message_text, sender}) => {
+    sendMessage: async (parent, {conversation_id, message_text}, context) => {
       return Conversation.findOneAndUpdate(
         {_id: conversation_id},
-        {$addToSet: {messages: { message_text, sender }},
+        {$addToSet: {messages: { message_text, sender:context.user.username }},
       },
       {
         new: true,
@@ -71,9 +94,9 @@ const resolvers = {
       );
     },
 
-    addFriend: async (parent, {_id, username}) => {
+    addFriend: async (parent, {_id, username}, context) => {
       return User.findOneAndUpdate (
-        {_id: "63582357c4c2e15f90c5d4b2"},
+        {_id: context.user._id},
         {$addToSet: {friends: {_id, username}},
       },
       {new: true,}
