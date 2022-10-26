@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Homepage() {
   return (
-<div>
-<main className="is-fullheight has-background-white">
+<>
+    
+</>
+
+  )
+}
+
+export default Homepage
+
+{/* <main className="is-fullheight has-background-white">
     <div id="search-results" className="is-6 p-4 is-hidden">
       <div className="card events-card">
         <header className="card-header ">
@@ -19,10 +27,4 @@ function Homepage() {
         </div>
       </div>
     </div>
-  </main>
-</div>
-
-  )
-}
-
-export default Homepage
+  </main> */}
