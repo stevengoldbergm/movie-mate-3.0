@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.has-border-bottom {
+  border-bottom: 4px, solid, red;
+}
+
+.is-roundeds {
+  border-radius: 5px;
+}
+
+@media(max-width: 767px) { /* <== You can change this break point as per your  needs */
+  .reverse-columns-mobile {
+    flex-direction: column-reverse;
+    display: flex;
+  }
+}
+
+
