@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 import React from 'react'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Profile from './pages/Profile'
+// import Navbar from './components/Navbar'
+// import Footer from './components/Footer'
+// import Profile from './pages/Profile'
 // import FriendList from './pages/Friendlist'
 // import Homepage from './pages/Homepage'
 // import Login from './pages/Login'
@@ -10,9 +9,12 @@ import Profile from './pages/Profile'
 // import PartyInvites from './pages/PartyInvites'
 // import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
+import Test from './pages/test'
+import MovieData from './pages/MovieData'
+
 import {
   ApolloClient,
-  // ApolloProvider,
+  ApolloProvider,
   InMemoryCache,
   createHttpLink
 } from '@apollo/client';
@@ -27,28 +29,6 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('id_token');
-=======
-import React from 'react';
-import { 
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  createHttpLink
-} from '@apollo/client'
-import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Test from './pages/test'
-import MovieData from './pages/MovieData';
-
-// Set up HTTP for GQL to attach to Apollo
-const httpLink = createHttpLink({
-  uri: '/graphql',
-})
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItme('id_token');
->>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
   return {
     headers: {
       ...headers,
@@ -56,28 +36,11 @@ const authLink = setContext((_, { headers }) => {
     }
   }
 });
-<<<<<<< HEAD
 // eslint-disable-next-line
-=======
-
->>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
-<<<<<<< HEAD
-
-function App() {
-  return (
-    <>
-    {/* ApolloProvider client={client}*/}
-    <Navbar />
-    <Profile />
-    <Footer />
-    {/* ApolloProvider */}
-    </>
-   
-=======
 
 
 function App() {
@@ -87,8 +50,7 @@ function App() {
       <Test />
       <MovieData />
     </>
-    //  </ApolloProvider>
->>>>>>> b3485497da90fc9be77d23a0808f9d417d14dfa4
+    // </ApolloProvider>
   );
 }
 
