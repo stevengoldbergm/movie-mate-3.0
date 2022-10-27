@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Auth from '../utils/auth' 
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -20,8 +22,8 @@ const Navbar = () => {
         <div className="hero-head has-background-white">
           <nav className="navbar card">
             <div className="container is-fullwidth">
-              <div className="navbar-brand ">
-                <a className="navbar-item p-3" href="/">
+              <div className="navbar-brand">
+                <Link className="navbar-item p-3" to="/">
                   <h1 className="title tangerine has-text-info animate__animated animate__rubberband p-3 is-size-4-mobile">
                     <span className="icon is-small mr-5">
                       <i className="fas fa-ticket-alt" />
@@ -31,7 +33,7 @@ const Navbar = () => {
                       <i className="fas fa-ticket-alt" />
                     </span>
                   </h1>
-                </a>
+                </Link>
                 <span
                   className={`navbar-burger is-align-self-center ${isActive}`}
                   aria-label="menu"
@@ -49,53 +51,54 @@ const Navbar = () => {
 
                   {Auth.loggedIn() ? 
                   <>
-                    <a 
+                    <Link 
                       className="navbar-item" 
-                      href="/"
+                      to="/"
                     >
                       Movie Search
-                    </a>
-                    <a 
+                    </Link>
+                    <Link 
                       className="navbar-item" 
-                      href="/profile"
+                      to="/profile"
                     >
                       Profile
-                    </a>
-                    <a 
+                    </Link>
+                    <Link 
                       className="navbar-item" 
-                      href="/my-reviews"
+                      to="/my-reviews"
                     >
                       My Reviews
-                    </a>
-                    <a 
+                    </Link>
+                    <Link 
                       className="navbar-item" 
-                      href="/friends"
+                      to="/friends"
                     >
                       Friends
-                    </a>
-                    <a 
+                    </Link>
+                    <Link 
                       className="navbar-item" 
-                      href="/watch-parties"
+                      to="/watch-parties"
                     >
                       Watch Parties
-                    </a>
+                    </Link>
                     {/* eslint-disable-next-line */}
-                    <a 
+                    <Link 
+                      to="/"
                       id="logout" 
                       className="navbar-item"
                       onClick={Auth.logout}
                     >
                       Logout
-                    </a>
+                    </Link>
                   </>
                   :
                   <>
-                    <a className="navbar-item" href="/login">
+                    <Link className="navbar-item" to="/login">
                       Login
-                    </a>
-                    <a className="navbar-item" href="/sign-up">
+                    </Link>
+                    <Link className="navbar-item" to="/sign-up">
                       Sign Up
-                    </a>
+                    </Link>
                   </>
                   }
                 </div>

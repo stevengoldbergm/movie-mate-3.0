@@ -4,7 +4,8 @@ import { LOGIN_USER } from '../utils/mutations' // Need LOGIN_USER mutation
 import { validateEmail } from '../utils/helpers';
 import Auth from '../utils/auth' 
 
-const Login = () => {
+const LoginForm = () => {
+  console.log('login');
   // Set initial form state
   const [userFormData, setUserFormData] = useState({
     email: '',
@@ -43,7 +44,7 @@ const Login = () => {
 
       // If there is data, make sure you log in!
       console.log(`data: ${data}`);
-      Auth.login(data.login.token) 
+      Auth.login(data.loginUser.token) 
 
     } catch (err) {
       console.error('catch err: ', err);
@@ -136,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
