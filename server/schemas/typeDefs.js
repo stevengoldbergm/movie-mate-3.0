@@ -28,7 +28,6 @@ const typeDefs = gql`
 
   type Conversation {
     _id: ID!
-    conversation_name: String!
     participants: [User]
     messages: [Message]
   }
@@ -57,8 +56,10 @@ const typeDefs = gql`
     users(_id: String): [User]
     reviews(_id: String): [Review]
     conversations(_id: String): [Conversation]
+    friendRequest(_id: String): [FriendRequest]
     me: User
-    friendRequest(_id: String): FriendRequest
+    myReviews: [Review]
+    myFriendRequests: [FriendRequest]
   }
 
   type Mutation {
@@ -80,7 +81,9 @@ const typeDefs = gql`
       movie_name: String!,
       imdb_id: String!): Movie
 
-    createConversation(conversation_name: String!) : Conversation
+    createConversation(
+      username: String
+      ) : Conversation
     
     sendMessage(
       conversation_id: String!,
