@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function PartyInvites() {
   return (
     <div>PartyInvites</div>
-  )
-}
+  );
+};
 
-export default PartyInvites
+export default PartyInvites;
