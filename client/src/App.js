@@ -34,7 +34,6 @@ const httpLink = createHttpLink({
   url: '/graphql',
 })
 
-// import Test from './pages/test'
 
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('id_token');
@@ -45,12 +44,13 @@ const authLink = setContext((_, {headers}) => {
     }
   }
 });
-// eslint-disable-next-line
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
 
+  
 
 function App() {
   return (
