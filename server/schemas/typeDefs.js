@@ -15,6 +15,7 @@ const typeDefs = gql`
     password: String!
     reviews: [Review]
     friends: [User]
+    friendRequests: [FriendRequest]
   }
 
   type Review {
@@ -30,6 +31,12 @@ const typeDefs = gql`
     conversation_name: String!
     participants: [User]
     messages: [Message]
+  }
+
+  type FriendRequest {
+    _id: ID!
+    sender: String!
+    recipient: String!
   }
 
   type Message {
@@ -51,6 +58,7 @@ const typeDefs = gql`
     reviews(_id: String): [Review]
     conversations(_id: String): [Conversation]
     me: User
+    friendRequest(_id: String): FriendRequest
   }
 
   type Mutation {
@@ -77,6 +85,10 @@ const typeDefs = gql`
     sendMessage(
       conversation_id: String!,
       message_text: String!): Message
+
+    createFriendRequest(
+      username: String!
+    ): FriendRequest
 
     addFriend(
       _id: ID!

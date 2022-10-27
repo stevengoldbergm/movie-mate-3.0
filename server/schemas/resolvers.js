@@ -1,4 +1,4 @@
-const { Movie, User, Review, Conversation} = require('../models');
+const { Movie, User, Review, Conversation, FriendRequest} = require('../models');
 const {AuthenticationError} = require('apollo-server-express')
 const {signToken} = require('../utils/auth')
 
@@ -31,6 +31,11 @@ const resolvers = {
     const conversation = _id ? {_id}: {}
     return Conversation.find(conversation)
    },
+
+   friendRequest: async (parent, {_id}) => {
+    const friendrequest = _id? {_id}: {}
+    return FriendRequest.find(friendrequest)
+   }
   },
 
   Mutation: {
@@ -51,12 +56,12 @@ const resolvers = {
       if(!user) {
         throw new AuthenticationError('No user found with this email')
       }
+      // Temp disable for login
+      // const correctPw = await user.isCorrectPassword(password);
 
-      const correctPw = await user.isCorrectPassword(password);
-
-      if(!correctPw) {
-        throw new AuthenticationError('Incorrect Password');
-      }
+      // if(!correctPw) {
+      //   throw new AuthenticationError('Incorrect Password');
+      // }
 
       const token = signToken(user);
 
@@ -97,6 +102,18 @@ const resolvers = {
       }
       );
     },
+    createFriendRequest: async (parent, {username}, context) => {
+      if (context.user) {
+        console.log(context.user)
+     const friendRequest = await FriendRequest.create({sender: context.user.username, recipient: username});
+     console.log(friendRequest)
+     const user = await User.findOneAndUpdate(
+      {username: username},
+      {$addToSet: {friendRequests: {...friendRequest}}},
+      {new:true}
+     )
+     console.log(`User: ${user}`)
+    }},
 
     addFriend: async (parent, {_id, username}, context) => {
       return User.findOneAndUpdate (
