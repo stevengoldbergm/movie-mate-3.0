@@ -17,6 +17,7 @@ import Homepage from './pages/Homepage'
 import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
 import MovieData from './pages/MovieData'
+import MovieSearch from './pages/MovieSearch'
 
 // import Test from './pages/test'
 
@@ -33,7 +34,6 @@ const httpLink = createHttpLink({
   url: '/graphql',
 })
 
-// import Test from './pages/test'
 
 const authLink = setContext((_, {headers}) => {
   const token = localStorage.getItem('id_token');
@@ -44,12 +44,13 @@ const authLink = setContext((_, {headers}) => {
     }
   }
 });
-// eslint-disable-next-line
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
 
+  
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
           <Routes>
             <Route 
               path='/' 
-              element={<Homepage />}
+              element={<MovieSearch />}
             />
             <Route 
               path='/sign-up' 
