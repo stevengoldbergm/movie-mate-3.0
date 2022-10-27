@@ -20,6 +20,12 @@ code {
   border-radius: 5px;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 @media(max-width: 767px) { /* <== You can change this break point as per your  needs */
   .reverse-columns-mobile {
     flex-direction: column-reverse;

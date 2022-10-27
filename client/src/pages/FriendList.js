@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function FriendList() {
   return (
     <div>FriendList</div>
-  )
-}
+  );
+};
 
-export default FriendList
+export default FriendList;
