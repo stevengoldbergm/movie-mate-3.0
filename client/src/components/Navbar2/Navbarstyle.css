@@ -1,0 +1,161 @@
+.navbar {
+    background: #242424;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    max-width: 1500px;
+}
+
+.navbar-logo {
+    color: #209cce;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    font-family: 'Abril Fatface', cursive;
+}
+
+
+.nav-menu {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    list-style: none;
+    text-align: center;
+    width: 60vw;
+    justify-content: end;
+    margin-right: 2rem;
+}
+
+.nav-item {
+    height: 80px;
+}
+
+/* color of the links when they are on bigger screens/when you arent hovering over it */
+.nav-links {
+    color: #209cee;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    height: 100%;
+    /* font-family: 'Barlow', sans-serif; */
+}
+
+.nav-links:hover {
+    border-bottom: 4px solid #209cee;
+    transition: all 0.2s ease-out;
+}
+
+.fa-bars {
+    color: #209cee;
+}
+
+.nav-links-mobile {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media screen and (max-width: 960px) {
+    .NavbarItems {
+    position: relative;
+    }
+
+    .nav-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 90vh;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+    }
+
+    /* when the navbar shows up on smaller screens */
+    .nav-menu.active {
+    background: #242424;
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 1;
+    }
+
+    .nav-links {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+    }
+
+    /* what the links look like when you hover over them on regular screens*/
+    .nav-links:hover {
+    background-color: #209cee;
+    color: #fff;
+    border-radius: 2;
+    }
+
+    .navbar-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(25%, 50%);
+    }
+
+    .menu-icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 60%);
+    font-size: 1.8rem;
+    cursor: pointer;
+    }
+
+    .fa-times {
+    color: #209cee;
+    font-size: 2rem;
+    }
+
+    .nav-links-mobile {
+    display: block;
+    text-align: center;
+    margin: 2rem auto;
+    border-radius: 4px;
+    width: 80%;
+    text-decoration: none;
+    font-size: 1.5rem;
+    background-color: transparent;
+    /* button colors and outlines */
+    color: #209cee;
+    padding: 14px 20px;
+    border: 1px solid #209cee;
+    transition: all 0.3s ease-out;
+    }
+
+    /* color of the hover and when color the links turn when they are hovered over on smaller screens */
+    .nav-links-mobile:hover {
+    background: #209cee;
+    color: #fff;
+    transition: 250ms;
+    }
+}
