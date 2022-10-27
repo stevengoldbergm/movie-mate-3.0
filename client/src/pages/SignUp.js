@@ -16,9 +16,6 @@ const SignUpForm = () => {
     password: '',
     passwordConfirm: ''
   });
-  // set form validation?
-  // const [ validated, setValidated ] = useState(false);
-
   // set state for alert
   const [ showAlert, setShowAlert ] = useState(false);
   // Import the createUser query
@@ -35,9 +32,11 @@ const SignUpForm = () => {
     const { username, email, password, passwordConfirm } = userFormData;
 
     if (!email || !validateEmail(email) || !username || !password || password !== passwordConfirm) {
-      setShowAlert(true)
+      setShowAlert(true);
       return;
     }
+    setShowAlert(false);
+
 
     // May want to add some validation here
 
@@ -59,7 +58,7 @@ const SignUpForm = () => {
 
     } catch (err) {
       console.error('catch err: ', err);
-      // console.error('Mutation error: ', error);
+      console.error('Mutation error: ', error);
       setShowAlert(true);
     }
 
@@ -80,7 +79,7 @@ const SignUpForm = () => {
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
-              <div className="column is-4">
+              <div className="column is-6">
                 <form className="box" id="submit">
                   { showAlert &&
                   <div className='container has-background-danger is-roundeds new-line'>
