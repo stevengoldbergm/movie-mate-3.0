@@ -17,6 +17,7 @@ import Homepage from './pages/Homepage'
 import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
 import MovieData from './pages/MovieData'
+import MovieSearch from './pages/MovieSearch'
 
 // import Test from './pages/test'
 
@@ -60,7 +61,7 @@ function App() {
           <Routes>
             <Route 
               path='/' 
-              element={<Homepage />}
+              element={<MovieSearch />}
             />
             <Route 
               path='/sign-up' 
