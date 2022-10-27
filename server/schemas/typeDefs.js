@@ -85,6 +85,11 @@ const typeDefs = gql`
       username: String
       ) : Conversation
     
+    updateConversation(
+      username: String
+      _id: String
+    ) : Conversation
+    
     sendMessage(
       conversation_id: String!,
       message_text: String!): Message
