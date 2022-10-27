@@ -1,16 +1,25 @@
+// Import React
 import React from 'react'
+
+// Import Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-// import Profile from './pages/Profile'
+import Profile from './pages/Profile'
+import SignUpForm from './pages/SignUp'
+import LoginForm from './pages/Login'
+
+
+// Import Pages
+
 // import FriendList from './pages/Friendlist'
 import Homepage from './pages/Homepage'
-// import Login from './pages/Login'
-// import SignUp from './pages/SignUp'
 // import PartyInvites from './pages/PartyInvites'
-// import Review from './pages/Review'
+import Review from './pages/Review'
 // import Wishlist from './pages/Wishlist'
+import MovieData from './pages/MovieData'
+
 // import Test from './pages/test'
-// import MovieData from './pages/MovieData'
+
 import {
   ApolloClient,
   ApolloProvider,
@@ -18,8 +27,7 @@ import {
   createHttpLink
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import {BrowserRouter as Router, Routes} from 'react-router-dom';
-
+import {BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 const httpLink = createHttpLink({
   url: '/graphql',
@@ -45,13 +53,44 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    // <ApolloProvider client={client}>
-    <>
-    <Router>
-        <Navbar />
+    <ApolloProvider client={client}>
+      <Router>
+        <>
+          <Navbar />
+          <Routes>
+            <Route 
+              path='/' 
+              element={<Homepage />}
+            />
+            <Route 
+              path='/sign-up' 
+              element={<SignUpForm />}
+            />
+            <Route 
+              path='/profile' 
+              element={<Profile />}
+            />
+            <Route 
+              path='/movie-data/:imdbId' 
+              element={<MovieData />}
+            />
+            <Route 
+              path='/login' 
+              element={<LoginForm />}
+            />
+            <Route 
+              path='/movie-data/reviews/:imdbId' 
+              element={<Review />}
+            />
+            <Route 
+              path='*' 
+              element={<Navigate to="/" />}
+            />
+          </Routes>
+          <Footer />
+        </>
       </Router>
-    </>
-    // </ApolloProvider>
+    </ApolloProvider>
   );
 }
 

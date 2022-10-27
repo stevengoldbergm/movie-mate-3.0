@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { searchMovie } from "../utils/API";
-// import axios from 'axios'
 
-const testMovie = "tt0103064";
+// Pull imdbId from URL
+const url = window.location.pathname
+const imdbId = url.substring(url.lastIndexOf('/') + 1);
+
+// const testMovie = "tt0103064";
 
 const MovieData = () => {
   const [movieStuff, setMovieStuff] = useState({});
@@ -10,7 +13,7 @@ const MovieData = () => {
   useEffect(() => {
     const handleSearch = async () => {
       try {
-        const data = await searchMovie(testMovie);
+        const data = await searchMovie(imdbId);
         setMovieStuff(data);
         return;
       } catch (err) {

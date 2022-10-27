@@ -1,104 +1,111 @@
-// import React from 'react'
+import React, { useState } from "react";
+import Auth from '../utils/auth' 
 
-import React, { useState, useEffect } from 'react';
-import { Button } from './navbarBtn.css';
-import { Link } from 'react-router-dom';
-// import './';
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+const Navbar = () => {
+  const [ isActive, setIsActive ] = useState('');
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
+  const handleNavBurger = () => {
+    if (!isActive) {
+      setIsActive('is-active');
     } else {
-      setButton(true);
-    }
+      setIsActive('');
+    };
   };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
-
+    
   return (
     <>
-      <nav className='navbar'>
-        <div className='navbar-container'>
-          {/* link to search bar homepage */}
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            MovieMate
-            <i class='fas fa-ticket-alt' />
-          </Link>
-          <div className='menu-icon' onClick={handleClick}>
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
-          {/* when you click on the buger menu it shows the 'x' and when you click out of it, the 3 lines show up again */}
-          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              {/* link to Movie Searh page */}
-              <Link to='/MovieSearch' className='nav-links' onClick={closeMobileMenu}>
-                Movie Search
-              </Link>
-            </li>
-            <li className='nav-item'>
-              {/* link to profile page */}
-              <Link
-                to='/Profile'
-                className='nav-links'
-                onClick={closeMobileMenu}>
-                Profile
-              </Link>
-            </li>
-            <li className='nav-item'>
-              {/* link to review page */}
-              <Link
-                to='/Reviews'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Reviews
-              </Link>
-            </li>
-            <li>
-              <Link
-                to='/Freind-Requests'
-                className='nav-links-mobile'
-                onClick={closeMobileMenu}
-              >
-                Friend Requests
-              </Link>
-            </li>
-            <li>
-              <Link
-                to='/Watch-party-invites'
-                className='nav-links-mobile'
-                onClick={closeMobileMenu}
-              >
-                Watch Party Invites
-              </Link>
-            </li>
-            <li>
-              <Link
-                to='/Logout'
-                className='nav-links-mobile'
-                onClick={closeMobileMenu}
-              >
-                Logout
-              </Link>
-            </li>
-            {/* log out button...unsure if we still need sign up and login button on navbar? */}
-          </ul>
-          {button && <Button buttonStyle='btn--outline'>Logout</Button>}
+      <section className="hero is-white block has-background-info mb-0">
+        <div className="hero-head has-background-white">
+          <nav className="navbar card">
+            <div className="container is-fullwidth">
+              <div className="navbar-brand ">
+                <a className="navbar-item p-3" href="/">
+                  <h1 className="title tangerine has-text-info animate__animated animate__rubberband p-3 is-size-4-mobile">
+                    <span className="icon is-small mr-5">
+                      <i className="fas fa-ticket-alt" />
+                    </span>
+                    MovieMate
+                    <span className="icon is-small ml-5">
+                      <i className="fas fa-ticket-alt" />
+                    </span>
+                  </h1>
+                </a>
+                <span
+                  className={`navbar-burger is-align-self-center ${isActive}`}
+                  aria-label="menu"
+                  aria-expanded="false"
+                  data-target="navbarMenuHeroB"
+                  onClick={handleNavBurger}
+                >
+                  <span aria-hidden="true" />
+                  <span aria-hidden="true" />
+                  <span aria-hidden="true" />
+                </span>
+              </div>
+              <div id="navbarMenuHeroB" className={`navbar-menu has-text-right has-text-centered-mobile ${isActive}`}>
+                <div className="navbar-end">
+
+                  {Auth.loggedIn() ? 
+                  <>
+                    <a 
+                      className="navbar-item" 
+                      href="/"
+                    >
+                      Movie Search
+                    </a>
+                    <a 
+                      className="navbar-item" 
+                      href="/profile"
+                    >
+                      Profile
+                    </a>
+                    <a 
+                      className="navbar-item" 
+                      href="/my-reviews"
+                    >
+                      My Reviews
+                    </a>
+                    <a 
+                      className="navbar-item" 
+                      href="/friends"
+                    >
+                      Friends
+                    </a>
+                    <a 
+                      className="navbar-item" 
+                      href="/watch-parties"
+                    >
+                      Watch Parties
+                    </a>
+                    {/* eslint-disable-next-line */}
+                    <a 
+                      id="logout" 
+                      className="navbar-item"
+                      onClick={Auth.logout}
+                    >
+                      Logout
+                    </a>
+                  </>
+                  :
+                  <>
+                    <a className="navbar-item" href="/login">
+                      Login
+                    </a>
+                    <a className="navbar-item" href="/sign-up">
+                      Sign Up
+                    </a>
+                  </>
+                  }
+                </div>
+              </div>
+            </div>
+          </nav>
         </div>
-      </nav>
+      </section>
     </>
   );
 }
 
-export default Navbar
+export default Navbar;
