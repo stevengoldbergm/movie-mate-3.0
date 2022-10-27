@@ -17,12 +17,12 @@ function SearchBar() {
               />
             </p>
             <br />
-            <h2 className="subtitle has-text-white">
+            <h2 className="subtitle has-text-centered has-text-black">
               Search for movies - Get the details!
             </h2>
             <br />
             {/* Search Button */}
-            <section>
+            <section className="container is-flex is-justify-content-center">
               <button className="button is-info is-light has-text-black">
                 Search Movies
               </button>
@@ -45,12 +45,14 @@ function SearchBar() {
                   <div className="dropdown-content">
                     <hr className="dropdown-divider" />
                     {/* Make the clear history button here */}
-                    <button
+                    {/* NOTE: You can't just clear local memory! It will delete the token! */}
+                    {/* eslint-disable-next-line */}
+                    <a
                       onclick="clearLocalStorage()"
                       className="dropdown-item"
                     >
                       Clear History
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
