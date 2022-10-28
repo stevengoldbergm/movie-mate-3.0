@@ -10,7 +10,7 @@ import LoginForm from './pages/LoginForm';
 
 
 // Import Pages
-
+// import Main from './pages/Main'; //needs mp4, and app.css data
 // import FriendList from './pages/Friendlist'
 import Homepage from './pages/Homepage';
 // import PartyInvites from './pages/PartyInvites'
@@ -69,7 +69,7 @@ function App() {
               element={<Profile />}
             />
             <Route 
-              path='/movie-data/:imdbId' 
+              path='/movie-details/:imdbId' 
               element={<MovieData />}
             />
             <Route 
