@@ -1,9 +1,11 @@
 // Import React
-import React from 'react';
+import React, { useState } from 'react';
 
 // Import Components
 import Navbar from './components/Navbar';
+// import Navbar2 from './components/Navbar2';
 import Footer from './components/Footer';
+// import Footer2 from './components/Footer2';
 import Profile from './pages/Profile';
 import SignUpForm from './pages/SignUp';
 import LoginForm from './pages/LoginForm';
@@ -53,6 +55,10 @@ const client = new ApolloClient({
   
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  // Make the navbar hold onto the state
+
+
   return (
     <ApolloProvider client={client}>
       <Router>
