@@ -8,8 +8,8 @@
 .Movie-Search,
 .Profile,
 .Reviews,
-.Friend-Requests,
-.Watch-party-invites,
+.Friends,
+.Watch-party,
 .Logout {
   display: flex;
   height: 90vh;
