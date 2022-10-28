@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import './Footer.css'
 
 
-function FooterNew() {
+function Footer2() {
   return (
     <div className='footer-container'>
         <section class='social-media'>
         <div class='social-media-wrap'>
           <div class='footer-logo'>
-            <Link to='/' className='social-logo'>
+            {/* <Link to='/' className='social-logo'>
               <i class='fas fa-ticket-alt' />
-              MovieMate
+              MOVIEMATE
               <i class='fas fa-ticket-alt' />
-            </Link>
+            </Link> */}
           </div>
           <small class='website-rights'>MovieMate © 2022</small>
           <div class='social-icons'>
@@ -44,4 +44,4 @@ function FooterNew() {
   )
 }
 
-export default FooterNew
+export default Footer2

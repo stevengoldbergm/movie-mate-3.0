@@ -62,6 +62,7 @@
     transition: all 0.2s ease-out;
 }
 
+/* when menu is not clicked */
 .fa-bars {
     color: #209cee;
 }
@@ -131,6 +132,7 @@
     cursor: pointer;
     }
 
+    /* when menu is clicked */
     .fa-times {
     color: #209cee;
     font-size: 2rem;

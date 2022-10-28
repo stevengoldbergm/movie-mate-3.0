@@ -1,9 +1,9 @@
 import React from 'react';
-// import '../App.css'
+import '../../App.css'
 import { Button } from './NavBtn'
 import './style.css';
 import { Link } from 'react-router-dom'
-import MovieVideo from './Pages/moviefilm.mp4'
+import MovieVideo from './moviefilm.mp4'
 
 
 
