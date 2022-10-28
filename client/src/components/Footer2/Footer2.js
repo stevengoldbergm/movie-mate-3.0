@@ -9,11 +9,11 @@ function FooterNew() {
         <section class='social-media'>
         <div class='social-media-wrap'>
           <div class='footer-logo'>
-            {/* <Link to='/' className='social-logo'>
+            <Link to='/' className='social-logo'>
               <i class='fas fa-ticket-alt' />
               MOVIEMATE
               <i class='fas fa-ticket-alt' />
-            </Link> */}
+            </Link>
           </div>
           <small class='website-rights'>MovieMate © 2022</small>
           <div class='social-icons'>
