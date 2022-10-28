@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { searchMovie } from "../utils/API";
-
-
+import { useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth'
 
 // const testMovie = "tt0103064";
 
 const MovieData = () => {
+  const navigate = useNavigate()
+  console.log("Logged in? ", Auth.loggedIn())
+    if (!Auth.loggedIn()) {
+      navigate("/login");
+    };
+  
   const [movieStuff, setMovieStuff] = useState({});
 
-  useEffect(() => {
+  useEffect(() => {    
+    if (!Auth.loggedIn()) {
+      navigate("/login");
+    };
     // Pull imdbId from URL
     const url = window.location.pathname
     const imdbId = url.substring(url.lastIndexOf('/') + 1);
@@ -120,18 +129,21 @@ const MovieData = () => {
                   </div>
                 )}
                 <h1 className="column is-fullwidth has-background-info has-text-white is-size-5 p-0 pl-3 is-roundeds">
-                  Details
+                  Reviews
                 </h1>
                 {movieData && (
                   <div
-                    id="details"
+                    id="reviews"
                     className="column is-justify-content-space-around is-flex is-flex-direction-column"
                   >
                     <p className="is-size-6">
-                      Rated: {movieData.Rated}{" "}
+                      IMDB: {movieData.imdbRating}
                     </p>
                     <p className="is-size-6">
-                      Release Date: {movieData.Released}
+                      Rotten Tomatoes: {rtScore}
+                    </p>
+                    <p className="is-size-6">
+                      Metacritic: {movieData.Metascore}
                     </p>
                   </div>
                 )}
@@ -166,21 +178,18 @@ const MovieData = () => {
                   </div>
                 )}
                 <h1 className="column is-fullwidth has-background-info has-text-white is-size-5 p-0 pl-3 is-roundeds">
-                  Reviews
+                  Details
                 </h1>
                 {movieData && (
                   <div
-                    id="reviews"
+                    id="details"
                     className="column is-justify-content-space-around is-flex is-flex-direction-column"
                   >
                     <p className="is-size-6">
-                      IMDB: {movieData.imdbRating}
+                      Rated: {movieData.Rated}{" "}
                     </p>
                     <p className="is-size-6">
-                      Rotten Tomatoes: {rtScore}
-                    </p>
-                    <p className="is-size-6">
-                      Metacritic: {movieData.Metascore}
+                      Release Date: {movieData.Released}
                     </p>
                   </div>
                 )}
