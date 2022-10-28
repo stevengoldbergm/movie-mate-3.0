@@ -84,20 +84,18 @@ const typeDefs = gql`
       imdb_id: String!): Movie
 
     createConversation(
-      username: String
-      ) : Conversation
+      username: String) : Conversation
     
     sendMessage(
       conversation_id: String!,
       message_text: String!): Conversation
 
     createFriendRequest(
-      username: String!
-    ): FriendRequest
+      username: String!): FriendRequest
 
     addFriend(
-      _id: ID!
-      username: String!): User
+      username: String!,
+      requestId:String!): User
   }
 `;
 

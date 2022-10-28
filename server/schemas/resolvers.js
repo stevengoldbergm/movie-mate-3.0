@@ -47,7 +47,6 @@ const resolvers = {
 
     myFriendRequests: async (parent, args, context) => {
       if (context.user) {
-        console.log(context.user)
         return FriendRequest.find({recipient: context.user.username})
       }
         throw new AuthenticationError('Please login or signup!')
@@ -152,17 +151,27 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
     }throw new AuthenticationError('Please login or signup!')
   },
 
-    addFriend: async (parent, {_id, username}, context) => {
+    addFriend: async (parent, {username, requestId}, context) => {
       if (context.user) {
-      return User.findOneAndUpdate (
+      const user1 = await User.findOneAndUpdate(
         {_id: context.user._id},
-        {$addToSet: {friends: {_id, username}}},
+        {$addToSet: {friends: {username}}},
         {new: true}
-      );
+      )
+      console.log(user1)
+      const user2 = await User.findOneAndUpdate(
+        {username: username},
+        {$addToSet: {friends: {username: context.user.username}}},
+        {new: true}
+      )
+      const request = await FriendRequest.findOneAndDelete(
+        {_id: requestId})
+      return user1
+      ;
     }
     throw new AuthenticationError('Please login or signup!')
   }
-  },
-};
+ }
+}
 
 module.exports = resolvers;
