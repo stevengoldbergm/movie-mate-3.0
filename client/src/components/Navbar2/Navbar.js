@@ -68,7 +68,7 @@ function Navbar() {
                 to='/Reviews'
                 className='nav-links'
                 onClick={closeMobileMenu}>
-                Reviews
+                My Reviews
             </Link>
             </li>
 
@@ -86,7 +86,7 @@ function Navbar() {
                 to='/Watch-party'
                 className='nav-links'
                 onClick={closeMobileMenu}>
-                Watch Party Invites
+                Watch Party
             </Link>
             </li>
 
