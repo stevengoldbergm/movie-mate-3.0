@@ -102,6 +102,7 @@ const resolvers = {
 
 // Chat enabling mutations
 createConversation: async (parent, {username}, context) => {
+  if (context.user) {
   const conversation = await Conversation.create({username});
   console.log(conversation)
   const convo = await Conversation.findOneAndUpdate(
@@ -125,6 +126,8 @@ createConversation: async (parent, {username}, context) => {
   console.log(user1)
   console.log(user2)
   return convo2
+  }
+  throw new AuthenticationError('Please login or signup!')
 },
 
 sendMessage: async (parent, {conversation_id, message_text}, context) => {
@@ -142,21 +145,23 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
 
 // Friend enabling mutations
     createFriendRequest: async (parent, {username}, context) => {
-      if (true) {
-        console.log(context.user)
-        console.log(username)
+      if (context.user) {
+    console.log(username)
      const friendRequest = await FriendRequest.create({sender: context.user.username, recipient: username});
      return friendRequest
-    }},
+    }throw new AuthenticationError('Please login or signup!')
+  },
 
     addFriend: async (parent, {_id, username}, context) => {
+      if (context.user) {
       return User.findOneAndUpdate (
         {_id: context.user._id},
-        {$addToSet: {friends: {_id, username}},
-      },
-      {new: true}
+        {$addToSet: {friends: {_id, username}}},
+        {new: true}
       );
-    },
+    }
+    throw new AuthenticationError('Please login or signup!')
+  }
   },
 };
 
