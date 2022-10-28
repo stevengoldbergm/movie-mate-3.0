@@ -1,23 +1,23 @@
 // Import React
-import React from 'react'
+import React from 'react';
 
 // Import Components
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Profile from './pages/Profile'
-import SignUpForm from './pages/SignUp'
-import LoginForm from './pages/Login'
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Profile from './pages/Profile';
+import SignUpForm from './pages/SignUp';
+import LoginForm from './pages/LoginForm';
 
 
 // Import Pages
-
+// import Main from './pages/Main'; //needs mp4, and app.css data
 // import FriendList from './pages/Friendlist'
-import Homepage from './pages/Homepage'
+import Homepage from './pages/Homepage';
 // import PartyInvites from './pages/PartyInvites'
-import Review from './pages/Review'
+import Review from './pages/Review';
 // import Wishlist from './pages/Wishlist'
-import MovieData from './pages/MovieData'
-import MovieSearch from './pages/MovieSearch'
+import MovieData from './pages/MovieData';
+import MovieSearch from './pages/MovieSearch';
 
 // import Test from './pages/test'
 
@@ -32,7 +32,7 @@ import {BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-do
 
 const httpLink = createHttpLink({
   url: '/graphql',
-})
+});
 
 
 const authLink = setContext((_, {headers}) => {
@@ -59,10 +59,7 @@ function App() {
         <>
           <Navbar />
           <Routes>
-            <Route 
-              path='/' 
-              element={<MovieSearch />}
-            />
+            <Route path='/' element={<MovieSearch />}/>
             <Route 
               path='/sign-up' 
               element={<SignUpForm />}
@@ -72,7 +69,7 @@ function App() {
               element={<Profile />}
             />
             <Route 
-              path='/movie-data/:imdbId' 
+              path='/movie-details/:imdbId' 
               element={<MovieData />}
             />
             <Route 

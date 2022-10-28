@@ -35,6 +35,12 @@ const userSchema = new Schema({
       ref: 'FriendRequest'
     },
   ],
+  conversations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Conversation"
+    },
+  ]
 },{
   toJSON: {
     virtuals: true,

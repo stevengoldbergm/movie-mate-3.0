@@ -40,7 +40,7 @@ const resolvers = {
 
   myReviews: async (parent, args, context) => {
     if (context.user) {  
-      return Review.find({user_id: context.user._id})
+      return Review.find()
       }  
       throw new AuthenticationError('Please login or signup!');
       },
@@ -52,7 +52,14 @@ const resolvers = {
       }
         throw new AuthenticationError('Please login or signup!')
       },
+
+  myConversations: async (parent, args, context) => {
+    if(context.user) {
+    return Conversation.find({participants: context.user.username})
+   }
+   throw new AuthenticationError('Please login or signup!')
   },
+},
 
   Mutation: { 
 //  User sign in mutations
@@ -97,6 +104,16 @@ const resolvers = {
     createConversation: async (parent, {username}, context) => {
       const conversation = await Conversation.create({username});
       console.log(conversation)
+      const userConvo = await User.findOneAndUpdate(
+        {_id: context.user._id},
+        {$addToSet: {conversations: {_id: conversation._id}}},
+        {new:true}
+      )
+      const userConvo2 = await User.findOneAndUpdate(
+        {username: username},
+        {$addToSet: {conversations: {_id: conversation._id}}},
+        {new:true}
+      )
       const convo = await Conversation.findOneAndUpdate(
         {_id: conversation._id},
         {$addToSet: {participants: {username: context.user.username}}},

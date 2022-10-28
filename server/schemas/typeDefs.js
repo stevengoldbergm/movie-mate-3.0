@@ -16,6 +16,7 @@ const typeDefs = gql`
     reviews: [Review]
     friends: [User]
     friendRequests: [FriendRequest]
+    conversations: [Conversation]
   }
 
   type Review {
@@ -60,6 +61,7 @@ const typeDefs = gql`
     me: User
     myReviews: [Review]
     myFriendRequests: [FriendRequest]
+    myConversations: [Conversation]
   }
 
   type Mutation {

@@ -24,6 +24,7 @@ code {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #3e8ed0!important
 }
 
 @media(max-width: 767px) { /* <== You can change this break point as per your  needs */
