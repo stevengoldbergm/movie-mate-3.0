@@ -81,3 +81,57 @@ export const searchMovie = async (query) => {
         };
     };
 }
+
+// Search OMDB using search bar value
+export const searchOMDB = async () => {
+    // OMDB Key Variables
+    const omdbSearch = 'https://www.omdbapi.com/?s=' // change t to s if you want a list of similar movie names
+    const omdbApiKey = '&apikey=c26a6eef'
+    const omdbType = '&type=movie'
+
+    // Define the movie searchbar object
+    const searchEl = document.querySelector("#srch-title");
+
+    // Set up the search parameters
+    const searchValue = searchEl.value;
+    const searchResult = omdbSearch + searchValue + omdbType + omdbApiKey
+  
+    // Start search
+    try {
+      const response = await axios.get(searchResult);
+      // console.log(response.data.Search); // Working
+  
+      // Add History Button for search history
+  
+      // Define Variables
+      var movieSave = searchEl.value.toLowerCase();
+      console.log("Movie save name: " + movieSave)
+      console.log("Storage Test: ", localStorage.getItem("MovieMate: " + movieSave), movieSave)
+  
+      // Don't add history button if local storage already exists
+    //   if (!localStorage.getItem("MovieMate: " + movieSave)) {
+    //     // If no local storage, then:
+    //     localStorage.setItem("MovieMate: " + movieSave, movieSave)
+    //     console.log(localStorage.getItem("MovieMate: " + movieSave))  
+  
+    //     var newLink = document.createElement("a");
+  
+    //     newLink.classList.add("dropdown-item", "is-capitalized");
+    //     newLink.textContent = searchEl.value;
+    //     console.log(newLink.textContent)
+    //     console.log(newLink)
+    //     console.log(dropDownMenuContent)
+  
+    //     dropDownMenuContent.prepend(newLink);
+    //     }
+  
+      // Return list of movie objects based on search parameters
+      return response.data.Search;
+    } catch (err) {
+      if (err.response) {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+      };
+    };
+  }
