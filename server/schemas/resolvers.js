@@ -40,7 +40,7 @@ const resolvers = {
 
   myReviews: async (parent, args, context) => {
     if (context.user) {  
-      return Review.find()
+      return Review.find({user_id: context.user._id})
       }  
       throw new AuthenticationError('Please login or signup!');
       },
@@ -55,7 +55,7 @@ const resolvers = {
 
   myConversations: async (parent, args, context) => {
     if(context.user) {
-    return Conversation.find({participants: context.user.username})
+    
    }
    throw new AuthenticationError('Please login or signup!')
   },
@@ -104,16 +104,6 @@ const resolvers = {
     createConversation: async (parent, {username}, context) => {
       const conversation = await Conversation.create({username});
       console.log(conversation)
-      const userConvo = await User.findOneAndUpdate(
-        {_id: context.user._id},
-        {$addToSet: {conversations: {_id: conversation._id}}},
-        {new:true}
-      )
-      const userConvo2 = await User.findOneAndUpdate(
-        {username: username},
-        {$addToSet: {conversations: {_id: conversation._id}}},
-        {new:true}
-      )
       const convo = await Conversation.findOneAndUpdate(
         {_id: conversation._id},
         {$addToSet: {participants: {username: context.user.username}}},
@@ -121,26 +111,19 @@ const resolvers = {
       const convo2 = await Conversation.findOneAndUpdate(
         {_id: conversation._id},
         {$addToSet: {participants: {username: username}}},
-        {new:true})
+        {new:true}) 
+        const userConvo = await User.findOneAndUpdate(
+        {_id: context.user._id},
+        {$addToSet: {conversations: convo.id}},
+        {new:true}
+      )
+      const userConvo2 = await User.findOneAndUpdate(
+        {username: username},
+        {$addToSet: {conversations: convo.id}},
+        {new:true}
+      )
       return convo2
     },
-
-      updateConversation: async (parent, args, context) => {
-        if (context.user) {
-        console.log(args.username)
-        const conversation = await Conversation.findOneAndUpdate(
-          {_id: args._id},
-          {$addToSet: {participants: {username: context.user.username}}},
-          {new:true})
-          console.log(conversation)
-          const convo = await Conversation.findOneAndUpdate(
-            {_id: args._id},
-            {$addToSet: {participants: {username: args.username}}},
-            {new:true})
-            console.log(convo)
-          return convo}
-          throw new AuthenticationError('Please login or signup!')
-      },
 
     sendMessage: async (parent, {conversation_id, message_text}, context) => {
       return Conversation.findOneAndUpdate(
