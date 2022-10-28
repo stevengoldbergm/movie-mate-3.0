@@ -89,7 +89,7 @@ const typeDefs = gql`
     
     sendMessage(
       conversation_id: String!,
-      message_text: String!): Message
+      message_text: String!): Conversation
 
     createFriendRequest(
       username: String!

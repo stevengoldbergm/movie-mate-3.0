@@ -101,41 +101,44 @@ const resolvers = {
     },
 
 // Chat enabling mutations
-    createConversation: async (parent, {username}, context) => {
-      const conversation = await Conversation.create({username});
-      console.log(conversation)
-      const convo = await Conversation.findOneAndUpdate(
-        {_id: conversation._id},
-        {$addToSet: {participants: {username: context.user.username}}},
-        {new:true})
-      const convo2 = await Conversation.findOneAndUpdate(
-        {_id: conversation._id},
-        {$addToSet: {participants: {username: username}}},
-        {new:true}) 
-        const userConvo = await User.findOneAndUpdate(
-        {_id: context.user._id},
-        {$addToSet: {conversations: convo.id}},
-        {new:true}
-      )
-      const userConvo2 = await User.findOneAndUpdate(
-        {username: username},
-        {$addToSet: {conversations: convo.id}},
-        {new:true}
-      )
-      return convo2
-    },
+createConversation: async (parent, {username}, context) => {
+  const conversation = await Conversation.create({username});
+  console.log(conversation)
+  const convo = await Conversation.findOneAndUpdate(
+    {_id: conversation._id},
+    {$addToSet: {participants: {username: context.user.username}}},
+    {new:true})
+  const convo2 = await Conversation.findOneAndUpdate(
+    {_id: conversation._id},
+    {$addToSet: {participants: {username: username}}},
+    {new:true})
+  const user1 = await User.findOneAndUpdate(
+    {username: context.user.username},
+    {$addToSet: {conversations: {_id: conversation._id}}},
+    {new: true}
+  )
+  const user2 = await User.findOneAndUpdate(
+    {username: username},
+    {$addToSet: {conversations: {_id: conversation._id}}},
+    {new: true}
+  )
+  console.log(user1)
+  console.log(user2)
+  return convo2
+},
 
-    sendMessage: async (parent, {conversation_id, message_text}, context) => {
-      return Conversation.findOneAndUpdate(
-        {_id: conversation_id},
-        {$addToSet: {messages: { message_text, sender:context.user.username }},
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-      );
-    },
+sendMessage: async (parent, {conversation_id, message_text}, context) => {
+  if (context.user) {
+  convo = await  Conversation.findOneAndUpdate(
+    {_id: conversation_id},
+    {$addToSet: {messages: {message_text: message_text, sender: context.user.username}}},
+    {new: true}
+  )
+  console.log(convo) 
+  return convo
+  }
+  throw new AuthenticationError('Please login or signup!')
+},
 
 // Friend enabling mutations
     createFriendRequest: async (parent, {username}, context) => {
