@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../Navbar2/NavBtn';
-import './Navbarstyle.css'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from './NavBtn';
+import './Navbarstyle.css';
 
 function Navbar() {
     // updates useState to what is assigned
@@ -35,7 +35,7 @@ function Navbar() {
           {/* link to search bar homepage */}
         <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
             <i class='fas fa-ticket-alt' />
-            MovieMate
+            MOVIEMATE
             <i class='fas fa-ticket-alt' />
         </Link>
         <div className='menu-icon' onClick={handleClick}>
@@ -68,25 +68,25 @@ function Navbar() {
                 to='/Reviews'
                 className='nav-links'
                 onClick={closeMobileMenu}>
-                Reviews
+                My Reviews
             </Link>
             </li>
 
             <li>
             <Link
-                to='/Friend-Requests'
+                to='/Friends'
                 className='nav-links'
                 onClick={closeMobileMenu}>
-                Friend Requests
+                Friends
             </Link>
             </li>
 
             <li>
             <Link
-                to='/Watch-party-invites'
+                to='/Watch-party'
                 className='nav-links'
                 onClick={closeMobileMenu}>
-                Watch Party Invites
+                Watch Party
             </Link>
             </li>
 

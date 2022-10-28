@@ -2,22 +2,24 @@
 import React from 'react';
 
 // Import Components
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+// import Navbar from './components/Navbar';
+import Navbar2 from './components/Navbar2/Navbar';
+// import Footer from './components/Footer';
+import Footer2 from './components/Footer2/Footer2'
 import Profile from './pages/Profile';
 import SignUpForm from './pages/SignUp';
 import LoginForm from './pages/LoginForm';
 
 
 // Import Pages
-// import Main from './pages/Main'; //needs mp4, and app.css data
+import Main from './pages/Main'; //needs mp4, and app.css data
 // import FriendList from './pages/Friendlist'
-import Homepage from './pages/Homepage';
+// import Homepage from './pages/Homepage';
 // import PartyInvites from './pages/PartyInvites'
 import Review from './pages/Review';
 // import Wishlist from './pages/Wishlist'
 import MovieData from './pages/MovieData';
-import MovieSearch from './pages/MovieSearch';
+// import MovieSearch from './pages/MovieSearch';
 
 // import Test from './pages/test'
 
@@ -57,9 +59,9 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <>
-          <Navbar />
+          <Navbar2 />
           <Routes>
-            <Route path='/' element={<MovieSearch />}/>
+            <Route path='/' element={<Main />}/>
             <Route 
               path='/sign-up' 
               element={<SignUpForm />}
@@ -85,7 +87,7 @@ function App() {
               element={<Navigate to="/" />}
             />
           </Routes>
-          <Footer />
+          <Footer2 />
         </>
       </Router>
     </ApolloProvider>
