@@ -9,10 +9,13 @@ function SearchBar() {
   const [searchedMovies, setSearchedMovies] = useState([]);
   // Set state for search history
   const [searchHistory, setSearchHistory] = useState([]);
+  // Set a key int for the history objects
+  let searchInt = 0;
 
   // When you load the page for the first time, grab the search history!
   useEffect(() => {
-    console.log(getHistory())
+    // console.log(getHistory()) // Working
+    setSearchHistory(getHistory());
   }, [])
 
   const handleFormUpdate = (event) => {
@@ -21,29 +24,61 @@ function SearchBar() {
   };
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
+      console.log(event)
+      console.log(event.target.text)
+      event.preventDefault();
 
     if (!searchInput) {
+      console.log("No Search Input");
       return false;
     }
 
     console.log(searchInput); // Working
 
     try {
+      console.log('Pulling Movie Data:')
       const movies = await searchOMDB(searchInput);
       console.log("Movies: ", movies);
       if (movies === undefined) {
         return;
       };
       setSearchedMovies(movies);
+      setSearchHistory(getHistory());
+
     } catch (err) {
       console.log(err);
     }
   };
+
+  const handleHistoryButton = async (event) => {
+    console.log(event);
+    const searchInput = event.target.text;
+    console.log(searchInput);
+    setSearchInput(searchInput);
+    
+    // await handleFormSubmit(event);
+
+    // Calling FormSubmit doesn't work properly. Hard coding for now.
+    try {
+      console.log('Pulling Movie Data:')
+      const movies = await searchOMDB(searchInput);
+      console.log("Movies: ", movies);
+      if (movies === undefined) {
+        return;
+      };
+      setSearchedMovies(movies);
+      setSearchHistory(getHistory());
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const handleRemoveHistory = () => {
     removeHistory();
     setSearchHistory([]);
-  }
+    setSearchInput('');
+  };
 
   // Create local storage for movie history
   // Use context to set a state object of local storage items
@@ -105,16 +140,33 @@ function SearchBar() {
                           role="menu"
                         >
                           <div className="dropdown-content">
+                            {/* eslint-disable */}
+                            { searchHistory.length 
+                            ? (
+                                searchHistory.map((search) => {
+                                  searchInt++
+                                  return (
+                                    <a 
+                                      key={searchInt}
+                                      className="dropdown-item is-capitalized"
+                                      onClick={handleHistoryButton}
+                                    >{search}</a>
+                                  )
+                                  
+                                })
+                              )
+                            : <></>}
+                            
                             <hr className="dropdown-divider" />
                             {/* Make the clear history button here */}
                             {/* NOTE: You can't just clear local memory! It will delete the token! */}
-                            {/* eslint-disable-next-line */}
                             <a
                               onClick={handleRemoveHistory}
                               className="dropdown-item"
                             >
                               Clear History
                             </a>
+                            {/* eslint-enable */}
                           </div>
                         </div>
                       </div>
