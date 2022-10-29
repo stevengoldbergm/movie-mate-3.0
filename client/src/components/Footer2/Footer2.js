@@ -5,58 +5,58 @@ import './Footer.css'
 
 function Footer2() {
   return (
-    <footer className='footer-container'>
-      <section class='social-media'>
-        <div class='social-media-wrap is-flex is-flex-direction-column'>
-          {/* <div class='footer-logo'>
+    <footer className='footer-container pop'>
+      <section className='social-media'>
+        <div className='social-media-wrap is-flex is-flex-direction-column'>
+          {/* <div className='footer-logo'>
             <Link to='/' className='social-logo'>
-              <i class='fas fa-ticket-alt' />
+              <i className='fas fa-ticket-alt' />
               MOVIEMATE
-              <i class='fas fa-ticket-alt' />
+              <i className='fas fa-ticket-alt' />
             </Link>
           </div> */}
-          <small class='website-rights'>MovieMate © 2022</small>
-          <div class='social-icons mb-5'>
+          <small className='website-rights'>MovieMate © 2022</small>
+          <div className='social-icons mb-5'>
             <a
-              class='social-icon-link Github'
+              className='social-icon-link Github'
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/"
             >
-              <i class='fab fa-github' />
+              <i className='fab fa-github' />
             </a>
             <a
-              class='social-icon-link facebook'
+              className='social-icon-link facebook'
               target="_blank"
               rel="noopener noreferrer"
               href="https://facebook.com/"
             >
-              <i class='fab fa-facebook-f' />
+              <i className='fab fa-facebook-f' />
             </a>
             <a
-              class='social-icon-link instagram'
+              className='social-icon-link instagram'
               target="_blank"
               rel="noopener noreferrer"
               href="https://instagram.com/"
             >
-              <i class='fab fa-instagram' />
+              <i className='fab fa-instagram' />
             </a>
             <a
-              class='social-icon-link twitter'
+              className='social-icon-link twitter'
               target="_blank"
               rel="noopener noreferrer"
               href="https://twitter.com/"
             >
-              <i class='fab fa-twitter' />
+              <i className='fab fa-twitter' />
             </a>
             <a
-              class='social-icon-link linkedin'
+              className='social-icon-link linkedin'
               target="_blank"
               rel="noopener noreferrer"
               href="https://linkedin.com/"
               
             >
-              <i class='fab fa-linkedin' />
+              <i className='fab fa-linkedin' />
             </a>
           </div>
         </div>
