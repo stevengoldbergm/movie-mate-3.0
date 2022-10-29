@@ -53,7 +53,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    movies(_id: String): [Movie]
+    movies(imdb_id: String): [Movie]
     users(_id: String): [User]
     reviews(_id: String): [Review]
     conversations(_id: String): [Conversation]

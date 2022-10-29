@@ -5,8 +5,8 @@ const {signToken} = require('../utils/auth')
 const resolvers = {
   Query: {
    
-  movies: async (parent, {_id}) => {
-    const movie = _id ? {_id}: {};
+  movies: async (parent, {imdb_id}) => {
+    const movie = imdb_id ? {imdb_id}: {};
     return Movie.find(movie)
    },
 

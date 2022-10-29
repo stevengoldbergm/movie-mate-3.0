@@ -1,21 +1,13 @@
 import { gql } from '@apollo/client';
 
+// Query all movies or a single movie by imdb id - Pass in imdb id to get single pass in nothing to get all movies
 export const QUERY_MOVIES = gql`
-  query movies {
-    movies {
-      _id
-      movie_name
-    }
+  query Movies($imdbId: String) {
+  movies(imdb_id: $imdbId) {
+    _id
+    movie_name
   }
-`;
-
-export const QUERY_MOVIE = gql`
-  query movie($_id: String) {
-    movie(_id: $_id) {
-      _id
-      movie_name
-    }
-  }
+}
 `;
 
 export const QUERY_REVIEWS = gql`
