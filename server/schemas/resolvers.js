@@ -10,13 +10,13 @@ const resolvers = {
     return Movie.find(movie)
    },
 
-  users: async (parent, {_id}) => {
-    const user = _id ? {_id}: {};
+  users: async (parent, {username}) => {
+    const user = username ? {username}: {};
     return User.find(user)
    },
 
-  reviews: async (parent, {_id}) => {
-    const review = _id ? {_id}: {};
+  reviews: async (parent, {movie_id}) => {
+    const review = movie_id ? {movie_id}: {};
     return Review.find(review)
    },
 

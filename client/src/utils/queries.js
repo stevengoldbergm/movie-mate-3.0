@@ -10,47 +10,42 @@ export const QUERY_MOVIES = gql`
 }
 `;
 
+// Query all reviews or all reviews for a single movie by imdb id - Pass in imdb id to get for a single movie pass in nothing to get all reviews
 export const QUERY_REVIEWS = gql`
-  query reviews {
-    reviews {
-      _id
-      user_id
-      movie_id
-      review_score
-      review_text
-    }
+  query Reviews($movieId: String) {
+  reviews(movie_id: $movieId) {
+    review_score
+    review_text
+    user_id
   }
+}
 `;
 
-export const QUERY_REVIEW = gql`
-  query review($_id: String) {
-    review(_id: $_id) {
-      user_id
-      movie_id
-      review_score
-      review_text
-    }
-  }
-`;
-
+// Query all users or a single user by passing in username
 export const QUERY_USERS = gql`
-  query users {
-    users {
-      _id
+query Users($username: String) {
+  users(username: $username) {
     username
-    password
     email
-    }
   }
+}
 `;
 
-export const QUERY_USER = gql`
-  query user($_id: String) {
-    user(_id: $_id) {
-      _id
+// Query the logged in user based on context 
+export const ME = gql`
+  query Me {
+  me {
     username
-    password
     email
-    }
   }
+}
 `;
+
+// Quety all friend requests in which the recipient is the logged in user based on context
+export const MY_FRIEND_REQUESTS = gql`
+query MyFriendRequests {
+  myFriendRequests {
+    sender
+  }
+}
+`

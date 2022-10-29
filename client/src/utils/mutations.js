@@ -88,7 +88,7 @@ mutation SendMessage($conversationId: String!, $messageText: String!) {
 `;
 
 // Review Mutations
-// Called from movie details page on review button - Pass in movie ID from movie details state variable and review text from input field
+// Called from movie details page on review button - Pass in movie ID from movie details state variable(IMDB ID) and review text from input field
 export const CREATE_REVIEW = gql`
  mutation CreateReview($movieId: String!, $reviewScore: String!, $reviewText: String!) {
   createReview(movie_id: $movieId, review_score: $reviewScore, review_text: $reviewText) {
