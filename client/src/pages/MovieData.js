@@ -6,34 +6,34 @@ import Auth from '../utils/auth'
 // const testMovie = "tt0103064";
 
 const MovieData = () => {
+  // Get out of here if you aren't logged in!
   const navigate = useNavigate()
   console.log("Logged in? ", Auth.loggedIn())
     if (!Auth.loggedIn()) {
       navigate("/login");
     };
   
+  // Set the movie data state
   const [movieStuff, setMovieStuff] = useState({});
 
-  useEffect(() => {    
-    if (!Auth.loggedIn()) {
-      navigate("/login");
-    };
-    // Pull imdbId from URL
-    const url = window.location.pathname
-    const imdbId = url.substring(url.lastIndexOf('/') + 1);
+  // Pull imdbId from URL
+  const url = window.location.pathname
+  const imdbId = url.substring(url.lastIndexOf('/') + 1);
 
-    // Search imdbId
-    const handleSearch = async () => {
-      try {
-        const data = await searchMovie(imdbId);
-        setMovieStuff(data);
-        return;
-      } catch (err) {
-        console.log("error:", err);
-      }
-    };
+  // Search OMDb/YouTube with imdbId ONCE (It's running twice. . .)
+  useEffect(() => {
     handleSearch();
-  }, []);
+  }, [])
+
+  const handleSearch = async () => {
+    try {
+      const data = await searchMovie(imdbId);
+      setMovieStuff(data);
+      return;
+    } catch (err) {
+      console.log("error:", err);
+    }
+  }
 
   console.log("MovieStuff: ", movieStuff);
   const { movieData, rtScore, ytEmbed } = movieStuff;
@@ -45,9 +45,9 @@ const MovieData = () => {
 
   return (
     <>
-      <main className=" is-fullwidth m-0 p-0 py-6 has-background-info">
-        <section id="main-data" className="columns">
-          <div className="column is-1 is-hidden-mobile has-background-info" />
+      <main className=" is-fullwidth m-0 p-0 py-6 has-background-info pop">
+        <section id="main-data" className="columns pop">
+          <div className="column is-1 is-hidden-mobile has-background-info pop" />
 
           <div className="column is-multiline is-10 p-5 m-0 is-justify-content-space-around is-justify-content-center-mobile has-background-white is-align-items-center is-roundeds">
             <div className="columns is-12 m-0 is-justify-content-space-around is-justify-content-center-mobile has-background-white is-align-items-center reverse-columns-mobile">
@@ -204,7 +204,7 @@ const MovieData = () => {
                 </div>
             </div>
           </div>
-          <div class="column is-1 is-hidden-mobile has-background-info" />
+          <div className="column is-1 is-hidden-mobile has-background-info" />
         </section>
       </main>
     </>
