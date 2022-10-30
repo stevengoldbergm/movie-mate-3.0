@@ -34,6 +34,11 @@ code {
   z-index: 9;
 }
 
+.movie-poster {
+  max-height: 210px;
+  max-width: 140px;
+}
+
 #root {
   display: flex;
   flex-direction: column;
