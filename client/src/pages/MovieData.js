@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { searchMovie } from "../utils/API";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Auth from '../utils/auth'
+import { Link } from "react-router-dom";
 
 // const testMovie = "tt0103064";
 
 const MovieData = () => {
+ 
   // Get out of here if you aren't logged in!
   const navigate = useNavigate()
   console.log("Logged in? ", Auth.loggedIn())
@@ -198,9 +200,14 @@ const MovieData = () => {
             <div className="container column is-12">
                 <hr />
                 <div className="is-flex is-align-items-center is-justify-content-center">
-                  <button className="button is-info" id="review">
-                    View Movie Mate Reviews
-                  </button>
+                  <Link 
+                    to={`/movie-data/${imdbId}/reviews`} 
+                    state={[{searchResults: movieData}, {imdbId}]}
+                  >
+                    <button className="button is-info" id="review">
+                      View Movie Mate Reviews
+                    </button>
+                  </Link>
                 </div>
             </div>
           </div>
