@@ -1,10 +1,10 @@
 // Import React
-import React from 'react';
+import React, { useState } from 'react';
 
 // Import Components
 // import Navbar from './components/Navbar';
 import Navbar2 from './components/Navbar2/Navbar';
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 import Footer2 from './components/Footer2/Footer2'
 import Profile from './pages/Profile';
 import SignUpForm from './pages/SignUp';
@@ -19,7 +19,7 @@ import Main from './pages/Main'; //needs mp4, and app.css data
 import Review from './pages/Review';
 // import Wishlist from './pages/Wishlist'
 import MovieData from './pages/MovieData';
-// import MovieSearch from './pages/MovieSearch';
+import MovieSearch from './pages/MovieSearch';
 
 // import Test from './pages/test'
 
@@ -55,38 +55,49 @@ const client = new ApolloClient({
   
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  // Make the navbar hold onto the state
+
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <>
           <Navbar2 />
-          <Routes>
-            <Route path='/' element={<Main />}/>
-            <Route 
-              path='/sign-up' 
-              element={<SignUpForm />}
-            />
-            <Route 
-              path='/profile' 
-              element={<Profile />}
-            />
-            <Route 
-              path='/movie-details/:imdbId' 
-              element={<MovieData />}
-            />
-            <Route 
-              path='/login' 
-              element={<LoginForm />}
-            />
-            <Route 
-              path='/movie-data/reviews/:imdbId' 
-              element={<Review />}
-            />
-            <Route 
-              path='*' 
-              element={<Navigate to="/" />}
-            />
-          </Routes>
+            <Routes>
+              <Route 
+                path='/' 
+                element={<Main />}/
+              >
+              <Route 
+                path='/movie-search/' 
+                element={<MovieSearch />}
+              />
+              <Route 
+                path='/sign-up' 
+                element={<SignUpForm />}
+              />
+              <Route 
+                path='/profile' 
+                element={<Profile />}
+              />
+              <Route 
+                path='/movie-details/:imdbId' 
+                element={<MovieData />}
+              />
+              <Route 
+                path='/login' 
+                element={<LoginForm />}
+              />
+              <Route 
+                path='/movie-details/reviews/:imdbId' 
+                element={<Review />}
+              />
+              <Route 
+                path='*' 
+                element={<Navigate to="/" />}
+              />
+            </Routes>
           <Footer2 />
         </>
       </Router>

@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { searchMovie } from "../utils/API";
-
-
+import { useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth'
 
 // const testMovie = "tt0103064";
 
 const MovieData = () => {
+  // Get out of here if you aren't logged in!
+  const navigate = useNavigate()
+  console.log("Logged in? ", Auth.loggedIn())
+    if (!Auth.loggedIn()) {
+      navigate("/login");
+    };
+  
+  // Set the movie data state
   const [movieStuff, setMovieStuff] = useState({});
 
-  useEffect(() => {
-    // Pull imdbId from URL
-    const url = window.location.pathname
-    const imdbId = url.substring(url.lastIndexOf('/') + 1);
+  // Pull imdbId from URL
+  const url = window.location.pathname
+  const imdbId = url.substring(url.lastIndexOf('/') + 1);
 
-    // Search imdbId
-    const handleSearch = async () => {
-      try {
-        const data = await searchMovie(imdbId);
-        setMovieStuff(data);
-        return;
-      } catch (err) {
-        console.log("error:", err);
-      }
-    };
+  // Search OMDb/YouTube with imdbId ONCE (It's running twice. . .)
+  useEffect(() => {
     handleSearch();
-  }, []);
+  }, [])
+
+  const handleSearch = async () => {
+    try {
+      const data = await searchMovie(imdbId);
+      setMovieStuff(data);
+      return;
+    } catch (err) {
+      console.log("error:", err);
+    }
+  }
 
   console.log("MovieStuff: ", movieStuff);
   const { movieData, rtScore, ytEmbed } = movieStuff;
@@ -36,9 +45,9 @@ const MovieData = () => {
 
   return (
     <>
-      <main className=" is-fullwidth m-0 p-0 py-6 has-background-info">
-        <section id="main-data" className="columns">
-          <div className="column is-1 is-hidden-mobile has-background-info" />
+      <main className=" is-fullwidth m-0 p-0 py-6 has-background-info pop">
+        <section id="main-data" className="columns pop">
+          <div className="column is-1 is-hidden-mobile has-background-info pop" />
 
           <div className="column is-multiline is-10 p-5 m-0 is-justify-content-space-around is-justify-content-center-mobile has-background-white is-align-items-center is-roundeds">
             <div className="columns is-12 m-0 is-justify-content-space-around is-justify-content-center-mobile has-background-white is-align-items-center reverse-columns-mobile">
@@ -120,18 +129,21 @@ const MovieData = () => {
                   </div>
                 )}
                 <h1 className="column is-fullwidth has-background-info has-text-white is-size-5 p-0 pl-3 is-roundeds">
-                  Details
+                  Reviews
                 </h1>
                 {movieData && (
                   <div
-                    id="details"
+                    id="reviews"
                     className="column is-justify-content-space-around is-flex is-flex-direction-column"
                   >
                     <p className="is-size-6">
-                      Rated: {movieData.Rated}{" "}
+                      IMDB: {movieData.imdbRating}
                     </p>
                     <p className="is-size-6">
-                      Release Date: {movieData.Released}
+                      Rotten Tomatoes: {rtScore}
+                    </p>
+                    <p className="is-size-6">
+                      Metacritic: {movieData.Metascore}
                     </p>
                   </div>
                 )}
@@ -166,21 +178,18 @@ const MovieData = () => {
                   </div>
                 )}
                 <h1 className="column is-fullwidth has-background-info has-text-white is-size-5 p-0 pl-3 is-roundeds">
-                  Reviews
+                  Details
                 </h1>
                 {movieData && (
                   <div
-                    id="reviews"
+                    id="details"
                     className="column is-justify-content-space-around is-flex is-flex-direction-column"
                   >
                     <p className="is-size-6">
-                      IMDB: {movieData.imdbRating}
+                      Rated: {movieData.Rated}{" "}
                     </p>
                     <p className="is-size-6">
-                      Rotten Tomatoes: {rtScore}
-                    </p>
-                    <p className="is-size-6">
-                      Metacritic: {movieData.Metascore}
+                      Release Date: {movieData.Released}
                     </p>
                   </div>
                 )}
@@ -195,7 +204,7 @@ const MovieData = () => {
                 </div>
             </div>
           </div>
-          <div class="column is-1 is-hidden-mobile has-background-info" />
+          <div className="column is-1 is-hidden-mobile has-background-info" />
         </section>
       </main>
     </>
