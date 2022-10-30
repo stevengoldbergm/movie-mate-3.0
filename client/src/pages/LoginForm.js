@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations' // Need LOGIN_USER mutation
 import { validateEmail } from '../utils/helpers';
