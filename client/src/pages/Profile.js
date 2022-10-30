@@ -3,6 +3,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Friends from './Friends'
 import WatchParties from './WatchParties'
 import UserReviews from './UserReviews';
+import Chat from '../components/Chat';
 
 // Add JSX to Profile
 
@@ -18,7 +19,7 @@ const Profile = () => {
     if (currentPage === 'MyActivity') {
       return <Dashboard />
     } else if (currentPage === 'Friends') {
-      return <Friends />
+      return <Chat />
     } else if (currentPage === 'MyReviews') {
       return <UserReviews />
     } else {
