@@ -13,15 +13,12 @@ import LoginForm from './pages/LoginForm';
 
 // Import Pages
 import Main from './pages/Main'; //needs mp4, and app.css data
-// import FriendList from './pages/Friendlist'
-// import Homepage from './pages/Homepage';
-// import PartyInvites from './pages/PartyInvites'
-import Review from './pages/Review';
+
+import Reviews from './pages/Reviews';
 // import Wishlist from './pages/Wishlist'
 import MovieData from './pages/MovieData';
 import MovieSearch from './pages/MovieSearch';
 
-// import Test from './pages/test'
 
 import {
   ApolloClient,
@@ -85,13 +82,18 @@ function App() {
                 path='/movie-details/:imdbId' 
                 element={<MovieData />}
               />
+              <Route
+                path='/movie-data/:imdbId/reviews'
+                element={<Reviews />}
+              >
+              </Route>
               <Route 
                 path='/login' 
                 element={<LoginForm />}
               />
               <Route 
                 path='/movie-details/reviews/:imdbId' 
-                element={<Review />}
+                element={<Reviews />}
               />
               <Route 
                 path='*' 
