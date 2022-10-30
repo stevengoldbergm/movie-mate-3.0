@@ -1,0 +1,74 @@
+.chat-container {
+  position: fixed;
+  overflow: hidden;
+  bottom: 20vh;
+  right: 5vw;
+  width: 300px;
+  max-width: 50vw;
+  height: 55vh;
+  max-height: 55vh;
+  /* border: 1px solid black; */
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.244);
+  border-radius: 5px;
+  z-index: 999;
+}
+
+.chat-footer-container {
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto;
+}
+
+.chat-bubble-left {
+  left: 0;
+  width: 55%;
+  border-radius: 10px;
+  inline-size: 50%;
+  overflow-wrap: break-word;
+}
+
+.chat-bubble-right {
+  right: 0;
+  width: 55%;
+  border-radius: 10px;
+  inline-size: 50%;
+  overflow-wrap: break-word;
+}
+
+.scrollable {
+  max-height: 300px;
+  border-radius: 2.5px;
+  overflow-y: scroll;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+/* Scrollbar Customization */
+
+/* width */
+::-webkit-scrollbar {
+  width: 7.5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(92, 153, 197); 
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(181, 207, 255); 
+}
