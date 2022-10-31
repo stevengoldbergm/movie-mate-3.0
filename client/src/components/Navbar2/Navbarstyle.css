@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    background: #242424;
+    background: #EAEAEA;
     height: 15vh;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@
 }
 
 .navbar-logo {
-    color: #209cce;
+    color: #8E793E;
     justify-self: start;
     /* margin-left: 20px; */
     cursor: pointer;
@@ -49,7 +49,7 @@
 
 /* color of the links when they are on bigger screens/when you arent hovering over it */
 .nav-links {
-    color: #209cee;
+    color: #8E793E;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -59,13 +59,13 @@
 }
 
 .nav-links:hover {
-    border-bottom: 4px solid #209cee;
+    border-bottom: 4px solid #8E793E;
     transition: all 0.2s ease-out;
 }
 
 /* when menu is not clicked */
 .fa-bars {
-    color: #209cee;
+    color: #8E793E;
 }
 
 .nav-links-mobile {
@@ -96,7 +96,7 @@
 
     /* when the navbar shows up on smaller screens */
     .nav-menu.active {
-    background: #242424;
+    background: #EAEAEA;
     top: 15vh;
     left: 0;
     opacity: 1;
@@ -113,8 +113,8 @@
 
     /* what the links look like when you hover over them on regular screens*/
     .nav-links:hover {
-    background-color: #209cee;
-    color: #fff;
+    background-color: #EAEAEA;
+    color: #8E793E;
     border-radius: 2;
     }
 
@@ -137,7 +137,7 @@
 
     /* when menu is clicked */
     .fa-times {
-    color: #209cee;
+    color: #8E793E;
     font-size: 2rem;
     }
 
@@ -151,16 +151,16 @@
     font-size: 1.5rem;
     background-color: transparent;
     /* button colors and outlines */
-    color: #209cee;
+    color: #8E793E;
     padding: 14px 20px;
-    border: 1px solid #209cee;
+    border: 1px solid #8E793E;
     transition: all 0.3s ease-out;
     }
 
     /* color of the hover and when color the links turn when they are hovered over on smaller screens */
     .nav-links-mobile:hover {
-    background: #209cee;
-    color: #fff;
+    background: #8E793E;
+    color: #EAEAEA;
     transition: 250ms;
     }
 }

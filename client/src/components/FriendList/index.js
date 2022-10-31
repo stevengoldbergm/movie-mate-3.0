@@ -99,7 +99,7 @@ function FriendList() {
             <p className="subtitle">Do you want to accept?</p>
             <div className='btn is-flex is-flex-direction-row is-justify-content-space-between'>
                 <Button className='btn' buttonStyle='btn--checkmark' buttonSize='btn--yesfriends'>
-                <i className="fa-solid fa-check"/>
+                <i className=" fas fa-solid fa-check"/>
                 </Button>
                 <Button className='btn' buttonStyle='btn--xmark' buttonSize='btn--nofriends'>
                 ❌
