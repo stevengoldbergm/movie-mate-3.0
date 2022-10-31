@@ -31,3 +31,25 @@ function FriendList() {
             </ul>
         </aside>
             </div>
+
+            <div className="column is-9">
+    <section className="hero">
+      <div className="hero-body">
+        <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
+          <div className="container">
+            <h1 id="greeting" className="title">
+              Find and add friends here!
+            </h1>
+          </div>
+        </div>
+        </div>
+        {/* form template */}
+        <div className='main-header'>
+            <h2>Search for Friends</h2>
+            <form>
+                <label>Search for username:</label>
+                <input type='text' required=''></input>
+            </form>
+            <button>Search</button>
+            <aside></aside>
+        </div>
