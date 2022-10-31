@@ -1,6 +1,7 @@
 .navbar {
+    display: flex;
     background: #242424;
-    height: 150px;
+    height: 15vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,16 +13,16 @@
 
 .navbar-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     height: 80px;
-    max-width: 1500px;
+    width: 100vw;
 }
 
 .navbar-logo {
     color: #209cce;
     justify-self: start;
-    margin-left: 20px;
+    /* margin-left: 20px; */
     cursor: pointer;
     text-decoration: none;
     font-size: 2rem;
@@ -33,7 +34,7 @@
 
 .nav-menu {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(6, auto);
     grid-gap: 10px;
     list-style: none;
     text-align: center;
@@ -62,6 +63,7 @@
     transition: all 0.2s ease-out;
 }
 
+/* when menu is not clicked */
 .fa-bars {
     color: #209cee;
 }
@@ -82,8 +84,9 @@
     .nav-menu {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     width: 100%;
-    height: 90vh;
+    height: 85vh;
     position: absolute;
     top: 80px;
     left: -100%;
@@ -94,6 +97,7 @@
     /* when the navbar shows up on smaller screens */
     .nav-menu.active {
     background: #242424;
+    top: 15vh;
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;
@@ -116,21 +120,22 @@
 
     .navbar-logo {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0.9vh;
+    left: -5vw;
     transform: translate(25%, 50%);
     }
 
     .menu-icon {
     display: block;
     position: absolute;
-    top: 0;
+    top: 1.2vh;
     right: 0;
     transform: translate(-100%, 60%);
     font-size: 1.8rem;
     cursor: pointer;
     }
 
+    /* when menu is clicked */
     .fa-times {
     color: #209cee;
     font-size: 2rem;

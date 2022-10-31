@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { searchOMDB } from "../utils/API";
+import { searchOMDB, getHistory, removeHistory } from "../utils/API";
 
 function SearchBar() {
   // Create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
   // Set state object of pulled data
   const [searchedMovies, setSearchedMovies] = useState([]);
+  // Set state for search history
+  const [searchHistory, setSearchHistory] = useState([]);
+  // Set a key int for the history objects
+  let searchInt = 0;
+
+  // When you load the page for the first time, grab the search history!
+  useEffect(() => {
+    // console.log(getHistory()) // Working
+    setSearchHistory(getHistory());
+  }, [])
 
   const handleFormUpdate = (event) => {
     setSearchInput(event.target.value);
@@ -14,21 +24,60 @@ function SearchBar() {
   };
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
+      console.log(event)
+      console.log(event.target.text)
+      event.preventDefault();
 
     if (!searchInput) {
+      console.log("No Search Input");
       return false;
     }
 
     console.log(searchInput); // Working
 
     try {
+      console.log('Pulling Movie Data:')
       const movies = await searchOMDB(searchInput);
       console.log("Movies: ", movies);
+      if (movies === undefined) {
+        return;
+      };
       setSearchedMovies(movies);
+      setSearchHistory(getHistory());
+
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleHistoryButton = async (event) => {
+    console.log(event);
+    const searchInput = event.target.text;
+    console.log(searchInput);
+    setSearchInput(searchInput);
+    
+    // await handleFormSubmit(event);
+
+    // Calling FormSubmit doesn't work properly. Hard coding for now.
+    try {
+      console.log('Pulling Movie Data:')
+      const movies = await searchOMDB(searchInput);
+      console.log("Movies: ", movies);
+      if (movies === undefined) {
+        return;
+      };
+      setSearchedMovies(movies);
+      setSearchHistory(getHistory());
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleRemoveHistory = () => {
+    removeHistory();
+    setSearchHistory([]);
+    setSearchInput('');
   };
 
   // Create local storage for movie history
@@ -36,16 +85,8 @@ function SearchBar() {
   // Use local storage to generate search history buttons
   // When you click search history buttons, they search for the movie
 
-  const searchMovies = () => {
-    return;
-  };
-
-  const clearHistory = () => {
-    return;
-  };
-
   return (
-    <>
+    <div className="base-site">
       <header>
         <section className="background has-background-info hero has-text-centered">
           <div className="hero-body">
@@ -83,7 +124,6 @@ function SearchBar() {
                             className="has-background-info-light has-text-black is-normal p-2 ml-1 is-size-6 is-roundeds"
                             aria-haspopup="true"
                             aria-controls="dropdown-menu3"
-                            disabled="true"
                           >
                             <span>Search History</span>
                             <span className="icon is-small">
@@ -100,16 +140,33 @@ function SearchBar() {
                           role="menu"
                         >
                           <div className="dropdown-content">
+                            {/* eslint-disable */}
+                            { searchHistory.length 
+                            ? (
+                                searchHistory.map((search) => {
+                                  searchInt++
+                                  return (
+                                    <a 
+                                      key={searchInt}
+                                      className="dropdown-item is-capitalized"
+                                      onClick={handleHistoryButton}
+                                    >{search}</a>
+                                  )
+                                  
+                                })
+                              )
+                            : <></>}
+                            
                             <hr className="dropdown-divider" />
                             {/* Make the clear history button here */}
                             {/* NOTE: You can't just clear local memory! It will delete the token! */}
-                            {/* eslint-disable-next-line */}
                             <a
-                              onClick="clearLocalStorage()"
+                              onClick={handleRemoveHistory}
                               className="dropdown-item"
                             >
                               Clear History
                             </a>
+                            {/* eslint-enable */}
                           </div>
                         </div>
                       </div>
@@ -124,7 +181,8 @@ function SearchBar() {
       </header>
 
       {/* Start table object and map out search results */}
-      { searchedMovies.length && (
+      { searchedMovies.length 
+      ? (
         <main className="is-fullheight has-background-white">
           <div id="search-results" className="is-6 p-4">
             <div className="card events-card">
@@ -160,14 +218,16 @@ function SearchBar() {
                       )
                     })}
                     
+                    
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </main>
-      )}
-    </>
+      )
+      :<></>}
+    </div>
   );
 }
 

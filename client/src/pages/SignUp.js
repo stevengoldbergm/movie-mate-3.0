@@ -5,6 +5,7 @@ import Auth from '../utils/auth'
 
 // Call in e-mail helper
 import { validateEmail } from '../utils/helpers';
+import { Link } from 'react-router-dom';
 
 
 
@@ -175,7 +176,10 @@ const SignUpForm = () => {
                     </button>
                   </div>
                   <div className="has-text-centered">
-                    <p className="is-size-7"> Already have an account? <a href="/login" className="has-text-info">Login!</a>
+                    <p className="is-size-7"> Already have an account? 
+                      <Link to="/login" className="has-text-info">
+                        {` Login!`}
+                      </Link>
                     </p>
                   </div>
                 </form>

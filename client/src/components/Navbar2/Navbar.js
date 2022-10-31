@@ -1,113 +1,154 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../Navbar2/NavBtn';
-import './Navbarstyle.css'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "./NavBtn";
+import "./Navbarstyle.css";
+import Auth from "../../utils/auth";
 
 function Navbar() {
-    // updates useState to what is assigned
-    const [click, setClick] = useState(false);
-    // basically it reverses the above funtion (whenever its false its true vise versa)
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
+  // updates useState to what is assigned
+  const [isActive, setIsActive] = useState("");
 
-    // updates useState
-    const [button, setButton] = useState(true);
-    // makes button responsive and only shows up after a certain screen size (less than or equal to 960px)
-    const showButton = () => {
-        if(window.innerWidth <= 960) {
-            setButton(false)
-        } else {
-            setButton(true)
-        }
-    };
+  // basically it reverses the above funtion (whenever its false its true vise versa)
+  const handleNavBurger = () => {
+    if (!isActive) {
+      console.log("active");
+      setIsActive("is-active");
+    } else {
+      console.log("inactive");
+      setIsActive("");
+    }
+  };
 
-    // renders logout button once and doesnt show it again
-    useEffect(() => {
-        showButton()
-    }, []);
+  // Call this if you need to explicitly close the menu
+  const closeMobileMenu = () => setIsActive("");
 
-    window.addEventListener('resize', showButton);
+  // updates useState
+  const [button, setButton] = useState(true);
+  // // makes button responsive and only shows up after a certain screen size (less than or equal to 960px)
+  // const showButton = () => {
+  //     if(window.innerWidth <= 960) {
+  //         setButton(false)
+  //     } else {
+  //         setButton(true)
+  //     }
+  // };
 
-    return (
+  // // renders logout button once and doesnt show it again
+  // useEffect(() => {
+  //     showButton()
+  // }, []);
+
+  // window.addEventListener('resize', showButton);
+
+  return (
     <>
-        <nav className='navbar'>
-        <div className='navbar-container'>
+      <nav className="navbar m-0 p-0">
+        <div className="navbar-container ">
           {/* link to search bar homepage */}
-        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            <i class='fas fa-ticket-alt' />
-            MovieMate
-            <i class='fas fa-ticket-alt' />
-        </Link>
-        <div className='menu-icon' onClick={handleClick}>
-            {/* when you click on the buger menu it shows the 'x' and when you click out of it, the 3 lines show up again */}
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-        </div>
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            <i className="fas fa-ticket-alt" />
+            MOVIEMATE
+            <i className="fas fa-ticket-alt" />
+          </Link>
+
+          <div className="menu-icon" onClick={handleNavBurger}>
+            {/* when you click on the burger menu it shows the 'x' and when you click out of it, the 3 lines show up again */}
+            <i className={isActive ? "fas fa-times" : "fas fa-bars"} />
+          </div>
           {/* when you click on the navbar it disappears */}
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          {Auth.loggedIn() ? (
+            <ul className={isActive ? "nav-menu active" : "nav-menu"}>
+              <li className="nav-item">
+                <Link
+                  to="/movie-search"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Search
+                </Link>
 
-            <li className='nav-item'>
                 {/* When any link is clicked it removes the navbar*/}
-            <Link to='/Movie-Search' className='nav-links' onClick={closeMobileMenu}>
-                Movie Search
-            </Link>
-            </li>
+              </li>
 
-            <li className='nav-item'>
+              <li className="nav-item">
                 {/* link to profile page */}
-            <Link
-                to='/Profile'
-                className='nav-links'
-                onClick={closeMobileMenu}>
-                Profile
-            </Link>
-            </li>
+                <Link
+                  to="/profile"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Profile
+                </Link>
+              </li>
+              
+              {/* link to review page */}
+              {/* <li className="nav-item">
+                <Link
+                  to="/my-reviews"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Reviews
+                </Link>
+              </li>
 
-            <li className='nav-item'>
-                {/* link to review page */}
-            <Link
-                to='/Reviews'
-                className='nav-links'
-                onClick={closeMobileMenu}>
-                Reviews
-            </Link>
-            </li>
+              <li>
+                <Link
+                  to="/friends"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Friends
+                </Link>
+              </li>
 
-            <li>
-            <Link
-                to='/Friend-Requests'
-                className='nav-links'
-                onClick={closeMobileMenu}>
-                Friend Requests
-            </Link>
-            </li>
+              <li>
+                <Link
+                  to="/watch-parties"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Parties
+                </Link>
+              </li> */}
 
-            <li>
-            <Link
-                to='/Watch-party-invites'
-                className='nav-links'
-                onClick={closeMobileMenu}>
-                Watch Party Invites
-            </Link>
-            </li>
-
-            <li>
-            <Link
-                to='/Logout'
-                className='nav-links-mobile'
-                onClick={closeMobileMenu}>
+              <li>
+                <Link to="/Logout" className="nav-links" onClick={Auth.logout}>
+                  Logout
+                </Link>
+              </li>
+              {/* log out button...unsure if we still need sign up and login button on navbar? */}
+            </ul>
+          ) : (
+            <ul className={isActive ? "nav-menu active" : "nav-menu"}>
+              <li>
+                <Link
+                  to="/Login"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/sign-up"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                
+                </Link>
+              </li>
+            </ul>
+          )}
+          {/* {button && 
+            <Button buttonStyle='btn--outline'>
                 Logout
-            </Link>
-            </li>
-            {/* log out button...unsure if we still need sign up and login button on navbar? */}
-        </ul>
-        {button && 
-        <Button buttonStyle='btn--outline'>
-            Logout
-        </Button>}
+            </Button>} */}
         </div>
-        </nav>
+      </nav>
     </>
-    )
+  );
 }
 
-export default Navbar
+export default Navbar;
