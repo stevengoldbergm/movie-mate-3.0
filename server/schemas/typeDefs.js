@@ -15,6 +15,8 @@ const typeDefs = gql`
     password: String!
     reviews: [Review]
     friends: [User]
+    friendRequests: [FriendRequest]
+    conversations: [Conversation]
   }
 
   type Review {
@@ -27,9 +29,14 @@ const typeDefs = gql`
 
   type Conversation {
     _id: ID!
-    conversation_name: String!
     participants: [User]
     messages: [Message]
+  }
+
+  type FriendRequest {
+    _id: ID!
+    sender: String!
+    recipient: String!
   }
 
   type Message {
@@ -46,11 +53,15 @@ const typeDefs = gql`
   }
 
   type Query {
-    movies(_id: String): [Movie]
-    users(_id: String): [User]
-    reviews(_id: String): [Review]
+    movies(imdb_id: String): [Movie]
+    users(username: String): [User]
+    reviews(movie_id: String): [Review]
     conversations(_id: String): [Conversation]
+    friendRequest(_id: String): [FriendRequest]
     me: User
+    myReviews: [Review]
+    myFriendRequests: [FriendRequest]
+    myConversations: [Conversation]
   }
 
   type Mutation {
@@ -72,15 +83,19 @@ const typeDefs = gql`
       movie_name: String!,
       imdb_id: String!): Movie
 
-    createConversation(conversation_name: String!) : Conversation
+    createConversation(
+      username: String) : Conversation
     
     sendMessage(
       conversation_id: String!,
-      message_text: String!): Message
+      message_text: String!): Conversation
+
+    createFriendRequest(
+      username: String!): FriendRequest
 
     addFriend(
-      _id: ID!
-      username: String!): User
+      username: String!,
+      requestId:String!): User
   }
 `;
 

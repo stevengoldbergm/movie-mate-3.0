@@ -2,15 +2,13 @@ const {Schema, model} = require('mongoose')
 const dateFormat = require("../utils/dateFormat")
 
 const conversationSchema = new Schema({
-  conversation_name: {
-    type: String,
-    require: true,
-  },
   participants: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    },
+    { username: {
+      type:String,
+      required: true,
+      unique: false,
+    }
+  }
   ],
   messages: [
     {
