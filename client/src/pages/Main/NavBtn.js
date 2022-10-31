@@ -2,7 +2,7 @@ import React from 'react'
 import './NavBtn.css';
 import { Link } from 'react-router-dom';
 
-const STYLES = ['btn--info', 'btn--outline', 'btn--outline-login'];
+const STYLES = ['btn--primary', 'btn--outline', 'btn--outline-login', 'btn--checkmark', 'btn--xmark'];
 const SIZES = ['btn--meduim', 'btn--large'];
 
 export const Button = ({children, type, onClick, buttonStyle, buttonSize}) => {
