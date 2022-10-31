@@ -25,3 +25,12 @@
     box-sizing: border-box;
     display: block;
   }
+
+  .main-header button {
+    background: #8E793E;
+    color: #fff;
+    border: 0;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
