@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+/* .base-site {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #3e8ed0!important;
+    z-index: -1;
+
+} */
+
 .has-border-bottom {
   border-bottom: 4px, solid, red;
 }
@@ -20,11 +29,22 @@ code {
   border-radius: 5px;
 }
 
+/* Increase z-index */
+.pop {
+  z-index: 9;
+}
+
+.movie-poster {
+  max-height: 210px;
+  max-width: 140px;
+}
+
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* background-color: #3e8ed0!important */
+  background-color: #3e8ed0;
+  z-index: -2;
 }
 
 @media(max-width: 767px) { /* <== You can change this break point as per your  needs */

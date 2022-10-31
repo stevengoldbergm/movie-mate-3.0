@@ -5,42 +5,63 @@ import './Footer.css'
 
 function Footer2() {
   return (
-    <div className='footer-container'>
-        <section class='social-media'>
-        <div class='social-media-wrap'>
-          <div class='footer-logo'>
-            {/* <Link to='/' className='social-logo'>
-              <i class='fas fa-ticket-alt' />
+    <footer className='footer-container pop'>
+      <section className='social-media'>
+        <div className='social-media-wrap is-flex is-flex-direction-column'>
+          {/* <div className='footer-logo'>
+            <Link to='/' className='social-logo'>
+              <i className='fas fa-ticket-alt' />
               MOVIEMATE
-              <i class='fas fa-ticket-alt' />
-            </Link> */}
-          </div>
-          <small class='website-rights'>MovieMate © 2022</small>
-          <div class='social-icons'>
-            <Link
-              class='social-icon-link Github'>
-              <i class='fab fa-github' />
+              <i className='fas fa-ticket-alt' />
             </Link>
-            <Link
-              class='social-icon-link facebook'>
-              <i class='fab fa-facebook-f' />
-            </Link>
-            <Link
-              class='social-icon-link instagram'>
-              <i class='fab fa-instagram' />
-            </Link>
-            <Link
-              class='social-icon-link twitter'>
-              <i class='fab fa-twitter' />
-            </Link>
-            <Link
-              class='social-icon-link twitter'>
-              <i class='fab fa-linkedin' />
-            </Link>
+          </div> */}
+          <small className='website-rights'>MovieMate © 2022</small>
+          <div className='social-icons mb-5'>
+            <a
+              className='social-icon-link Github'
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/"
+            >
+              <i className='fab fa-github' />
+            </a>
+            <a
+              className='social-icon-link facebook'
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://facebook.com/"
+            >
+              <i className='fab fa-facebook-f' />
+            </a>
+            <a
+              className='social-icon-link instagram'
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://instagram.com/"
+            >
+              <i className='fab fa-instagram' />
+            </a>
+            <a
+              className='social-icon-link twitter'
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://twitter.com/"
+            >
+              <i className='fab fa-twitter' />
+            </a>
+            <a
+              className='social-icon-link linkedin'
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://linkedin.com/"
+              
+            >
+              <i className='fab fa-linkedin' />
+            </a>
           </div>
         </div>
       </section>
-    </div>
+    </footer>
   )
 }
 

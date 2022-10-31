@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations' // Need LOGIN_USER mutation
 import { validateEmail } from '../utils/helpers';
 import Auth from '../utils/auth' 
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   console.log('login');
@@ -124,7 +125,10 @@ const LoginForm = () => {
                     </button>
                   </div>
                   <div className="has-text-centered">
-                    <p className="is-size-7"> Don't have an account? <a href="/sign-up" className="has-text-info">Sign Up Here!</a>
+                    <p className="is-size-7"> Don't have an account? 
+                      <Link to="/sign-up" className="has-text-info">
+                        {` Sign Up!`}
+                      </Link>
                     </p>
                   </div>
                 </form>

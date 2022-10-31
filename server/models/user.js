@@ -25,10 +25,25 @@ const userSchema = new Schema({
   ],
   friends: [
     {
+      username: {
+      type: String,
+      required: false,
+      unique: false,
+    }
+  }
+  ],
+  friendRequests: [
+    {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'FriendRequest'
     },
   ],
+  conversations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Conversation"
+    },
+  ]
 },{
   toJSON: {
     virtuals: true,
