@@ -3,7 +3,7 @@ import './NavBtn.css';
 import { Link } from 'react-router-dom';
 
 const STYLES = ['btn--primary', 'btn--outline', 'btn--outline-login', 'btn--checkmark', 'btn--xmark'];
-const SIZES = ['btn--meduim', 'btn--large'];
+const SIZES = ['btn--meduim', 'btn--large', 'btn--yesfriends', 'btn--nofriends'];
 
 export const Button = ({children, type, onClick, buttonStyle, buttonSize}) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0]
