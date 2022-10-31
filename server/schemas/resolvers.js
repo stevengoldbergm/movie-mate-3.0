@@ -131,7 +131,7 @@ createConversation: async (parent, {username}, context) => {
 
 sendMessage: async (parent, {conversation_id, message_text}, context) => {
   if (context.user) {
-  convo = await  Conversation.findOneAndUpdate(
+  let convo = await  Conversation.findOneAndUpdate(
     {_id: conversation_id},
     {$addToSet: {messages: {message_text: message_text, sender: context.user.username}}},
     {new: true}
@@ -170,6 +170,11 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
       ;
     }
     throw new AuthenticationError('Please login or signup!')
+  },
+  denyFriend: async (parent, {requestId}) => {
+    const request = await FriendRequest.findOneAndDelete(
+      {_id: requestId})
+      return request
   }
  }
 }
