@@ -16,3 +16,12 @@
     color: #8E793E;
     margin-bottom: 30px;
   }
+
+  .main-header input{
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: block;
+  }
