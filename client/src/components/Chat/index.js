@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const Chat = () => {
   // set state for active button
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     scrollToBottom();
@@ -24,11 +25,42 @@ const Chat = () => {
     return chatWindow;
   }
 
+  const handleInputChange = (event) => {
+    console.log(event.target.value)
+    const keystroke = event.target.value;
+    setMessage(keystroke);
+  }
+
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log(event);
+    console.log(message);
     scrollToBottom();
+    setMessage('');
   }
+
+  // Make chat window movable
+
+
+  // const dragElement = (element) => {
+  //   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  //   if (document.querySelector('.movable')) {
+  //     // If present, the header is where you move the DIV from
+  //     document.querySelector('.movable').mousedown = dragMouseDown;
+  //   } else {
+  //     // Otherwise, move the DIV from anywhere inside the DIV
+  //     element.mousedown = dragMouseDown
+  //   }
+  // }
+  // const dragMouseDown = () => {
+  //   console.log('Drag on Mouse Down')
+  // }
+
+  // dragElement(document.querySelector('.movable'));
+
+
+  
 
 
   return (
@@ -43,7 +75,7 @@ const Chat = () => {
         className={`chat-container has-background-info-light ${ active ? '' : 'is-hidden' }`}
       >
         <article className="message is-info">
-          <header className="message-header">
+          <header className="message-header movable" draggable>
             <p>
               MovieMate Chat <i className='far fa-comment'></i> 
             </p>
@@ -90,7 +122,16 @@ const Chat = () => {
           <div className='chat-footer-container p-3'>
             <div className="control has-icons-left has-icons-right">
               <form className='is-flex flex-direction-row' type='submit' onSubmit={handleFormSubmit}>
-                <input className="input is-small" type="text" placeholder="Message"/>
+                <input 
+                  name='message'
+                  value={message}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className="input is-small" 
+                  id='message'
+                  placeholder="Message"
+                  autoComplete='off'
+                />
                 <span className="icon is-small is-left">
                   <i className="fas fa-comment"></i>
                 </span>
