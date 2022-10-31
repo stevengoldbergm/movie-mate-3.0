@@ -2,19 +2,19 @@ import React from 'react';
 import '../../App.css'
 import { Button } from './NavBtn'
 import './style.css';
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import MovieVideo from './moviefilm.mp4'
 
 
 
 const Main = () => {
-  return (
+return (
     <div className='main-container'>
         <video src= {MovieVideo} autoPlay loop muted/>
         
         <h1>
         <i class='fas fa-ticket-alt fa-ticket-alt-main' />
-          MOVIEMATE
+            MOVIEMATE
         <i class='fas fa-ticket-alt fa-ticket-alt-main' />
         </h1>
         
@@ -29,7 +29,7 @@ const Main = () => {
             
         </div>
     </div>
-  )
+)
 }
 
 export default Main;
