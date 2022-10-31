@@ -80,9 +80,9 @@ function Navbar() {
                   Profile
                 </Link>
               </li>
-
-              <li className="nav-item">
-                {/* link to review page */}
+              
+              {/* link to review page */}
+              {/* <li className="nav-item">
                 <Link
                   to="/my-reviews"
                   className="nav-links"
@@ -110,7 +110,7 @@ function Navbar() {
                 >
                   Parties
                 </Link>
-              </li>
+              </li> */}
 
               <li>
                 <Link to="/Logout" className="nav-links" onClick={Auth.logout}>
