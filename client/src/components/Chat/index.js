@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { MY_CONVERSATIONS, ONE_CONVERSATION } from '../../utils/queries';
+import { SEND_MESSAGE } from '../../utils/mutations';
 
 const Chat = () => {
+  const myConversations = useQuery(MY_CONVERSATIONS)
+  const [sendMessage] = useMutation(SEND_MESSAGE)
+  const messageData = myConversations.data?.myConversations || myConversations.data
+  console.log(messageData)
+
   // set state for active button
   const [active, setActive] = useState(false);
   const [message, setMessage] = useState('');
-
+  
   useEffect(() => {
     scrollToBottom();
   }, [])
@@ -97,28 +105,77 @@ const Chat = () => {
             </div>
             
           </header>
-          <div className="message-body scrollable">
-            <div className='columns is-multiline'>
-              <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
-                Yo what's up buddy?
+            <div className='columns'>
+              <div className="column is-4 message-body ">
+                <div className='columns is-multiline'>
+                  { !messageData
+                    ? 
+                      <div>Loading. . .</div>
+                    : 
+                      
+                      (
+                        messageData.map((conversation) => {
+                          return (
+                            <div key={conversation._id} className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                            {conversation.participants[1].username}
+                          </div>
+                          )
+                        })
+                      ) 
+                      
+                  }
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    Friend 1
+                  </div>
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    Friend 2
+                  </div>
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    Friend 3
+                  </div>
+                  
+                </div>
               </div>
-              <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
-                Nothin' much - just killin time.
-              </div>
-              <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
-                Does this thing look ok?
-              </div>
-              <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
-                Idunno man, it's just a chat window. It doesn't even work...
-              </div>
-              <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
-                But like - it's ok looking?
-              </div>
-              <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
-                Uuuh. Sure. It's fine.
+
+              {/* Messages */}
+              <div className="column is-8 message-body scrollable">
+                <div className='columns is-multiline'>
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    Yo what's up buddy?
+                  </div>
+                  <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Nothin' much - just killin time.
+                  </div>
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    Does this thing look ok?
+                  </div>
+                  <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Idunno man, it's just a chat window. It doesn't even work...
+                  </div>
+                  <div className='column is-three-fifths chat-bubble-left has-background-warning has-text-warning-dark py-1 px-2 my-2'>
+                    But like - it's ok looking?
+                  </div>
+                  <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div>
+                  <div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div><div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div><div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div><div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div><div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div><div className='column is-three-fifths is-offset-two-fifths chat-bubble-right has-background-info has-text-info-light py-1 px-2 my-2'>
+                    Uuuh. Sure. It's fine.
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+              
+            
           <div className='chat-footer-container p-3'>
             <div className="control has-icons-left has-icons-right">
               <form className='is-flex flex-direction-row' type='submit' onSubmit={handleFormSubmit}>
