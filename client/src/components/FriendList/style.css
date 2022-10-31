@@ -5,3 +5,8 @@
     text-align: left;
       float: left;
   }
+
+  .main-header label {
+    text-align: left;
+    display: block;
+  }
