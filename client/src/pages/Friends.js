@@ -1,4 +1,16 @@
 import React from 'react';
+<<<<<<< HEAD
+
+function Friends() {
+  return (
+    <div>
+      
+    </div>
+  );
+};
+
+export default Friends;
+=======
 import '../components/Chat/style.css'
 
 function FriendList() {
@@ -55,3 +67,4 @@ function FriendList() {
 };
 
 export default FriendList;
+>>>>>>> 3f88b5c5d06450f23643471d5018afd678e8e532
