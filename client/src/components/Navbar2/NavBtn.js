@@ -11,12 +11,14 @@ export const Button = ({children, type, onClick, buttonStyle, buttonSize}) => {
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
 return (
-    <Link to='/Logout' className='btn-mobile'>
+    // <Link to='/Logout' className='btn-mobile'>
+    <div className='btn-mobile'>
         {/* used to update the button sizes and styles when needed */}
     <button className={`btn ${checkButtonStyle} ${checkButtonSize}`}onClick={onClick} type={type}>
         {/* renders whatever i put in the 'parent' button */}
         {children}
     </button>
-    </Link>
+    {/* </Link> */}
+    </div>
     );
 };
