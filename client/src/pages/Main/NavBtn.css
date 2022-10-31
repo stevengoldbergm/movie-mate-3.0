@@ -35,6 +35,21 @@
     font-family: 'Nunito', sans-serif;
 }
 
+.btn--xmark {
+    background-color: white;
+    color: #fff;
+    border: 1px solid red;
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px
+}
+
+.btn--checkmark{
+    background-color: green;
+    color: #fff;
+    border: 1px solid green;
+    font-family: 'Nunito', sans-serif;
+}
+
 .btn--medium {
     padding: 8px 20px;
     font-size: 18px;
