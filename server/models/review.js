@@ -20,6 +20,11 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
     unique: false,
+  },
+  movie_name: {
+    type: String,
+    required:true,
+    unique:false
   }
 },{
   toJSON: {
