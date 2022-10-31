@@ -1,5 +1,5 @@
 .footer-container {
-    background-color: #242424;
+    background-color: #eaeaea;
     padding: 1rem 1 1rem 0;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
 
 /* Social Icons */
 .social-icon-link {
-    color: #209cee;
+    color: #8E793E;
     font-size: 24px;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .social-logo {
-    color: #209cee;
+    color: #8E793E;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;
@@ -48,7 +48,7 @@
 }
 
 .website-rights {
-    color: #209cee;
+    color: #8E793E;
     margin-bottom: 16px;
 }
 
