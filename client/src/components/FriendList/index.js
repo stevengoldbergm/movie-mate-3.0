@@ -53,3 +53,27 @@ function FriendList() {
             <button>Search</button>
             <aside></aside>
         </div>
+
+        <div className="">
+          <h2 className="card-header-title">
+            Friend Requests
+          </h2>
+        </div>
+        <br/>
+        {/* card section */}
+        <div className="info-tiles">
+      <div className="tile has-text-centered">
+        <div className="tile is-parent">
+          <article className="tile is-child box">
+            <p className="title">@placeholder wants to add you!</p>
+            <p className="subtitle">Do you want to accept?</p>
+            <div className='btn is-flex is-flex-direction-row is-justify-content-space-between'>
+                <Button className='btn' buttonStyle='btn--checkmark' buttonSize='btn--yesfriends'>
+                <i className="fas fa-solid fa-check"/>
+                </Button>
+                <Button className='btn' buttonStyle='btn--xmark' buttonSize='btn--nofriends'>
+                ❌
+                </Button>
+            </div>
+          </article>
+        </div>
