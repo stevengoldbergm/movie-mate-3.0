@@ -31,3 +31,25 @@ function PartyInvites() {
             </ul>
         </aside>
             </div>
+
+            <div className="row is-9">
+    <section className="hero">
+      <div className="hero-body">
+        <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
+          <div className="container">
+            <h1 id="greeting" className="title">
+              Create movie parties and invite others to watch!
+            </h1>
+          </div>
+        </div>
+<br/>
+        {/* form template */}
+        <div className='main-header'>
+            <h2>Search for Movie Title:</h2>
+            <form>
+                <label>What movie do you want to watch with friends?</label>
+                <input type='text' required=''></input>
+            </form>
+            <button>Search</button>
+            <aside></aside>
+        </div>
