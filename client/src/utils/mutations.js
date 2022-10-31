@@ -56,6 +56,14 @@ mutation AddFriend($username: String!, $requestId: String!) {
 }
 `;
 
+export const DENY_FRIEND = gql`
+mutation DenyFriend($requestId: String!) {
+  denyFriend(requestId: $requestId) {
+    _id
+  }
+}
+`;
+
 // Conversation Mutations
 // Called from conversation pop up - Pass in username from friend you are sending conversation to in front end 
 export const CREATE_CONVERSATION = gql`

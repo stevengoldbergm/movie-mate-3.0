@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Dashboard from '../components/Dashboard/Dashboard';
-import Friends from './Friends'
-import WatchParties from './WatchParties'
+// import FriendList from './Friends'
+import FriendList from '../components/FriendList';
+import PartyInvites from './Watch party';
 import UserReviews from './UserReviews';
-import Chat from '../components/Chat';
+// import Chat from '../components/Chat';
+
 
 // Add JSX to Profile
 
@@ -19,11 +21,11 @@ const Profile = () => {
     if (currentPage === 'MyActivity') {
       return <Dashboard />
     } else if (currentPage === 'Friends') {
-      return <Chat />
+      return <FriendList />
     } else if (currentPage === 'MyReviews') {
       return <UserReviews />
     } else {
-      return <WatchParties />
+      return <PartyInvites />
     }
   }
 

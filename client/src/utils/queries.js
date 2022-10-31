@@ -45,7 +45,9 @@ export const ME = gql`
 export const MY_FRIEND_REQUESTS = gql`
 query MyFriendRequests {
   myFriendRequests {
+    _id
     sender
+    
   }
 }
 `
@@ -53,6 +55,7 @@ query MyFriendRequests {
 export const MY_CONVERSATIONS = gql`
 query MyConversations {
   myConversations {
+    _id
     participants {
       username
     }
@@ -65,3 +68,18 @@ query MyConversations {
 }
 `
 
+export const ONE_CONVERSATION = gql`
+query Conversations($id: String) {
+  conversations(_id: $id) {
+     _id
+    participants {
+      username
+    }
+    messages {
+      message_text
+      time_sent
+      sender
+    }
+  }
+}
+`

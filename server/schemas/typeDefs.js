@@ -96,6 +96,9 @@ const typeDefs = gql`
     addFriend(
       username: String!,
       requestId:String!): User
+
+    denyFriend(
+      requestId: String!): FriendRequest
   }
 `;
 
