@@ -54,7 +54,8 @@ const resolvers = {
 
   myConversations: async (parent, args, context) => {
     if(context.user) {
-    
+    return Conversation.find({
+      "participants.username": context.user.username})
    }
    throw new AuthenticationError('Please login or signup!')
   },
@@ -74,12 +75,11 @@ const resolvers = {
       if(!user) {
         throw new AuthenticationError('No user found with this email')
       }
-      // Temp disable for login
-      // const correctPw = await user.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
-      // if(!correctPw) {
-      //   throw new AuthenticationError('Incorrect Password');
-      // }
+      if(!correctPw) {
+        throw new AuthenticationError('Incorrect Password');
+      }
 
       const token = signToken(user);
 

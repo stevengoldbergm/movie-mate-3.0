@@ -41,7 +41,7 @@ export const ME = gql`
 }
 `;
 
-// Quety all friend requests in which the recipient is the logged in user based on context
+// Query all friend requests in which the recipient is the logged in user based on context
 export const MY_FRIEND_REQUESTS = gql`
 query MyFriendRequests {
   myFriendRequests {
@@ -49,3 +49,19 @@ query MyFriendRequests {
   }
 }
 `
+// Query all conversations in which the logged in user is a participant
+export const MY_CONVERSATIONS = gql`
+query MyConversations {
+  myConversations {
+    participants {
+      username
+    }
+    messages {
+      message_text
+      time_sent
+      sender
+    }
+  }
+}
+`
+
