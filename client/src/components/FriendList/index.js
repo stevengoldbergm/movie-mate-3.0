@@ -129,7 +129,6 @@ function FriendList() {
     try {
       denyFriend({variables: { username: friendRequests.data.myFriendRequests[num].sender, requestId: friendRequests.data.myFriendRequests[num]._id}})
       console.log('Friend Denied!')
-      this.forceUpdate();
     } catch (error) {
       console.log(error)
     }
