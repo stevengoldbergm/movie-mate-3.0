@@ -1,28 +1,33 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-// import {} from '../utils/queries' // Need query to pull all reviews
-// import {} from '../utils/mutations' // Need mutation to add new reviews
+import { CREATE_REVIEW } from "../utils/mutations";
+import { QUERY_REVIEWS } from "../utils/queries";
 import Auth from '../utils/auth'
 
 
 // Add OMDB search to Review page
 // Add JSX to Review page
 
-const Reviews = () => {
+function Reviews() {
   //----- Pull in props from MovieData -----//
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const { searchResults } = location.state[0];
   const { imdbId } = location.state[1]
-  console.log(searchResults, imdbId);
-
+  // console.log(searchResults, imdbId,);
+  const [createReview, {error}] = useMutation(CREATE_REVIEW);
   //----- Set reviews state -----//
   const [reviews, setReviews] = useState([])
 
   //----- Check for existing reviews -----//
   // useEffect(() => {
-    // const query = useQuery(Add query to search for all reviews where the imdbId = movie_id)
+    
+    const {loading, data} = useQuery(QUERY_REVIEWS, 
+      {variables: {movieId: imdbId}})
+    console.log(data)
+    const reviewList = data?.reviews || [];
+    console.log(reviewList)
     // setReviews(query)
   // }, [])
 
@@ -31,6 +36,7 @@ const Reviews = () => {
       score: '',
       review: '',
       imdbId,
+      movie_name: searchResults.Title
     });
   
   const handleFormUpdate = (event) => {
@@ -42,7 +48,7 @@ const Reviews = () => {
   const handleFormSubmit = async (event) => {
     // Don't you dare refresh that page
     event.preventDefault()
-    const { score, review } = reviewFormData;
+    const { score, review, movie_name } = reviewFormData;
 
     // Don't submit an incomplete form!
     if (!score || score === 'Choose a score' || !review) {
@@ -50,16 +56,20 @@ const Reviews = () => {
       return;
     }
 
-    // Get user?
-    const { data } = await Auth.getProfile();
-    const userID = data._id;
-    console.log(data, userID);
-
     // Add submit query using reviewFormData{score, review, imdbId}
     // reformat variables as necessary
-    console.log('Submitted Review!');
-    console.log(reviewFormData);
-    // submitReview(...reviewFormData);
+    try {
+      // console.log(score)
+      // console.log(review)
+      // console.log(movie_name)
+      // console.log(imdbId)
+      const newReview = await createReview( { variables: {movieId: imdbId, reviewScore: score, reviewText: review, movieName: movie_name} } );
+      // console.log(newReview)
+    } catch (error) {
+      console.error(error);
+    }
+    // console.log('Submitted Review!');
+    // console.log(reviewFormData);
   }
 
 
@@ -171,17 +181,17 @@ const Reviews = () => {
                       </div>
                     </form>
                     {/* Add generated review cards here */}
-                    {reviews.length
+                    {reviewList.length
                       ? (
-                          reviews.map((review) => {
+                          reviewList.map((review) => {
                             return (
-                              <div key='review._id' className="card events-card"> 
+                              <div key= {review._id} className="card events-card"> 
                                 <header className="card-header is-flex is-justify-content-space-between">
                                   <p className="card-header-title">
-                                    username
+                                    {review.movie_name} review by {review.user_name}
                                   </p>
                                   <p className="pt-3 pr-3 has-text-weight-bold has-text-right">
-                                    review_score out of 10
+                                    {review.review_score} out of 10
                                   </p>
                                 </header>
                                 <div className="card-table">
@@ -192,7 +202,7 @@ const Reviews = () => {
                                           <i className="fa fa-bell-o"/>
                                         </td>
                                         <td>
-                                          review_text
+                                          {review.review_text}
                                         </td>
                                       </tr>
                                     </table>

@@ -12,7 +12,7 @@ const reviewSchema = new Schema({
     unique: false,
   },
   review_score: {
-    type: Number,
+    type: String,
     required: true,
     unique: false,
   },
@@ -20,6 +20,16 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
     unique: false,
+  },
+  movie_name: {
+    type: String,
+    required:true,
+    unique:false
+  },
+  user_name: {
+    type: String,
+    require: true,
+    unique: false
   }
 },{
   toJSON: {

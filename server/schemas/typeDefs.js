@@ -6,6 +6,7 @@ const typeDefs = gql`
     movie_name: String!
     imdb_id: String!
     reviews: [Review]
+    Movie_name: String!
   }
 
   type User {
@@ -25,6 +26,8 @@ const typeDefs = gql`
     movie_id: String!
     review_score: String!
     review_text: String!
+    movie_name: String!
+    user_name: String!
   }
 
   type Conversation {
@@ -77,7 +80,8 @@ const typeDefs = gql`
     createReview(
       movie_id: String!,
       review_score: String!,
-      review_text: String!): Review
+      review_text: String!,
+      movie_name: String!): Review
 
     createMovie(
       movie_name: String!,

@@ -94,7 +94,7 @@ const resolvers = {
 
     createReview: async (parent, args, context) => {
       if (context.user) {
-      const review = await Review.create({...args, user_id: context.user._id});
+      const review = await Review.create({...args, user_id: context.user._id, user_name: context.user.username});
       return review}
       throw new AuthenticationError('Please login or signup!');
     },
