@@ -109,7 +109,7 @@ const Chat = () => {
       {/* Make chat pop-up window */}
       <div className='columns m-0 pr-3'>
         <div 
-          className={`column is-7 is-offset-5 is-12-mobile p-0 has-background-info-light is-roundeds ${ active ? '' : 'is-hidden' }`}
+          className={`column is-7 pop is-offset-5 is-12-mobile p-0 has-background-info-light is-roundeds ${ active ? '' : 'is-hidden' }`}
         >
           <article className="column is-multiline message is-info p-0 is-roundeds">
             <header className="column is-12 message-header is-flex">
