@@ -26,6 +26,7 @@ const typeDefs = gql`
     movie_id: String!
     review_score: String!
     review_text: String!
+    movie_name: String!
   }
 
   type Conversation {

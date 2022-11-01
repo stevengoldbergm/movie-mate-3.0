@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
+import { CREATE_REVIEW } from "../utils/mutations";
 // import {} from '../utils/queries' // Need query to pull all reviews
 // import {} from '../utils/mutations' // Need mutation to add new reviews
 import Auth from '../utils/auth'
@@ -9,14 +10,14 @@ import Auth from '../utils/auth'
 // Add OMDB search to Review page
 // Add JSX to Review page
 
-const Reviews = () => {
+function Reviews() {
   //----- Pull in props from MovieData -----//
   const location = useLocation();
   console.log(location);
   const { searchResults } = location.state[0];
   const { imdbId } = location.state[1]
-  console.log(searchResults, imdbId);
-
+  console.log(searchResults, imdbId,);
+  const [createReview, {error}] = useMutation(CREATE_REVIEW);
   //----- Set reviews state -----//
   const [reviews, setReviews] = useState([])
 
@@ -31,6 +32,7 @@ const Reviews = () => {
       score: '',
       review: '',
       imdbId,
+      movie_name: searchResults.Title
     });
   
   const handleFormUpdate = (event) => {
@@ -42,7 +44,7 @@ const Reviews = () => {
   const handleFormSubmit = async (event) => {
     // Don't you dare refresh that page
     event.preventDefault()
-    const { score, review } = reviewFormData;
+    const { score, review, movie_name } = reviewFormData;
 
     // Don't submit an incomplete form!
     if (!score || score === 'Choose a score' || !review) {
@@ -51,15 +53,24 @@ const Reviews = () => {
     }
 
     // Get user?
-    const { data } = await Auth.getProfile();
-    const userID = data._id;
-    console.log(data, userID);
+    // const { data } = await Auth.getProfile();
+    // const userID = data._id;
+    // console.log(data, userID);
 
     // Add submit query using reviewFormData{score, review, imdbId}
     // reformat variables as necessary
+    try {
+      console.log(score)
+      console.log(review)
+      console.log(movie_name)
+      console.log(imdbId)
+      const newReview = await createReview( { variables: {movieId: imdbId, reviewScore: score, reviewText: review, movieName: movie_name} } );
+      console.log(newReview)
+    } catch (error) {
+      console.error(error);
+    }
     console.log('Submitted Review!');
     console.log(reviewFormData);
-    // submitReview(...reviewFormData);
   }
 
 

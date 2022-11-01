@@ -12,7 +12,7 @@ const reviewSchema = new Schema({
     unique: false,
   },
   review_score: {
-    type: Number,
+    type: String,
     required: true,
     unique: false,
   },

@@ -29,6 +29,7 @@ query Query {
     movie_id
     review_score
     review_text
+    movie_name
   }
 }
 `
