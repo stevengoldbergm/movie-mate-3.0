@@ -38,10 +38,10 @@ const UserReviews = () => {
                   : (
                     reviewData.map((review) => {
                       return (
-                        <div className={`tile is-parent`} key={review.movie_id}>
+                        <div className={`tile is-parent`} key={review._id}>
                           <article className={`tile is-child box`} >
                             <p className="title"> {review.movie_name} Review</p>
-                            <p className="subtitle">You scored this film a {review.review_score}</p>
+                            <p className="subtitle">{review.review_score}/10</p>
                             <p className="subtitle">Your Review: {review.review_text}</p>
                             <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
                             </div>
