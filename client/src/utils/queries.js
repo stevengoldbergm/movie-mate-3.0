@@ -14,9 +14,12 @@ export const QUERY_MOVIES = gql`
 export const QUERY_REVIEWS = gql`
   query Reviews($movieId: String) {
   reviews(movie_id: $movieId) {
+    _id
     review_score
     review_text
     user_id
+    movie_name
+    user_name
   }
 }
 `;

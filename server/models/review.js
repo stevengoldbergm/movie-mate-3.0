@@ -25,6 +25,11 @@ const reviewSchema = new Schema({
     type: String,
     required:true,
     unique:false
+  },
+  user_name: {
+    type: String,
+    require: true,
+    unique: false
   }
 },{
   toJSON: {
