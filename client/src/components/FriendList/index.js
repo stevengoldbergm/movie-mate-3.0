@@ -1,46 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './style.css'
 import {Button} from '../Navbar2/NavBtn'
 import '../Navbar2/NavBtn.css'
 import { MY_FRIEND_REQUESTS, QUERY_USERS } from '../../utils/queries'
-import { useMutation, useQuery } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { ADD_FRIEND, DENY_FRIEND, CREATE_FRIEND_REQUEST } from '../../utils/mutations'
 import Auth from '../../utils/auth';
 
 
 function FriendList() {
   // Issues:
-    // Cannot reload state after adding or removing friend
-    // UseEffect, UseContext, or other REACT function may help, 
-    // but may require useLazyQuery or other method we have yet to utilize.
-
+    // Searching for a null value after searching for a bad value (no user) when adding a friend
+    // results in the user's name popping up in the query results.
     
   // Set state for searchUser
   const [searchUser, setSearchUser] = useState('');
-  const [searchedUser, setSearchedUser] = useState('');
 
-  // Set State for is-hidden
-  // const [isHidden, setIsHidden] = useState(false)
+  // useLazyQuery to search for a specific friend!
+  const [lazyUserSearch, lazySearchResults] = useLazyQuery(QUERY_USERS);
 
   // Import the query to search users
-  // const [users, { error } ] = useQuery(QUERY_USERS);
   const [createFriendRequest] = useMutation(CREATE_FRIEND_REQUEST);
   const [addFriend] = useMutation(ADD_FRIEND);
   const [denyFriend] = useMutation(DENY_FRIEND);
-  // const [denyFriend, { error }] = useMutation(DENY_FRIEND);
 
+  // Set state for friend requests
+  const [friendRequestState, setFriendRequestState] = useState([])
 
   // search for friend requests
   const friendRequests = useQuery(MY_FRIEND_REQUESTS);
-  const friendRequestData = friendRequests.data?.myFriendRequests || friendRequests.data ;
-  console.log(friendRequestData);
 
-  // uselazyquery? Look it up
-  const { loading, data } = useQuery(QUERY_USERS, {
-    variables: { username: searchUser }});
+  // Place before conditionals, but after initializing interior items
+  useEffect(() => {
+    if (friendRequests.data) {
+      setFriendRequestState(friendRequests.data.myFriendRequests);
+    }
+  },[friendRequests.data])
 
-  const UserTarget = data?.users[0] || {};
+  if (friendRequests.loading) return 'Loading. . .'
+  if (friendRequests.error) return `Error! ${friendRequests.error.message}`
 
   const handleInputChange = (event) => {
     console.log(event.target.value)
@@ -48,31 +47,29 @@ function FriendList() {
   }
 
   const handleFormSubmit = (event) => {
-    // NOTES:
-      // Sometimes search doesn't render on first try
-      // Bad searches immediately break site
-
+    // Prevent Default
     event.preventDefault();
-    // console.log(event);
-    console.log(searchUser);
-    setSearchUser('');
-    console.log(data);
-    // console.log(data.users);
-
-    // bad search breaks the site
-    // if (data === undefined || data.users === []) {
-    //   return;
-    // }
-
-    if (loading) {
-      console.log(loading);
-    } else {
-      console.log(data.users[0].username);
-      const targetValue = data.users[0].username
-      setSearchedUser(targetValue);
-      console.log(searchedUser); // Shows null, but react devtools finds the value
+    
+    // kickback if there's no data
+    console.log(event.target.value)
+    if (event.target.value === '') {
+      return;
     }
-    console.log(`searchedUser ${UserTarget}`); // Removing this breaks everything?
+
+    // Check for friends
+    try {
+      lazyUserSearch({
+      variables: { username: searchUser }}
+      )
+      if (!lazySearchResults.data) {
+        console.log('Loading. . .')
+      } else {
+          console.log(lazySearchResults.data.users[0].username);
+      }
+    } catch (error) {
+      console.log("Probably a bad username")
+      console.log(error);
+    }
   }
 
   const handleFriendRequest = async (event) => {
@@ -89,33 +86,49 @@ function FriendList() {
     }
 
     try {
-      console.log(`Trying to create friend request for ${searchedUser}`)
-      const friendRequest = await createFriendRequest( { variables: { username: searchedUser } } );
+      console.log(`Trying to create friend request for ${searchUser}`)
+      const friendRequest = await createFriendRequest( { variables: { username: searchUser } } );
       console.log(friendRequest);
     } catch (error) {
       console.error(error);
     }
   }
 
-  const handleAcceptFriend = () => {
-    console.log('accept friend')
+  const handleAcceptFriend = (num) => {
+    console.log('accept friend');
 
+    // Remove request element from state array and update the state
+    console.log(num);
+    console.log(friendRequestState);
+    let copyState = [...friendRequestState];
+    copyState = copyState.filter((item, index) => num !== index)
+    console.log(copyState);
+    setFriendRequestState(copyState);
+
+    // Add friend based on which button you click
     try {
-      addFriend({variables: { username: friendRequestData[0].sender, requestId: friendRequestData[0]._id}})
+      addFriend({variables: { username: friendRequestState[num].sender, requestId: friendRequestState[num]._id}})
       console.log('Friend Added!')
-      // setIsHidden(true);
     } catch {
       console.log(addFriend.error)
     }
   }
-  const handleDenyFriend = () => {
+
+  const handleDenyFriend = (num) => {
     console.log('deny friend')
 
+    // Remove request element from state array and update the state
+    console.log(num);
+    console.log(friendRequestState);
+    let copyState = [...friendRequestState];
+    copyState = copyState.filter((item, index) => num !== index)
+    console.log(copyState);
+    setFriendRequestState(copyState);
+
+    // Deny that loser your attention
     try {
-      denyFriend({variables: { username: friendRequestData[0].sender, requestId: friendRequestData[0]._id}})
+      denyFriend({variables: { username: friendRequests.data.myFriendRequests[num].sender, requestId: friendRequests.data.myFriendRequests[num]._id}})
       console.log('Friend Denied!')
-      // setIsHidden(true);
-      this.forceUpdate();
     } catch (error) {
       console.log(error)
     }
@@ -160,10 +173,10 @@ function FriendList() {
                   Search
                 </button>
                 {/* <aside></aside> */}
-                {searchedUser
+                {lazySearchResults.data?.users[0] !== undefined
                   ? <article className="tile is-child box">
                       <p className="title">They're here!</p>
-                      <p className="subtitle">Do you want to add <strong>{searchedUser}</strong> as a friend?</p>
+                      <p className="subtitle">Do you want to add <strong>{lazySearchResults.data?.users[0].username}</strong> as a friend?</p>
                       <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
                         <Button
                           type='click'
@@ -188,7 +201,7 @@ function FriendList() {
               {/* card section */}
               <div className="info-tiles">
                 <div className="tile has-text-centered">
-                  {!friendRequestData 
+                  {!friendRequestState 
                   ? 
                     <div className="tile is-parent">
                       <article className="tile is-child box">
@@ -196,7 +209,7 @@ function FriendList() {
                       </article>
                     </div> 
                   : (
-                    friendRequestData.map((friendRequest) => {
+                    friendRequestState.map((friendRequest, index) => {
                       return (
                         <div className={`tile is-parent`} key={friendRequest._id}>
                           <article className={`tile is-child box`}>
@@ -205,7 +218,7 @@ function FriendList() {
                             <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
                               <Button
                                 type='click'
-                                onClick={handleAcceptFriend}
+                                onClick={() => handleAcceptFriend(index)}
                                 className="btn"
                                 buttonStyle="btn--checkmark"
                                 buttonSize="btn--yesfriends"
@@ -214,7 +227,7 @@ function FriendList() {
                               </Button>
                               <Button
                                 type='click'
-                                onClick={handleDenyFriend}
+                                onClick={() => handleDenyFriend(index)}
                                 className="btn"
                                 buttonStyle="btn--xmark"
                                 buttonSize="btn--nofriends"
@@ -227,52 +240,6 @@ function FriendList() {
                       )
                     })
                   )}
-
-                  {/* <div className="tile is-parent">
-                    <article className="tile is-child box">
-                      <p className="title">@placeholder wants to add you!</p>
-                      <p className="subtitle">Do you want to accept?</p>
-                      <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                        <Button
-                          className="btn"
-                          buttonStyle="btn--checkmark"
-                          buttonSize="btn--yesfriends"
-                        >
-                          <i className="fas fa-solid fa-check" />
-                        </Button>
-                        <Button
-                          className="btn"
-                          buttonStyle="btn--xmark"
-                          buttonSize="btn--nofriends"
-                        >
-                          ❌
-                        </Button>
-                      </div>
-                    </article>
-                  </div> */}
-
-                  {/* <div className="tile is-parent">
-                    <article className="tile is-child box">
-                      <p className="title">@placeholder wants to add you!</p>
-                      <p className="subtitle">Do you want to accept?</p>
-                      <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                        <Button
-                          className="btn"
-                          buttonStyle="btn--checkmark"
-                          buttonSize="btn--yesfriends"
-                        >
-                          <i className=" fas fa-solid fa-check" />
-                        </Button>
-                        <Button
-                          className="btn"
-                          buttonStyle="btn--xmark"
-                          buttonSize="btn--nofriends"
-                        >
-                          ❌
-                        </Button>
-                      </div>
-                    </article>
-                  </div> */}
                 </div>
               </div>
             </section>
