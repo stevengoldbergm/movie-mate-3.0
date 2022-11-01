@@ -1,10 +1,10 @@
 .chat-container {
   position: fixed;
   overflow: hidden;
-  bottom: 20vh;
-  right: 5vw;
-  width: 300px;
-  max-width: 50vw;
+  /* bottom: 20vh; */
+  /* right: 5vw; */
+  /* width: 300px; */
+  /* max-width: 50vw; */
   height: 55vh;
   max-height: 55vh;
   /* border: 1px solid black; */
@@ -14,13 +14,14 @@
 }
 
 .chat-footer-container {
-  position: absolute;
+  /* position: absolute; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
   bottom: 0;
   width: 100%;
   margin-top: auto;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .chat-bubble-left {
@@ -39,7 +40,17 @@
   overflow-wrap: break-word;
 }
 
-.movable {
+.info-border-left {
+  border-left: solid 2px #3e8ed0;;
+  border-radius: 0%;
+}
+
+.info-border-top {
+  border-top: solid 1px #3e8ed0;;
+  border-radius: 0%;
+}
+
+/* .movable {
   cursor: move;
 }
 
@@ -48,11 +59,11 @@
 	resize: both;
 	max-width: 300px;
 	max-height: 460px;
-}
+} */
 
 .scrollable {
   max-height: 300px;
-  border-radius: 2.5px;
+  /* border-radius: 2.5px; */
   overflow-y: scroll;
 }
 
