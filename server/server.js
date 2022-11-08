@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-// By using the wildcard character, any enpoint aside from the / endpoint should still open the base index.html before loading the rest of React app
+// By using the wildcard character, any enpoint aside from the / endpoint should load the React app from the same place.
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
