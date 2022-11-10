@@ -1,43 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_REVIEW } from "../utils/mutations";
 import { QUERY_REVIEWS } from "../utils/queries";
 import Auth from '../utils/auth'
 
-
-// Add OMDB search to Review page
-// Add JSX to Review page
-
 function Reviews() {
   //----- Pull in props from MovieData -----//
   const location = useLocation();
-  // console.log(location);
+
+  // console.log(location); // working
   const { searchResults } = location.state[0];
   const { imdbId } = location.state[1]
-  // console.log(searchResults, imdbId,);
-  const [createReview, {error}] = useMutation(CREATE_REVIEW);
+
+  // console.log(searchResults, imdbId,); // working
+  const [createReview, { error }] = useMutation(CREATE_REVIEW);
+
   //----- Set reviews state -----//
   const [reviews, setReviews] = useState([])
 
   //----- Check for existing reviews -----//
-  // useEffect(() => {
     
     const {loading, data} = useQuery(QUERY_REVIEWS, 
       {variables: {movieId: imdbId}})
-    console.log(data)
+    // console.log(data)
+    // Give the data time to populate as an object
     const reviewList = data?.reviews || [];
-    console.log(reviewList)
-    // setReviews(query)
-  // }, [])
+    // console.log(reviewList)
+    
+    // Set up lazy searches for the reviews.
+    const [lazyReviewSearch, lazyReviewInfo] = useLazyQuery(QUERY_REVIEWS)
+      
+    // Set up function to use lazyQuery
+    const searchReviews = async () => {
+      try {
+        console.log("Searching for Reviews")
 
-    // Set initial form state
-    const [reviewFormData, setReviewFormData] = useState({
-      score: '',
-      review: '',
-      imdbId,
-      movie_name: searchResults.Title
-    });
+        await lazyReviewSearch({ 
+          variables: { movieId: imdbId },
+          fetchPolicy: 'network-only'
+        })
+        // console.log(lazyReviewInfo.data?.reviews);
+        setReviews(lazyReviewInfo.data?.reviews);
+        // console.log(lazyReviewInfo);
+      } catch (error) {
+        console.error(error);
+        console.log(lazyReviewInfo);
+      }
+    }
+
+  // Populate the reviews state using the reviewList variable from above
+  useEffect(() => {
+    setReviews(reviewList);
+  }, [reviews]);
+
+  // console.log(reviewState);
+
+  // Set initial form state
+  const [reviewFormData, setReviewFormData] = useState({
+    score: '',
+    review: '',
+    imdbId,
+    movie_name: searchResults.Title
+  });
   
   const handleFormUpdate = (event) => {
     const { name, value } = event.target;
@@ -59,12 +84,21 @@ function Reviews() {
     // Add submit query using reviewFormData{score, review, imdbId}
     // reformat variables as necessary
     try {
-      // console.log(score)
-      // console.log(review)
-      // console.log(movie_name)
-      // console.log(imdbId)
+      // console.log(score, review, movie_name, imdbId)
       const newReview = await createReview( { variables: {movieId: imdbId, reviewScore: score, reviewText: review, movieName: movie_name} } );
-      // console.log(newReview)
+      console.log('New Review:', newReview)
+
+      // Reset form after review submit
+      setReviewFormData({
+        score: 'Choose a score',
+        review: '',
+        imdbId,
+        movie_name: searchResults.Title
+      });
+      
+      // Call lazyQuery to update the reviews on page
+      searchReviews();
+
     } catch (error) {
       console.error(error);
     }
@@ -144,6 +178,7 @@ function Reviews() {
                               id="review-score"
                               name="score"
                               onChange={handleFormUpdate}
+                              value={reviewFormData.score}
                             >
                               <option>Choose a score</option>
                               <option>1</option>
@@ -167,8 +202,8 @@ function Reviews() {
                           name="review"
                           id="review-text"
                           placeholder="What did you think about the movie?"
-                          defaultValue={""}
                           onChange={handleFormUpdate}
+                          value={reviewFormData.review}
                         />
                       </div>
                       <div className="field">
@@ -181,9 +216,9 @@ function Reviews() {
                       </div>
                     </form>
                     {/* Add generated review cards here */}
-                    {reviewList.length
+                    {reviews
                       ? (
-                          reviewList.map((review) => {
+                          reviews.map((review) => {
                             return (
                               <div key= {review._id} className="card events-card"> 
                                 <header className="card-header is-flex is-justify-content-space-between">
@@ -197,14 +232,16 @@ function Reviews() {
                                 <div className="card-table">
                                   <div className="content p-2">
                                     <table className="table is-fullwidth">
-                                      <tr>
-                                        <td width={5}>
-                                          <i className="fa fa-bell-o"/>
-                                        </td>
-                                        <td>
-                                          {review.review_text}
-                                        </td>
-                                      </tr>
+                                      <tbody>
+                                        <tr>
+                                          <td width={5}>
+                                            <i className="fa fa-bell-o"/>
+                                          </td>
+                                          <td>
+                                            {review.review_text}
+                                          </td>
+                                        </tr>
+                                      </tbody>
                                     </table>
                                   </div>
                                 </div>

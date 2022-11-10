@@ -11,8 +11,7 @@ import Auth from '../../utils/auth';
 
 function FriendList() {
   // Issues:
-    // Searching for a null value after searching for a bad value (no user) when adding a friend
-    // results in the user's name popping up in the query results.
+    // Searching for a null value after searching for a bad value (no user) when adding a friend results in the user's name popping up in the query results.
     
   // Set state for searchUser
   const [searchUser, setSearchUser] = useState('');
@@ -64,7 +63,7 @@ function FriendList() {
       if (!lazySearchResults.data) {
         console.log('Loading. . .')
       } else {
-          console.log(lazySearchResults.data.users[0].username);
+        console.log(lazySearchResults.data.users[0].username);
       }
     } catch (error) {
       console.log("Probably a bad username")
