@@ -99,3 +99,19 @@ query Conversations($id: String) {
   }
 }
 `
+
+// Queries to enable Watch Parties
+export const MY_WATCHPARTIES = gql`
+query MyWatchParties {
+  myWatchParties {
+    _id
+    date
+    host
+    time
+    recipients {
+      attending
+      username
+    }
+  }
+}
+`

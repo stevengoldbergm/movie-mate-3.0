@@ -109,4 +109,24 @@ mutation CreateReview($movieId: String!, $reviewScore: String!, $reviewText: Str
 }
 `;
 
+// Watch Party Mutations
+export const CREATE_WATCHPARTY = gql`
+mutation CreateWatchParty($date: String!, $time: String!) {
+  createWatchParty(date: $date, time: $time) {
+    _id
+    date
+    host
+    time
+  }
+}
+`
 
+export const WATCHPARTY_INVITE = gql`
+mutation InviteToWatchParty($username: String!, $partyId: String!) {
+  inviteToWatchParty(username: $username, partyId: $partyId) {
+    _id
+    recipients {
+      username
+    }
+  }
+}`
