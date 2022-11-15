@@ -14,7 +14,7 @@ const watchPartySchema = new Schema({
       unique: false,
     },
       attending: {
-        Type: String,
+      type: String,
       required: false,
       unique: false,
     },

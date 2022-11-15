@@ -198,15 +198,33 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
   inviteToWatchParty: async (parent, {username, partyId}, context) => {
     const watchParty = await WatchParty.findOneAndUpdate(
       {_id: partyId},
-      {$addToSet: {recipients: {username: username}}},
+      {$addToSet: {recipients: {username, attending: "Pending Response"}}},
       {new: true}
     )
     return watchParty
   },
-createPartyInvite: async (parent, {date, time, username, partyId}, context) => {
-  const partyInvite = await PartyInvite.create({host: context.user.username, date, time, username, partyId})
-  return partyInvite
-}
+  createPartyInvite: async (parent, {date, time, username, partyId}, context) => {
+    const partyInvite = await PartyInvite.create({host: context.user.username, date, time, username, partyId})
+    return partyInvite
+},
+  acceptPartyInvite: async (parent, {partyId, inviteId}, context) => {
+    const watchParty = await WatchParty.findOneAndUpdate(
+      {_id: partyId, "recipients.username": context.user.username},
+      {$set: {"recipients.$.attending": "Yes"}},
+      {new: true}
+    )
+    const partyInvite = await PartyInvite.findOneAndDelete(
+      {_id: inviteId})
+      return watchParty
+  },
+  denyPartyInvite: async (parent, {partyId}, context) => {
+    const watchParty = await WatchParty.findOneAndUpdate(
+      {_id: partyId, "recipients.username": context.user.username},
+      {$set: {"recipients.$.attending": "No"}},
+      {new: true}
+    )
+      return watchParty
+  }
  }
 }
 

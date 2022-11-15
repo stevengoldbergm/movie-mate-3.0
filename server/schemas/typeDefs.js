@@ -56,7 +56,7 @@ const typeDefs = gql`
   }
 type partyResponse {
     username: String!
-    attending: String
+    attending: String!
   }
 
   type WatchParty {
@@ -141,6 +141,16 @@ type partyResponse {
     inviteToWatchParty(
       username: String!
       partyId: String!
+    ): WatchParty
+
+    acceptPartyInvite(
+      partyId: String!
+      inviteId:String!
+    ): WatchParty
+
+    denyPartyInvite(
+      partyId: String!
+      invtieId: String!
     ): WatchParty
   }
 `;
