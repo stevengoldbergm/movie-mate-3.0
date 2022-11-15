@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../components/FriendList/style.css'
 import './style.css'
 import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
+import { useQuery } from '@apollo/client';
+import { MY_PARTY_INVITES } from '../../utils/queries';
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
 function PartyInvites() {
+
+  // Set state for Watch Party Invites
+  const [partyInviteState, setPartyInviteState] = useState([])
+
+  // Search for party invites
+  const partyInvites = useQuery(MY_PARTY_INVITES)
+
+  useEffect(() => {
+    if (partyInvites.data) {
+      setPartyInviteState(partyInvites.data.myPartyInvites);
+    }
+  },[partyInvites.data])
+
+  if (partyInvites.loading) return 'Loading. . .'
+  if (partyInvites.loading) return `Error! ${partyInvites.error.message}`
+  
     return (
       <>
         <div className="columns p-4 has-background-white">
@@ -45,15 +63,6 @@ function PartyInvites() {
                 </div>
                 <br />
                 {/* form template */}
-                <div className="main-header">
-                  <h2>Search for Movie Title:</h2>
-                  <form>
-                    <label>What movie do you want to watch with friends?</label>
-                    <input type="text" required=""></input>
-                  </form>
-                  <button>Search</button>
-                  <aside></aside>
-                </div>
 
                 <div className="">
                   <h2 className="card-header-title">Watch Party Requests</h2>
@@ -62,10 +71,20 @@ function PartyInvites() {
                 {/* card section */}
                 <div className="info-tiles">
                   <div className="tile has-text-centered">
+                    {!partyInviteState
+                    ?
                     <div className="tile is-parent">
                       <article className="tile is-child box">
+                        <p className="title">No pending party invites. . .</p>
+                      </article>
+                    </div> 
+                  : (
+                    partyInviteState.map((partyInvite, index) => {
+                      return (
+                      <div className="tile is-parent" key={partyInvite._id}>
+                      <article className="tile is-child box">
                         <p className="title">
-                          @placeholder wants to watch a movie with you!
+                          {partyInvite.host} has invited you to a party on {partyInvite.date} at {partyInvite.time}
                         </p>
                         <p className="subtitle">Do you want to accept?</p>
                         <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
@@ -86,54 +105,10 @@ function PartyInvites() {
                         </div>
                       </article>
                     </div>
-                    <div className="tile is-parent">
-                      <article className="tile is-child box">
-                        <p className="title">
-                          @placeholder wants to watch a movie with you!
-                        </p>
-                        <p className="subtitle">Do you want to accept?</p>
-                        <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                          <Button
-                            className="btn"
-                            buttonStyle="btn--checkmark"
-                            buttonSize="btn--yesfriends"
-                          >
-                            <i className="fas fa-solid fa-check" />
-                          </Button>
-                          <Button
-                            className="btn"
-                            buttonStyle="btn--xmark"
-                            buttonSize="btn--nofriends"
-                          >
-                            ❌
-                          </Button>
-                        </div>
-                      </article>
-                    </div>
-                    <div className="tile is-parent">
-                      <article className="tile is-child box">
-                        <p className="title">
-                          @placeholder wants to watch a movie with you!
-                        </p>
-                        <p className="subtitle">Do you want to accept?</p>
-                        <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                          <Button
-                            className="btn"
-                            buttonStyle="btn--checkmark"
-                            buttonSize="btn--yesfriends"
-                          >
-                            <i className="fas fa-solid fa-check" />
-                          </Button>
-                          <Button
-                            className="btn"
-                            buttonStyle="btn--xmark"
-                            buttonSize="btn--nofriends"
-                          >
-                            ❌
-                          </Button>
-                        </div>
-                      </article>
-                    </div>
+                    )
+                  })
+                  
+                  )}                    
                   </div>
                 </div>
               </div>

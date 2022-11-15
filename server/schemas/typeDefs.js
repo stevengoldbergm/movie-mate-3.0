@@ -70,7 +70,7 @@ type partyResponse {
   type PartyInvite {
     _id: ID!
     host: String!
-    recipients: [partyResponse]
+    recipient: String
     date: String!
     time: String!
   }

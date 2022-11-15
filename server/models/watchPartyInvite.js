@@ -7,14 +7,11 @@ const partyInviteSchema = new Schema({
     unique: false,
   },
 
-  recipients: [
-    { username: {
+  recipient: {    
       type:String,
-      required: false,
+      required: true,
       unique: false,
-    }
-  }
-  ],
+  },
 
   date: {
     type: String,

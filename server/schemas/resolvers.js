@@ -70,9 +70,8 @@ const resolvers = {
 
   myPartyInvites: async (parent, params, context) => {
     if(context.user) {
-      return PartyInvite.find()
+      return PartyInvite.find({recipient: context.user.username})
     }
-    // {recipients: context.user.username}
     throw new AuthenticationError('Please login or signup!')
   }
 },

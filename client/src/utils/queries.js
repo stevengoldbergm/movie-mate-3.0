@@ -115,3 +115,13 @@ query MyWatchParties {
   }
 }
 `
+export const MY_PARTY_INVITES = gql`
+query MyPartyInvites {
+  myPartyInvites {
+    _id
+    date
+    host
+    time
+  }
+}
+`
