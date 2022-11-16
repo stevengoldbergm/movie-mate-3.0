@@ -125,3 +125,18 @@ query MyPartyInvites {
   }
 }
 `
+
+export const INVITED_WATCH_PARTIES = gql`
+query InvitedWatchParties {
+  invitedWatchParties {
+    _id
+    date
+    host
+    time
+    recipients {
+      attending
+      username
+    }
+  }
+}
+`

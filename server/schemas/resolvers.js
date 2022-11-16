@@ -68,6 +68,13 @@ const resolvers = {
     throw new AuthenticationError('Please login or signup!')
   },
 
+  invitedWatchParties: async(parent, args,context) =>{
+    if(context.user) {
+      return WatchParty.find({"recipients.username": context.user.username})
+    }
+    throw new AuthenticationError('Please login or signup!')
+  },
+
   myPartyInvites: async (parent, params, context) => {
     if(context.user) {
       return PartyInvite.find({recipient: context.user.username})

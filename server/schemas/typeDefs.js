@@ -87,6 +87,7 @@ type partyResponse {
     myConversations: [Conversation]
     myWatchParties: [WatchParty]
     myPartyInvites: [PartyInvite]
+    invitedWatchParties: [WatchParty]
   }
 
   type Mutation {

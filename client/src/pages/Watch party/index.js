@@ -5,17 +5,20 @@ import './style.css'
 import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
 import { useQuery } from '@apollo/client';
-import { MY_PARTY_INVITES } from '../../utils/queries';
+import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES } from '../../utils/queries';
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
 function PartyInvites() {
 
-  // Set state for Watch Party Invites
+  // Set state for Watch Party Invites and invited parties
   const [partyInviteState, setPartyInviteState] = useState([])
+  const [invitedPartiesState, setInvitedPartiesState] = useState([])
 
-  // Search for party invites
+  // Search for party invites and invited parties
   const partyInvites = useQuery(MY_PARTY_INVITES)
+  const invitedParties = useQuery(INVITED_WATCH_PARTIES)
+  console.log(invitedParties)
 
   useEffect(() => {
     if (partyInvites.data) {
@@ -23,8 +26,15 @@ function PartyInvites() {
     }
   },[partyInvites.data])
 
-  if (partyInvites.loading) return 'Loading. . .'
-  if (partyInvites.loading) return `Error! ${partyInvites.error.message}`
+  useEffect(() => {
+    if (invitedParties.data) {
+      setInvitedPartiesState(invitedParties.data.invitedWatchParties);
+    }
+  },[invitedParties.data])
+
+
+  if (partyInvites.loading || invitedParties.loading) return 'Loading. . .'
+  if (partyInvites.loading || invitedParties.loading) return `Error!`
   
     return (
       <>
@@ -63,11 +73,52 @@ function PartyInvites() {
                 </div>
                 <br />
                 {/* form template */}
-
                 <div className="">
-                  <h2 className="card-header-title">Watch Party Requests</h2>
+                  <h2 className="card-header-title">You Are a Participant in the Below Watch Parties</h2>
                 </div>
                 <br />
+                {/* card section */}
+                <div className="info-tiles">
+                  <div className="tile has-text-centered">
+                    {!invitedPartiesState
+                    ?
+                    <div className="tile is-parent">
+                      <article className="tile is-child box">
+                        <p className="title">You are not a participant in any Watch Parties</p>
+                      </article>
+                    </div> 
+                  : (
+                    invitedPartiesState.map((watchParty, index) => {
+                      return (
+                      <div className="tile is-parent" key={watchParty._id}>
+                      <article className="tile is-child box">
+                        <p className="title">
+                        {watchParty.host}'s WatchParty
+                        </p>
+                        <p>Date: {watchParty.date}</p>
+                        <p>Time: {watchParty.time}</p>
+                        <p>Invited: 
+                          <ul>
+                            {watchParty.recipients.map((recipients) => {
+                              return (
+                                <li>{recipients.username}: {recipients.attending}</li>
+                              )
+                            })}
+                          </ul>
+                        </p>
+                      </article>
+                    </div>
+                    )
+                  })
+                  
+                  )}                    
+                  </div>
+                </div>
+                <div className="">
+                  <h2 className="card-header-title">The Below Invites are Pending Your Response</h2>
+                </div>
+                <br />
+                
                 {/* card section */}
                 <div className="info-tiles">
                   <div className="tile has-text-centered">
