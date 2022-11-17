@@ -48,10 +48,10 @@ const MovieData = () => {
   return (
     <>
       <main className=" is-fullwidth m-0 p-0 py-6 pop">
-        <section id="main-data" className="columns pop">
+        <section id="main-data" className="columns pop is-flex is-justify-content-center">
           <div className="column is-1 is-hidden-mobile pop" />
 
-          <div className="box has-background-light column is-multiline is-10 p-5 m-0 is-justify-content-space-around is-justify-content-center-mobile is-align-items-center is-roundeds">
+          <div className="box has-background-light column is-multiline is-10 is-11-mobile p-5 m-0 is-justify-content-space-around is-justify-content-center-mobile is-align-items-center is-roundeds">
             <div className="columns is-12 m-0 is-justify-content-space-around is-justify-content-center-mobile is-align-items-center reverse-columns-mobile">
               <div className="column is-8 is-12-mobile p-0 mb-5 has-border-bottom">
                 <figure className="image is-16by9 is-10-mobile">
