@@ -4,8 +4,9 @@ import '../../components/FriendList/style.css'
 import './style.css'
 import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES } from '../../utils/queries';
+import {ACCEPT_PARTY} from '../../utils/mutations'
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
@@ -14,11 +15,28 @@ function PartyInvites() {
   // Set state for Watch Party Invites and invited parties
   const [partyInviteState, setPartyInviteState] = useState([])
   const [invitedPartiesState, setInvitedPartiesState] = useState([])
+  const [hostPartyState, setHostParty] = useState("off")
 
   // Search for party invites and invited parties
   const partyInvites = useQuery(MY_PARTY_INVITES)
   const invitedParties = useQuery(INVITED_WATCH_PARTIES)
-  console.log(invitedParties)
+  const [acceptParty] = useMutation(ACCEPT_PARTY)
+
+  // Mutations for watch party responses
+  const handleAcceptParty = (num) =>{
+    let copyState= [...partyInviteState];
+    // copyState = copyState.filter((item,index) => num !== index)
+    setPartyInviteState(copyState)
+    console.log(copyState)
+    console.log(invitedPartiesState[num].partyId)
+    console.log(invitedPartiesState[num]._id)
+
+    try {
+      acceptParty({variables: {partyId: invitedPartiesState[num].partyId, inviteId: invitedPartiesState[num]._id}})
+    } catch {
+      console.error(acceptParty.error)
+    }
+  }
 
   useEffect(() => {
     if (partyInvites.data) {
@@ -69,6 +87,23 @@ function PartyInvites() {
                     <h1 id="greeting" className="title">
                       Create movie parties and invite others to watch!
                     </h1>
+                    {hostPartyState === 'off' ? 
+                      <Button
+                            type='click'
+                            className="btn"
+                            buttonStyle="btn--checkmark"
+                            buttonSize="btn--yesfriends"
+                          >
+                            Host a New WatchParty
+                    </Button> :
+                    // Placeholder for form to create party
+                    <Button
+                    className="btn"
+                    buttonStyle="btn--checkmark"
+                    buttonSize="btn--yesfriends"
+                  >
+                    TEST
+            </Button> }
                   </div>
                 </div>
                 <br />
@@ -93,7 +128,7 @@ function PartyInvites() {
                       <div className="tile is-parent" key={watchParty._id}>
                       <article className="tile is-child box">
                         <p className="title">
-                        {watchParty.host}'s WatchParty
+                        {watchParty.host}'s Watch Party
                         </p>
                         <p>Date: {watchParty.date}</p>
                         <p>Time: {watchParty.time}</p>
@@ -140,6 +175,8 @@ function PartyInvites() {
                         <p className="subtitle">Do you want to accept?</p>
                         <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
                           <Button
+                            type='click'
+                            onClick={() => handleAcceptParty(index)}
                             className="btn"
                             buttonStyle="btn--checkmark"
                             buttonSize="btn--yesfriends"

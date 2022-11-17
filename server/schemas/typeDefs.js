@@ -71,6 +71,7 @@ type partyResponse {
     _id: ID!
     host: String!
     recipient: String
+    partyId: String!
     date: String!
     time: String!
   }

@@ -13,6 +13,12 @@ const partyInviteSchema = new Schema({
       unique: false,
   },
 
+  partyId: {
+    type: String,
+    required: true,
+    unique: false,
+  },
+
   date: {
     type: String,
     required: true,

@@ -122,6 +122,7 @@ query MyPartyInvites {
     date
     host
     time
+    partyId
   }
 }
 `

@@ -130,3 +130,11 @@ mutation InviteToWatchParty($username: String!, $partyId: String!) {
     }
   }
 }`
+
+export const ACCEPT_PARTY = gql`
+mutation AcceptPartyInvite($partyId: String!, $inviteId: String!) {
+  acceptPartyInvite(partyId: $partyId, inviteId: $inviteId) {
+    _id
+  }
+}
+`

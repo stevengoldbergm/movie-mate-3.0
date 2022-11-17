@@ -211,7 +211,7 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
     return watchParty
   },
   createPartyInvite: async (parent, {date, time, username, partyId}, context) => {
-    const partyInvite = await PartyInvite.create({host: context.user.username, date, time, username, partyId})
+    const partyInvite = await PartyInvite.create({host: context.user.username, date, time, recipient: username, partyId})
     return partyInvite
 },
   acceptPartyInvite: async (parent, {partyId, inviteId}, context) => {
