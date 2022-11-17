@@ -113,7 +113,7 @@ function Navbar() {
               </li> */}
 
               <li>
-                <Link to="/Logout" className="nav-links" onClick={Auth.logout}>
+                <Link to="/" className="nav-links" onClick={Auth.logout}>
                   Logout
                 </Link>
               </li>
@@ -127,7 +127,7 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  
+                  Login
                 </Link>
               </li>
               <li>
@@ -136,15 +136,11 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                
+                  Sign Up
                 </Link>
               </li>
             </ul>
           )}
-          {/* {button && 
-            <Button buttonStyle='btn--outline'>
-                Logout
-            </Button>} */}
         </div>
       </nav>
     </>
