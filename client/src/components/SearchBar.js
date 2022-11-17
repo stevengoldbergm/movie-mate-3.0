@@ -89,7 +89,7 @@ function SearchBar() {
     <div className="base-site">
       <header>
         <section className="background hero has-text-centered">
-          <div className="hero-body">
+          <div className="hero-body py-5">
             <div className="container">
               <header className="columns">
                 <section className="column is-one-fifth is-hidden-mobile" />
@@ -186,7 +186,7 @@ function SearchBar() {
           <div id="search-results" className="is-6 p-4">
             <div className="card events-card">
               <header className="card-header ">
-                <p className="card-header-title">Search Results</p>
+                <p className="card-header-title is-hidden">Search Results</p>
               </header>
               <div className="card-table">
                 <table className="table is-fullwidth is-striped">
@@ -216,12 +216,11 @@ function SearchBar() {
                         </tr>
                       )
                     })}
-                    
-                    
                   </tbody>
                 </table>
               </div>
             </div>
+            <br/> {/* Add a break at the end of the table to make it pretty */}
           </div>
         </main>
       )
