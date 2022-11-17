@@ -35,8 +35,8 @@ code {
 }
 
 .movie-poster {
-  max-height: 210px;
-  max-width: 140px;
+  max-height: 85%;
+  max-width: 75%;
 }
 
 #root {
