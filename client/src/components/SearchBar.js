@@ -88,7 +88,7 @@ function SearchBar() {
   return (
     <div className="base-site">
       <header>
-        <section className="background has-background-info hero has-text-centered">
+        <section className="background hero has-text-centered">
           <div className="hero-body">
             <div className="container">
               <header className="columns">
@@ -100,7 +100,7 @@ function SearchBar() {
                         name="searchInput"
                         value={searchInput}
                         onChange={handleFormUpdate}
-                        className="input"
+                        className="input is-dark"
                         id="srch-title"
                         type="text"
                         placeholder="Movie Title"
@@ -108,20 +108,20 @@ function SearchBar() {
                       />
                     </p>
                     <br />
-                    <h2 className="subtitle has-text-centered has-text-white">
+                    <h2 className="subtitle has-text-centered has-text-dark">
                       Search for movies - Get the details!
                     </h2>
                     <br />
                     {/* Search Button */}
                     <section className="container is-flex is-justify-content-center">
-                      <button className="button is-info is-light has-text-black">
+                      <button className="button is-dark has-text-white">
                         Search Movies
                       </button>
                       {/* Dropdown Start */}
                       <div className="dropdown is-hoverable">
                         <div className="dropdown-trigger">
                           <div
-                            className="has-background-info-light has-text-black is-normal p-2 ml-1 is-size-6 is-roundeds"
+                            className="has-background-dark has-text-white is-normal p-2 ml-1 is-size-6 is-roundeds"
                             aria-haspopup="true"
                             aria-controls="dropdown-menu3"
                           >
@@ -143,11 +143,10 @@ function SearchBar() {
                             {/* eslint-disable */}
                             { searchHistory.length 
                             ? (
-                                searchHistory.map((search) => {
-                                  searchInt++
+                                searchHistory.map((search, index) => {
                                   return (
                                     <a 
-                                      key={searchInt}
+                                      key={index}
                                       className="dropdown-item is-capitalized"
                                       onClick={handleHistoryButton}
                                     >{search}</a>
@@ -195,8 +194,8 @@ function SearchBar() {
                     { searchedMovies.map((movie) => {
                       console.log(movie.Title, movie.Year, movie.imdbID, )
                       return (
-                        <tr key={movie.imdbID} className=" is-flex-direction-column is-justify-content-center is-align-items-center">
-                          <td style={{width: "5%"}}>
+                        <tr key={movie.imdbID} className="">
+                          <td style={{width: "5%"}} className="is-hidden">
                             <i className="fa fa-bell-o is-hidden-mobile"></i>
                           </td>
                           <td>
@@ -207,7 +206,7 @@ function SearchBar() {
                           </td>
                           <td className="level-right">
                             <Link 
-                              className="button is-small is-info" 
+                              className="button is-small is-dark has-text-white" 
                               imdb-id={movie.imdbID} 
                               to={`/movie-details/${ movie.imdbID }`}
                             >
