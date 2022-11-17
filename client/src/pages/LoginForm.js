@@ -63,12 +63,12 @@ const LoginForm = () => {
 
   return (
     <div>
-      <div className="hero is-info">
+      <div className="hero">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
               <div className="column is-6">
-                <form className="box" id="submit">
+                <form className="box has-background-light" id="submit">
                 { showAlert &&
                   <div className='container has-background-danger is-roundeds new-line'>
                     <p className='px-3 py-1 has-text-white has-text-centered is-size-7'>
@@ -76,9 +76,9 @@ const LoginForm = () => {
                     </p>
                   </div>
                   } 
-                  <h1 className="py-2">Login Here:</h1>
+                  <h1 className="py-2 has-text-dark has-text-weight-semibold">Login Here:</h1>
                   <div className="field">
-                    <label className="label">
+                    <label className="label is-dark">
                       Email
                     </label>
                     <div className="control has-icons-left">
@@ -88,7 +88,7 @@ const LoginForm = () => {
                         onChange={handleInputChange}
                         type="email" 
                         id="email" 
-                        className="input" 
+                        className="input is-dark" 
                         placeholder="e.g movie@example.com" 
                       />
                       <span className="icon is-small is-left">
@@ -104,7 +104,7 @@ const LoginForm = () => {
                         value={userFormData.password}
                         onChange={handleInputChange}
                         type="password" 
-                        className="input" 
+                        className="input is-dark" 
                         id="password" 
                         placeholder="Enter Password Here" 
                       />
@@ -118,7 +118,7 @@ const LoginForm = () => {
                   <div className="field">
                     <button 
                       typeof='submit'
-                      className="button is-info is-fullwidth"
+                      className="button is-dark has-text-white is-fullwidth"
                       onClick={handleFormSubmit}
                     >
                       Login
@@ -126,7 +126,7 @@ const LoginForm = () => {
                   </div>
                   <div className="has-text-centered">
                     <p className="is-size-7"> Don't have an account? 
-                      <Link to="/sign-up" className="has-text-info">
+                      <Link to="/sign-up" className="has-text-dark has-text-weight-semibold">
                         {` Sign Up!`}
                       </Link>
                     </p>
