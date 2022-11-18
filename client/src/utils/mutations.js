@@ -138,3 +138,11 @@ mutation AcceptPartyInvite($partyId: String!, $inviteId: String!) {
   }
 }
 `
+
+export const DENY_PARTY = gql`
+mutation denyPartyInvite($partyId: String!, $inviteId: String!) {
+  denyPartyInvite(partyId: $partyId, inviteId: $inviteId) {
+    _id
+  }
+}
+`

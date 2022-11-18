@@ -5,8 +5,8 @@ import './style.css'
 import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
 import { useMutation, useQuery } from '@apollo/client';
-import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES } from '../../utils/queries';
-import {ACCEPT_PARTY} from '../../utils/mutations'
+import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES, MY_WATCHPARTIES } from '../../utils/queries';
+import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY} from '../../utils/mutations'
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
@@ -16,25 +16,54 @@ function PartyInvites() {
   const [partyInviteState, setPartyInviteState] = useState([])
   const [invitedPartiesState, setInvitedPartiesState] = useState([])
   const [hostPartyState, setHostParty] = useState("off")
+  const [hostedPartiesState, setHostedPartiesState] = useState([])
 
   // Search for party invites and invited parties
   const partyInvites = useQuery(MY_PARTY_INVITES)
   const invitedParties = useQuery(INVITED_WATCH_PARTIES)
+  const hostedParties = useQuery(MY_WATCHPARTIES)
   const [acceptParty] = useMutation(ACCEPT_PARTY)
+  const [denyParty] = useMutation(DENY_PARTY)
 
+  // Mutation for creating a new watch party
+  const [createWatchParty]  = useMutation(CREATE_WATCHPARTY)
+  const [partyFormData, setPartyFormData] = useState({
+    date: "",
+    time: ""
+  })
+  
   // Mutations for watch party responses
-  const handleAcceptParty = (num) =>{
+  const handleAcceptParty = (num) => {
     let copyState= [...partyInviteState];
-    // copyState = copyState.filter((item,index) => num !== index)
-    setPartyInviteState(copyState)
-    console.log(copyState)
-    console.log(invitedPartiesState[num].partyId)
-    console.log(invitedPartiesState[num]._id)
+    // console.log(copyState)
+    // console.log(num)
+    // console.log(copyState[num].partyId)
+    // console.log(copyState[num]._id)
 
     try {
-      acceptParty({variables: {partyId: invitedPartiesState[num].partyId, inviteId: invitedPartiesState[num]._id}})
+      acceptParty({variables: {partyId: copyState[num].partyId, inviteId: copyState[num]._id}})
+      console.log("Party invite accepted")
+      copyState = copyState.filter((item,index) => num !== index)
+      setPartyInviteState(copyState)
     } catch {
       console.error(acceptParty.error)
+    }
+  }
+
+  const handleDenyParty = (num) => {
+    let copyState= [...partyInviteState];
+    console.log(copyState)
+    console.log(num)
+    console.log(copyState[num].partyId)
+    console.log(copyState[num]._id)
+
+    try {
+      denyParty({variables: {partyId: copyState[num].partyId, inviteId: copyState[num]._id}})
+      console.log("Party invite denied")
+      copyState = copyState.filter((item,index) => num !== index)
+      setPartyInviteState(copyState)
+    } catch {
+      console.error(denyParty.error)
     }
   }
 
@@ -50,161 +79,208 @@ function PartyInvites() {
     }
   },[invitedParties.data])
 
+  useEffect(() => {
+    if (hostedParties.data) {
+      // console.log(hostedParties.data)
+      setHostedPartiesState(hostedParties.data.myWatchParties)
+    }
+  }, [hostedParties.data])
+
+  const handleFormUpdate = (event) => {
+    const { name, value } = event.target;
+    setPartyFormData({...partyFormData, [name]: value});
+    console.log(partyFormData);
+  }
+
+  const handleFormSubmit = async (event) => {
+    // Don't you dare refresh that page
+    event.preventDefault()
+    const { date, time } = partyFormData;
+
+    if(!date || !time ) {
+      console.log("Please provide a time and date for your party")
+      return;
+    }
+
+    try {
+      const newParty = await createWatchParty({ variables: {date, time}})
+      console.log('New Party:', newParty)
+
+      setPartyFormData({
+        date:"",
+        time: ""
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   if (partyInvites.loading || invitedParties.loading) return 'Loading. . .'
   if (partyInvites.loading || invitedParties.loading) return `Error!`
   
-    return (
-      <>
-        <div className="columns p-4 has-background-white">
-          {/*  <div className="is-3 p-3 ">
-         <aside className="menu is-hidden-mobile ">
-        <p className="menu-label">
-            Profile
-        </p>
-            <ul className="menu-list">
-            <Link className="menu-list" to="/Reviews">
-                Your Reviews
-            </Link>
-            <Link className="menu-list" to="/Profile">
-                Your Activity
-            </Link>
-            <Link className="menu-list" to="/Profile">
-                Your Friends
-            </Link>
-            <Link className="menu-list" to="/Profile">
-                Your Invites
-            </Link>
-            </ul>
-        </aside> 
-            </div> */}
-
-          <div className="row is-12">
-            <section className="hero">
-              <div className="hero-body">
-                <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
-                  <div className="container">
-                    <h1 id="greeting" className="title">
-                      Create movie parties and invite others to watch!
-                    </h1>
-                    {hostPartyState === 'off' ? 
-                      <Button
-                            type='click'
-                            className="btn"
-                            buttonStyle="btn--checkmark"
-                            buttonSize="btn--yesfriends"
-                          >
-                            Host a New WatchParty
-                    </Button> :
-                    // Placeholder for form to create party
+  return (
+    <>
+      <div className="columns p-4 has-background-white">
+        <div className="row is-12">
+          <section className="hero">
+            <div className="hero-body">
+              <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
+                <div className="container">
+                  <h1 id="greeting" className="title">
+                    Create movie parties and invite others to watch!
+                  </h1>
+                  {hostPartyState === "of" ? (
                     <Button
-                    className="btn"
-                    buttonStyle="btn--checkmark"
-                    buttonSize="btn--yesfriends"
-                  >
-                    TEST
-            </Button> }
-                  </div>
+                      type="click"
+                      className="btn"
+                      buttonStyle="btn--checkmark"
+                      buttonSize="btn--yesfriends"
+                    >
+                      Host a New WatchParty
+                    </Button>
+                  ) : (
+                    // Placeholder for form to create party
+                    <form className="box" id="submit-review">
+                      <h1 className="py-2">Create a New Watch Party:</h1>
+                      <div className="field">
+                        <label className="label">Date:</label>
+                        <textarea
+                          className="textarea is-info"
+                          name="date"
+                          id="date-text"
+                          placeholder="What day is your watch party?"
+                          onChange={handleFormUpdate}
+                          value={partyFormData.date}
+                        />
+                      </div>
+                      <div className="field">
+                        <label className="label">Time:</label>
+                        <textarea
+                          className="textarea is-info"
+                          name="time"
+                          id="time-text"
+                          placeholder="When is your watch party?"
+                          onChange={handleFormUpdate}
+                          value={partyFormData.time}
+                        />
+                      </div>
+                      <div className="field">
+                        <button 
+                          className="button is-info is-fullwidth"
+                          onClick={handleFormSubmit}
+                        >
+                          Add Review
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
-                <br />
-                {/* form template */}
-                <div className="">
-                  <h2 className="card-header-title">You Are a Participant in the Below Watch Parties</h2>
-                </div>
-                <br />
-                {/* card section */}
-                <div className="info-tiles">
-                  <div className="tile has-text-centered">
-                    {!invitedPartiesState
-                    ?
+              </div>
+              <div className="">
+                <h2 className="card-header-title">
+                  You Are a Participant in the Below Watch Parties
+                </h2>
+              </div>
+              <br />
+              {/* card section */}
+              <div className="info-tiles">
+                <div className="tile has-text-centered">
+                  {!invitedPartiesState ? (
                     <div className="tile is-parent">
                       <article className="tile is-child box">
-                        <p className="title">You are not a participant in any Watch Parties</p>
-                      </article>
-                    </div> 
-                  : (
-                    invitedPartiesState.map((watchParty, index) => {
-                      return (
-                      <div className="tile is-parent" key={watchParty._id}>
-                      <article className="tile is-child box">
                         <p className="title">
-                        {watchParty.host}'s Watch Party
-                        </p>
-                        <p>Date: {watchParty.date}</p>
-                        <p>Time: {watchParty.time}</p>
-                        <p>Invited: 
-                          <ul>
-                            {watchParty.recipients.map((recipients) => {
-                              return (
-                                <li>{recipients.username}: {recipients.attending}</li>
-                              )
-                            })}
-                          </ul>
+                          You are not a participant in any Watch Parties
                         </p>
                       </article>
                     </div>
-                    )
-                  })
-                  
-                  )}                    
-                  </div>
+                  ) : (
+                    invitedPartiesState.map((watchParty, index) => {
+                      return (
+                        <div className="tile is-parent" key={watchParty._id}>
+                          <article className="tile is-child box">
+                            <p className="title">
+                              {watchParty.host}'s Watch Party
+                            </p>
+                            <p>Date: {watchParty.date}</p>
+                            <p>Time: {watchParty.time}</p>
+                            <p>Invited: </p>
+
+                            <ul>
+                              {watchParty.recipients.map((recipients) => {
+                                return (
+                                  <li>
+                                    {recipients.username}:{" "}
+                                    {recipients.attending}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </article>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
-                <div className="">
-                  <h2 className="card-header-title">The Below Invites are Pending Your Response</h2>
-                </div>
-                <br />
-                
-                {/* card section */}
-                <div className="info-tiles">
-                  <div className="tile has-text-centered">
-                    {!partyInviteState
-                    ?
+              </div>
+              <div className="">
+                <h2 className="card-header-title">
+                  The Below Invites are Pending Your Response
+                </h2>
+              </div>
+              <br />
+
+              {/* card section */}
+              <div className="info-tiles">
+                <div className="tile has-text-centered">
+                  {!partyInviteState ? (
                     <div className="tile is-parent">
                       <article className="tile is-child box">
                         <p className="title">No pending party invites. . .</p>
                       </article>
-                    </div> 
-                  : (
+                    </div>
+                  ) : (
                     partyInviteState.map((partyInvite, index) => {
                       return (
-                      <div className="tile is-parent" key={partyInvite._id}>
-                      <article className="tile is-child box">
-                        <p className="title">
-                          {partyInvite.host} has invited you to a party on {partyInvite.date} at {partyInvite.time}
-                        </p>
-                        <p className="subtitle">Do you want to accept?</p>
-                        <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                          <Button
-                            type='click'
-                            onClick={() => handleAcceptParty(index)}
-                            className="btn"
-                            buttonStyle="btn--checkmark"
-                            buttonSize="btn--yesfriends"
-                          >
-                            <i className="fas fa-solid fa-check" />
-                          </Button>
-                          <Button
-                            className="btn"
-                            buttonStyle="btn--xmark"
-                            buttonSize="btn--nofriends"
-                          >
-                            ❌
-                          </Button>
+                        <div className="tile is-parent" key={partyInvite._id}>
+                          <article className="tile is-child box">
+                            <p className="title">
+                              {partyInvite.host} has invited you to a party on{" "}
+                              {partyInvite.date} at {partyInvite.time}
+                            </p>
+                            <p className="subtitle">Do you want to accept?</p>
+                            <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
+                              <Button
+                                type="click"
+                                onClick={() => handleAcceptParty(index)}
+                                className="btn"
+                                buttonStyle="btn--checkmark"
+                                buttonSize="btn--yesfriends"
+                              >
+                                <i className="fas fa-solid fa-check" />
+                              </Button>
+                              <Button
+                                type="click"
+                                onClick={() => handleDenyParty(index)}
+                                className="btn"
+                                buttonStyle="btn--xmark"
+                                buttonSize="btn--nofriends"
+                              >
+                                ❌
+                              </Button>
+                            </div>
+                          </article>
                         </div>
-                      </article>
-                    </div>
-                    )
-                  })
-                  
-                  )}                    
-                  </div>
+                      );
+                    })
+                  )}
                 </div>
               </div>
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
-      </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
-export default PartyInvites
+export default PartyInvites;

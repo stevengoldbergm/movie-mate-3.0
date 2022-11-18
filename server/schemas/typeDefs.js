@@ -152,7 +152,7 @@ type partyResponse {
 
     denyPartyInvite(
       partyId: String!
-      invtieId: String!
+      inviteId: String!
     ): WatchParty
   }
 `;

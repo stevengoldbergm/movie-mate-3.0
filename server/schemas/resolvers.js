@@ -1,7 +1,6 @@
 const { Movie, User, Review, Conversation, FriendRequest, WatchParty, PartyInvite} = require('../models');
 const {AuthenticationError} = require('apollo-server-express')
 const {signToken} = require('../utils/auth');
-const { watch } = require('../models/watchParty');
 
 const resolvers = {
   Query: {
@@ -224,12 +223,14 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
       {_id: inviteId})
       return watchParty
   },
-  denyPartyInvite: async (parent, {partyId}, context) => {
+  denyPartyInvite: async (parent, {partyId, inviteId}, context) => {
     const watchParty = await WatchParty.findOneAndUpdate(
       {_id: partyId, "recipients.username": context.user.username},
       {$set: {"recipients.$.attending": "No"}},
       {new: true}
     )
+    const partyInvite = await PartyInvite.findOneAndDelete(
+      {_id: inviteId})
       return watchParty
   }
  }
