@@ -6,7 +6,7 @@ import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
 import { useMutation, useQuery } from '@apollo/client';
 import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES, MY_WATCHPARTIES } from '../../utils/queries';
-import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY} from '../../utils/mutations'
+import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY, WATCHPARTY_INVITE} from '../../utils/mutations'
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
@@ -17,6 +17,7 @@ function PartyInvites() {
   const [invitedPartiesState, setInvitedPartiesState] = useState([])
   const [hostPartyState, setHostParty] = useState("off")
   const [hostedPartiesState, setHostedPartiesState] = useState([])
+  const [inviteFormUsername, setInviteFormUsername] = useState("")
 
   // Search for party invites and invited parties
   const partyInvites = useQuery(MY_PARTY_INVITES)
@@ -24,7 +25,8 @@ function PartyInvites() {
   const hostedParties = useQuery(MY_WATCHPARTIES)
   const [acceptParty] = useMutation(ACCEPT_PARTY)
   const [denyParty] = useMutation(DENY_PARTY)
-
+  const [inviteFriend] = useMutation(WATCHPARTY_INVITE)
+ 
   // Mutation for creating a new watch party
   const [createWatchParty]  = useMutation(CREATE_WATCHPARTY)
   const [partyFormData, setPartyFormData] = useState({
@@ -51,7 +53,7 @@ function PartyInvites() {
   }
 
   const handleDenyParty = (num) => {
-    let copyState= [...partyInviteState];
+    let copyState = [...partyInviteState];
     console.log(copyState)
     console.log(num)
     console.log(copyState[num].partyId)
@@ -64,6 +66,20 @@ function PartyInvites() {
       setPartyInviteState(copyState)
     } catch {
       console.error(denyParty.error)
+    }
+  }
+
+  const handleInviteFriend = (num) => {
+    let copyState = [...hostedPartiesState]
+    console.log(copyState)
+    console.log(num)
+    try{ 
+      console.log(inviteFormUsername)
+      console.log(copyState[num]._id)
+      inviteFriend({variables: {username: inviteFormUsername, partyId: copyState[num]._id}})
+      setInviteFormUsername("")
+    } catch {
+      console.error(inviteFriend.error)
     }
   }
 
@@ -81,17 +97,23 @@ function PartyInvites() {
 
   useEffect(() => {
     if (hostedParties.data) {
-      // console.log(hostedParties.data)
       setHostedPartiesState(hostedParties.data.myWatchParties)
     }
   }, [hostedParties.data])
 
   const handleFormUpdate = (event) => {
     const { name, value } = event.target;
+    console.log(event.target)
     setPartyFormData({...partyFormData, [name]: value});
     console.log(partyFormData);
   }
 
+  const handleInviteUpdate = (event) => {
+    console.log(event.target)
+    const {value} = event.target;
+    setInviteFormUsername(value)
+  }
+  
   const handleFormSubmit = async (event) => {
     // Don't you dare refresh that page
     event.preventDefault()
@@ -144,7 +166,7 @@ function PartyInvites() {
                       <h1 className="py-2">Create a New Watch Party:</h1>
                       <div className="field">
                         <label className="label">Date:</label>
-                        <textarea
+                        <input
                           className="textarea is-info"
                           name="date"
                           id="date-text"
@@ -155,7 +177,7 @@ function PartyInvites() {
                       </div>
                       <div className="field">
                         <label className="label">Time:</label>
-                        <textarea
+                        <input
                           className="textarea is-info"
                           name="time"
                           id="time-text"
@@ -169,7 +191,7 @@ function PartyInvites() {
                           className="button is-info is-fullwidth"
                           onClick={handleFormSubmit}
                         >
-                          Add Review
+                          Create Watch Party
                         </button>
                       </div>
                     </form>
@@ -178,10 +200,52 @@ function PartyInvites() {
               </div>
               <div className="">
                 <h2 className="card-header-title">
+                  You Are hosting the Below Watch Parties
+                </h2>
+              </div> 
+              {!hostedPartiesState ? (
+                <p> No hosted parties</p>
+              ): (
+                hostedPartiesState.map((hostedParty, index) =>{
+                  return (
+                    <div className = "tile is-parent" key={hostedParty._id}>
+                      <article className='tile is-child box'>
+                      <p className='title'>
+                        You are hosting a watch party on {hostedParty.date} at {hostedParty.time}
+                      </p>
+                      <h2>Invite Friends</h2>
+                      <div className="field">
+                        <label className="label">Type Friend Below:</label>
+                        <input
+                          className="textarea is-info"
+                          name="friend"
+                          id="friend-text"
+                          placeholder="Who do you want to invite?"
+                          onChange={handleInviteUpdate}
+                          value={inviteFormUsername}
+                        />
+                      </div>
+                      <div className="field">
+                        <button 
+                          className="button is-info is-fullwidth"
+                          onClick={() => handleInviteFriend(index)}
+                        >
+                          Invite {inviteFormUsername}
+                        </button>
+                      </div>
+
+                      </article>
+                    </div>
+                  )
+                })
+              )}
+              <br />
+              <div className="">
+                <h2 className="card-header-title">
                   You Are a Participant in the Below Watch Parties
                 </h2>
               </div>
-              <br />
+             
               {/* card section */}
               <div className="info-tiles">
                 <div className="tile has-text-centered">
@@ -194,7 +258,7 @@ function PartyInvites() {
                       </article>
                     </div>
                   ) : (
-                    invitedPartiesState.map((watchParty, index) => {
+                    invitedPartiesState.map((watchParty) => {
                       return (
                         <div className="tile is-parent" key={watchParty._id}>
                           <article className="tile is-child box">
@@ -228,7 +292,6 @@ function PartyInvites() {
                 </h2>
               </div>
               <br />
-
               {/* card section */}
               <div className="info-tiles">
                 <div className="tile has-text-centered">
