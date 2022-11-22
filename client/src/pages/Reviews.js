@@ -114,53 +114,55 @@ function Reviews() {
           <div className="container">
             <div className="columns is-centered">
               <div className="column is-9">
-                <section className="hero is-info welcome is-small is-roundeds">
+                <section className="hero is-light welcome is-small is-roundeds">
                   <div className="hero-body">
-                    
-                    <div className="columns is-justify-content-space-between">
-                      <div className="column is-flex-direction-column is-fullwidth">
-                        <h1 className="title mb-1 movie-title is-centered">
+                    <div className="columns is-multiline is-justify-content-space-between">
+                      <div className="column is-12">
+                        <h1 className="title mb-1 movie-title is-centered has-text-dark">
                           {searchResults.Title}
                         </h1>
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                      </div>
+                      <div className="column is-7 is-flex-direction-column is-fullwidth">
+                        
+                        <p className="has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Actors
                         </p>
                         <p className="movie-actors is-size-7 pl-3">
                           {searchResults.Actors}
                         </p>
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                        <p className="is-fullwidth has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Directed By
                         </p>
                         <p className="movie-director is-size-7 pl-3">
                           {searchResults.Director}
                         </p>
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                        <p className="is-fullwidth has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Written By
                         </p>
                         <p className="movie-writer is-size-7 pl-3">
                           {searchResults.Writer}
                         </p> 
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                        <p className="is-fullwidth has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Rated
                         </p>
                         <p className="movie-rated is-size-7 pl-3">
                           {searchResults.Rated}
                         </p>
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                        <p className="is-fullwidth has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Released
                         </p>
                         <p className="movie-released is-size-7 pl-3">
                           {searchResults.Released}
                         </p>
-                        <p className="is-fullwidth has-background-info-light has-text-info has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
+                        <p className="is-fullwidth has-background-dark has-text-white has-text-weight-bold is-size-7 p-0 pl-3 my-2 is-roundeds">
                           Genre
                         </p>
                         <p className="movie-genre is-size-7 pl-3">
                           {searchResults.Genre}
                         </p>
                       </div>
-                      <figure className="is-align-self-center has-background-info-dark is-roundeds">
-                        <img className="movie-poster m-5 is-hidden-mobile" src={searchResults.Poster} alt='Movie Poster' />
+                      <figure className="column columns is-justify-content-center pt-4 is-roundeds p-0 m-0">
+                        <img className="box movie-poster p-0 m-0 is-hidden-mobile" src={searchResults.Poster} alt='Movie Poster' />
                       </figure>
                     </div>
                   </div>
@@ -173,7 +175,7 @@ function Reviews() {
                       <div className="field">
                         <label className="label">Score (1-10):</label>
                         <div className="control">
-                          <div className="select">
+                          <div className="select is-dark">
                             <select 
                               id="review-score"
                               name="score"
@@ -198,7 +200,7 @@ function Reviews() {
                       <div className="field">
                         <label className="label">Review:</label>
                         <textarea
-                          className="textarea is-info"
+                          className="textarea is-dark"
                           name="review"
                           id="review-text"
                           placeholder="What did you think about the movie?"
@@ -208,7 +210,7 @@ function Reviews() {
                       </div>
                       <div className="field">
                         <button 
-                          className="button is-info is-fullwidth"
+                          className="button is-dark is-fullwidth"
                           onClick={handleFormSubmit}
                         >
                           Add Review
@@ -220,6 +222,7 @@ function Reviews() {
                       ? (
                           reviews.map((review) => {
                             return (
+                              <>
                               <div key= {review._id} className="card events-card"> 
                                 <header className="card-header is-flex is-justify-content-space-between">
                                   <p className="card-header-title">
@@ -246,6 +249,8 @@ function Reviews() {
                                   </div>
                                 </div>
                               </div>
+                              <br />
+                              </>
                             )}
                           )
                         )

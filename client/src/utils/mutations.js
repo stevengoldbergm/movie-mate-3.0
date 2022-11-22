@@ -64,6 +64,8 @@ mutation DenyFriend($requestId: String!) {
 }
 `;
 
+// REMOVE FRIEND
+
 // Conversation Mutations
 // Called from conversation pop up - Pass in username from friend you are sending conversation to in front end 
 export const CREATE_CONVERSATION = gql`
@@ -108,6 +110,8 @@ mutation CreateReview($movieId: String!, $reviewScore: String!, $reviewText: Str
   }
 }
 `;
+
+// DELETE REVIEW
 
 // Watch Party Mutations
 export const CREATE_WATCHPARTY = gql`

@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 // Import Components
 // import Navbar from './components/Navbar';
 import Navbar2 from './components/Navbar2/Navbar';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Footer2 from './components/Footer2/Footer2'
 import Profile from './pages/Profile';
 import SignUpForm from './pages/SignUp';
 import LoginForm from './pages/LoginForm';
-import Chat from './components/Chat'
+// import Chat from './components/Chat'
 
 
 // Import Pages
@@ -101,7 +101,7 @@ function App() {
                 element={<Navigate to="/" />}
               />
             </Routes>
-          <Chat />
+          {/* <Chat /> */}
           <Footer2 />
         </>
       </Router>

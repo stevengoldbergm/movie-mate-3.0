@@ -9,8 +9,6 @@ function SearchBar() {
   const [searchedMovies, setSearchedMovies] = useState([]);
   // Set state for search history
   const [searchHistory, setSearchHistory] = useState([]);
-  // Set a key int for the history objects
-  let searchInt = 0;
 
   // When you load the page for the first time, grab the search history!
   useEffect(() => {
@@ -88,19 +86,20 @@ function SearchBar() {
   return (
     <div className="base-site">
       <header>
-        <section className="background has-background-info hero has-text-centered">
-          <div className="hero-body">
+        <section className="background hero has-text-centered">
+          <div className="hero-body py-5">
             <div className="container">
               <header className="columns">
                 <section className="column is-one-fifth is-hidden-mobile" />
                 <section className="column is-three-fifths is-12-mobile">
+                  <br/>
                   <form id="srch-form" onSubmit={handleFormSubmit}>
                     <p className="control center">
                       <input
                         name="searchInput"
                         value={searchInput}
                         onChange={handleFormUpdate}
-                        className="input"
+                        className="input is-dark"
                         id="srch-title"
                         type="text"
                         placeholder="Movie Title"
@@ -108,20 +107,20 @@ function SearchBar() {
                       />
                     </p>
                     <br />
-                    <h2 className="subtitle has-text-centered has-text-white">
+                    <h2 className="subtitle has-text-centered has-text-dark">
                       Search for movies - Get the details!
                     </h2>
                     <br />
                     {/* Search Button */}
                     <section className="container is-flex is-justify-content-center">
-                      <button className="button is-info is-light has-text-black">
+                      <button className="button is-dark has-text-white">
                         Search Movies
                       </button>
                       {/* Dropdown Start */}
                       <div className="dropdown is-hoverable">
                         <div className="dropdown-trigger">
                           <div
-                            className="has-background-info-light has-text-black is-normal p-2 ml-1 is-size-6 is-roundeds"
+                            className="has-background-dark has-text-white is-normal p-2 ml-1 is-size-6 is-roundeds"
                             aria-haspopup="true"
                             aria-controls="dropdown-menu3"
                           >
@@ -143,11 +142,10 @@ function SearchBar() {
                             {/* eslint-disable */}
                             { searchHistory.length 
                             ? (
-                                searchHistory.map((search) => {
-                                  searchInt++
+                                searchHistory.map((search, index) => {
                                   return (
                                     <a 
-                                      key={searchInt}
+                                      key={index}
                                       className="dropdown-item is-capitalized"
                                       onClick={handleHistoryButton}
                                     >{search}</a>
@@ -187,7 +185,7 @@ function SearchBar() {
           <div id="search-results" className="is-6 p-4">
             <div className="card events-card">
               <header className="card-header ">
-                <p className="card-header-title">Search Results</p>
+                <p className="card-header-title is-hidden">Search Results</p>
               </header>
               <div className="card-table">
                 <table className="table is-fullwidth is-striped">
@@ -195,8 +193,8 @@ function SearchBar() {
                     { searchedMovies.map((movie) => {
                       console.log(movie.Title, movie.Year, movie.imdbID, )
                       return (
-                        <tr key={movie.imdbID} className=" is-flex-direction-column is-justify-content-center is-align-items-center">
-                          <td style={{width: "5%"}}>
+                        <tr key={movie.imdbID} className="">
+                          <td style={{width: "5%"}} className="is-hidden">
                             <i className="fa fa-bell-o is-hidden-mobile"></i>
                           </td>
                           <td>
@@ -207,7 +205,7 @@ function SearchBar() {
                           </td>
                           <td className="level-right">
                             <Link 
-                              className="button is-small is-info" 
+                              className="button is-small is-dark has-text-white" 
                               imdb-id={movie.imdbID} 
                               to={`/movie-details/${ movie.imdbID }`}
                             >
@@ -217,12 +215,11 @@ function SearchBar() {
                         </tr>
                       )
                     })}
-                    
-                    
                   </tbody>
                 </table>
               </div>
             </div>
+            <br/> {/* Add a break at the end of the table to make it pretty */}
           </div>
         </main>
       )
