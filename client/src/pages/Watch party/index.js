@@ -6,7 +6,7 @@ import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
 import { useMutation, useQuery } from '@apollo/client';
 import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES, MY_WATCHPARTIES } from '../../utils/queries';
-import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY, WATCHPARTY_INVITE} from '../../utils/mutations'
+import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY, WATCHPARTY_INVITE, SEND_INVITE} from '../../utils/mutations'
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
 
@@ -15,7 +15,7 @@ function PartyInvites() {
   // Set state for Watch Party Invites and invited parties
   const [partyInviteState, setPartyInviteState] = useState([])
   const [invitedPartiesState, setInvitedPartiesState] = useState([])
-  const [hostPartyState, setHostParty] = useState("off")
+  const [hostPartyState, setHostParty] = useState(false)
   const [hostedPartiesState, setHostedPartiesState] = useState([])
   const [inviteFormUsername, setInviteFormUsername] = useState("")
 
@@ -26,7 +26,8 @@ function PartyInvites() {
   const [acceptParty] = useMutation(ACCEPT_PARTY)
   const [denyParty] = useMutation(DENY_PARTY)
   const [inviteFriend] = useMutation(WATCHPARTY_INVITE)
- 
+  const  [sendInvite] = useMutation(SEND_INVITE)
+  
   // Mutation for creating a new watch party
   const [createWatchParty]  = useMutation(CREATE_WATCHPARTY)
   const [partyFormData, setPartyFormData] = useState({
@@ -78,6 +79,8 @@ function PartyInvites() {
       console.log(copyState[num]._id)
       inviteFriend({variables: {username: inviteFormUsername, partyId: copyState[num]._id}})
       setInviteFormUsername("")
+      alert(`${inviteFormUsername} has been invited`)
+      sendInvite({variables: {username:inviteFormUsername, partyId:copyState[num]._id, date: copyState[num].date, time: copyState[num].time}})
     } catch {
       console.error(inviteFriend.error)
     }
@@ -131,7 +134,9 @@ function PartyInvites() {
       setPartyFormData({
         date:"",
         time: ""
-      })
+      }
+      )
+      setHostParty(false)
     } catch (error) {
       console.error(error)
     }
@@ -151,17 +156,29 @@ function PartyInvites() {
                   <h1 id="greeting" className="title">
                     Create movie parties and invite others to watch!
                   </h1>
-                  {hostPartyState === "of" ? (
+                  {!hostPartyState ? (
                     <Button
                       type="click"
                       className="btn"
                       buttonStyle="btn--checkmark"
                       buttonSize="btn--yesfriends"
+                      onClick={() => setHostParty(true)}
                     >
                       Host a New WatchParty
                     </Button>
                   ) : (
                     // Placeholder for form to create party
+                    <div>
+                      <Button
+                      type="click"
+                      className="btn"
+                      buttonStyle="btn--checkmark"
+                      buttonSize="btn--yesfriends"
+                      onClick={() => setHostParty(false)}
+                    >
+                      Hide WatchParty form
+                    </Button>
+                    <br />
                     <form className="box" id="submit-review">
                       <h1 className="py-2">Create a New Watch Party:</h1>
                       <div className="field">
@@ -195,6 +212,7 @@ function PartyInvites() {
                         </button>
                       </div>
                     </form>
+                    </div>
                   )}
                 </div>
               </div>

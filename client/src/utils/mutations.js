@@ -146,3 +146,11 @@ mutation denyPartyInvite($partyId: String!, $inviteId: String!) {
   }
 }
 `
+
+export const SEND_INVITE = gql`
+mutation CreatePartyInvite($date: String!, $time: String!, $username: String!, $partyId: String!) {
+  createPartyInvite(date: $date, time: $time, username: $username, partyId: $partyId) {
+    _id
+  }
+}
+`
