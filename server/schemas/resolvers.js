@@ -1,6 +1,6 @@
-const { Movie, User, Review, Conversation, FriendRequest} = require('../models');
+const { Movie, User, Review, Conversation, FriendRequest, WatchParty, PartyInvite} = require('../models');
 const {AuthenticationError} = require('apollo-server-express')
-const {signToken} = require('../utils/auth')
+const {signToken} = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -59,6 +59,27 @@ const resolvers = {
    }
    throw new AuthenticationError('Please login or signup!')
   },
+
+  myWatchParties: async(parent, args,context) =>{
+    if(context.user) {
+      return WatchParty.find({host: context.user.username})
+    }
+    throw new AuthenticationError('Please login or signup!')
+  },
+
+  invitedWatchParties: async(parent, args,context) =>{
+    if(context.user) {
+      return WatchParty.find({"recipients.username": context.user.username})
+    }
+    throw new AuthenticationError('Please login or signup!')
+  },
+
+  myPartyInvites: async (parent, params, context) => {
+    if(context.user) {
+      return PartyInvite.find({recipient: context.user.username})
+    }
+    throw new AuthenticationError('Please login or signup!')
+  }
 },
 
   Mutation: { 
@@ -175,6 +196,42 @@ sendMessage: async (parent, {conversation_id, message_text}, context) => {
     const request = await FriendRequest.findOneAndDelete(
       {_id: requestId})
       return request
+  },
+  createWatchParty: async(parent,{date, time},context) => {
+    const watchParty = await WatchParty.create({date, time, host: context.user.username})
+    return watchParty
+  },
+  inviteToWatchParty: async (parent, {username, partyId}, context) => {
+    const watchParty = await WatchParty.findOneAndUpdate(
+      {_id: partyId},
+      {$addToSet: {recipients: {username, attending: "Pending Response"}}},
+      {new: true}
+    )
+    return watchParty
+  },
+  createPartyInvite: async (parent, {date, time, username, partyId}, context) => {
+    const partyInvite = await PartyInvite.create({host: context.user.username, date, time, recipient: username, partyId})
+    return partyInvite
+},
+  acceptPartyInvite: async (parent, {partyId, inviteId}, context) => {
+    const watchParty = await WatchParty.findOneAndUpdate(
+      {_id: partyId, "recipients.username": context.user.username},
+      {$set: {"recipients.$.attending": "Yes"}},
+      {new: true}
+    )
+    const partyInvite = await PartyInvite.findOneAndDelete(
+      {_id: inviteId})
+      return watchParty
+  },
+  denyPartyInvite: async (parent, {partyId, inviteId}, context) => {
+    const watchParty = await WatchParty.findOneAndUpdate(
+      {_id: partyId, "recipients.username": context.user.username},
+      {$set: {"recipients.$.attending": "No"}},
+      {new: true}
+    )
+    const partyInvite = await PartyInvite.findOneAndDelete(
+      {_id: inviteId})
+      return watchParty
   }
  }
 }

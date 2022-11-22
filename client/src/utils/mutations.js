@@ -113,4 +113,48 @@ mutation CreateReview($movieId: String!, $reviewScore: String!, $reviewText: Str
 
 // DELETE REVIEW
 
+// Watch Party Mutations
+export const CREATE_WATCHPARTY = gql`
+mutation CreateWatchParty($date: String!, $time: String!) {
+  createWatchParty(date: $date, time: $time) {
+    _id
+    date
+    host
+    time
+  }
+}
+`
 
+export const WATCHPARTY_INVITE = gql`
+mutation InviteToWatchParty($username: String!, $partyId: String!) {
+  inviteToWatchParty(username: $username, partyId: $partyId) {
+    _id
+    recipients {
+      username
+    }
+  }
+}`
+
+export const ACCEPT_PARTY = gql`
+mutation AcceptPartyInvite($partyId: String!, $inviteId: String!) {
+  acceptPartyInvite(partyId: $partyId, inviteId: $inviteId) {
+    _id
+  }
+}
+`
+
+export const DENY_PARTY = gql`
+mutation denyPartyInvite($partyId: String!, $inviteId: String!) {
+  denyPartyInvite(partyId: $partyId, inviteId: $inviteId) {
+    _id
+  }
+}
+`
+
+export const SEND_INVITE = gql`
+mutation CreatePartyInvite($date: String!, $time: String!, $username: String!, $partyId: String!) {
+  createPartyInvite(date: $date, time: $time, username: $username, partyId: $partyId) {
+    _id
+  }
+}
+`

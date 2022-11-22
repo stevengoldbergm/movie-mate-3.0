@@ -54,6 +54,27 @@ const typeDefs = gql`
     token: ID!
     user: User
   }
+type partyResponse {
+    username: String!
+    attending: String!
+  }
+
+  type WatchParty {
+    _id: ID!
+    host: String!
+    recipients: [partyResponse]
+    date: String!
+    time: String!
+  }
+  
+  type PartyInvite {
+    _id: ID!
+    host: String!
+    recipient: String
+    partyId: String!
+    date: String!
+    time: String!
+  }
 
   type Query {
     movies(imdb_id: String): [Movie]
@@ -65,6 +86,9 @@ const typeDefs = gql`
     myReviews: [Review]
     myFriendRequests: [FriendRequest]
     myConversations: [Conversation]
+    myWatchParties: [WatchParty]
+    myPartyInvites: [PartyInvite]
+    invitedWatchParties: [WatchParty]
   }
 
   type Mutation {
@@ -103,6 +127,33 @@ const typeDefs = gql`
 
     denyFriend(
       requestId: String!): FriendRequest
+
+    createWatchParty(
+      date: String!
+      time: String!
+    ): WatchParty
+    
+    createPartyInvite(
+      date: String!
+      time: String!
+      username: String!
+      partyId:String!
+    ): WatchParty
+
+    inviteToWatchParty(
+      username: String!
+      partyId: String!
+    ): WatchParty
+
+    acceptPartyInvite(
+      partyId: String!
+      inviteId:String!
+    ): WatchParty
+
+    denyPartyInvite(
+      partyId: String!
+      inviteId: String!
+    ): WatchParty
   }
 `;
 
