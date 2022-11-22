@@ -53,6 +53,10 @@ export const ME = gql`
   me {
     username
     email
+    friends {
+      _id
+      username
+    }
   }
 }
 `;
@@ -63,7 +67,6 @@ query MyFriendRequests {
   myFriendRequests {
     _id
     sender
-    
   }
 }
 `

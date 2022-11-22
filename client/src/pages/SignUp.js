@@ -76,12 +76,12 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <div className="hero is-info">
+      <div className="hero">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
               <div className="column is-6">
-                <form className="box" id="submit">
+                <form className="box has-background-light" id="submit">
                   { showAlert &&
                   <div className='container has-background-danger is-roundeds new-line'>
                     <p className='px-3 py-1 has-text-white has-text-centered is-size-7'>
@@ -89,7 +89,7 @@ const SignUpForm = () => {
                     </p>
                   </div>
                   } 
-                  <h1 className="py-2">Sign Up Here:</h1>
+                  <h1 className="py-2 has-text-dark has-text-weight-semibold">Sign Up Here:</h1>
                   <div className="field">
                     <label className="label">
                       Email
@@ -100,7 +100,7 @@ const SignUpForm = () => {
                         value={userFormData.email}
                         onChange={handleInputChange}
                         type="email" 
-                        className="input" 
+                        className="input is-dark" 
                         id="email-signup" 
                         placeholder="e.g movie@example.com" 
                       />
@@ -119,7 +119,7 @@ const SignUpForm = () => {
                         value={userFormData.username}
                         onChange={handleInputChange}
                         type="username" 
-                        className="input" 
+                        className="input is-dark" 
                         id="username-signup" 
                         placeholder="Must be 8-10 characters" 
                       />
@@ -138,7 +138,7 @@ const SignUpForm = () => {
                         value={userFormData.password}
                         onChange={handleInputChange}
                         type="password" 
-                        className="input" 
+                        className="input is-dark" 
                         id="password-signup" 
                         placeholder="Enter Password Here" 
                       />
@@ -155,7 +155,7 @@ const SignUpForm = () => {
                         value={userFormData.passwordConfirm}
                         onChange={handleInputChange}
                         type="password" 
-                        className="input" 
+                        className="input is-dark" 
                         id="passwordConfirm" 
                         placeholder="Re-type Password Here" />
                       <span className="icon is-small is-left">
@@ -169,7 +169,7 @@ const SignUpForm = () => {
                     
                     <button 
                       typeof='submit'
-                      className="button is-info is-fullwidth"
+                      className="button is-dark has-text-white is-fullwidth"
                       onClick={handleFormSubmit}
                     >
                       Create Account
@@ -177,7 +177,7 @@ const SignUpForm = () => {
                   </div>
                   <div className="has-text-centered">
                     <p className="is-size-7"> Already have an account? 
-                      <Link to="/login" className="has-text-info">
+                      <Link to="/login" className="has-text-dark has-text-weight-semibold">
                         {` Login!`}
                       </Link>
                     </p>
