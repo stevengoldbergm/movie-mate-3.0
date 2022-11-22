@@ -9,8 +9,6 @@ function SearchBar() {
   const [searchedMovies, setSearchedMovies] = useState([]);
   // Set state for search history
   const [searchHistory, setSearchHistory] = useState([]);
-  // Set a key int for the history objects
-  let searchInt = 0;
 
   // When you load the page for the first time, grab the search history!
   useEffect(() => {
@@ -94,6 +92,7 @@ function SearchBar() {
               <header className="columns">
                 <section className="column is-one-fifth is-hidden-mobile" />
                 <section className="column is-three-fifths is-12-mobile">
+                  <br/>
                   <form id="srch-form" onSubmit={handleFormSubmit}>
                     <p className="control center">
                       <input
