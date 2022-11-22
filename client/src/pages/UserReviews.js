@@ -12,11 +12,11 @@ const UserReviews = () => {
           
           {/* Add the header */}
           <header className="column hero is-12">
-              <div className="box hero-body has-text-centered pt-0 has-background-dark p-2 is-roundeds">
+              <div className="box hero-body has-text-centered pt-0 has-background-light p-2 is-roundeds">
                 <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
                   <div className="container">
-                    <h1 id="greeting" className="title is-fullwidth has-text-centered has-text-white has-text-weight-bold is-size-5 p-0">
-                      Reviews
+                    <h1 id="greeting" className="title is-fullwidth has-text-centered has-text-dark has-text-weight-bold is-size-4 p-0">
+                      Your MovieMate Reviews
                     </h1>
                   </div>
                 </div>
