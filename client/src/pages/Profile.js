@@ -3,11 +3,17 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import FriendList from '../components/FriendList';
 import PartyInvites from './Watch party';
 import UserReviews from './UserReviews';
-
-
-// Add JSX to Profile
+import Auth from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+    // Get out of here if you aren't logged in!
+    const navigate = useNavigate()
+    console.log("Logged in? ", Auth.loggedIn())
+      if (!Auth.loggedIn()) {
+        navigate("/login");
+      };
+
   // useState to set the correct dashboard component
   const [currentPage, setCurrentPage] = useState('MyActivity')
   
