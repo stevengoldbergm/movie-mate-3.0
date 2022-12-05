@@ -4,19 +4,20 @@ import '../../components/FriendList/style.css'
 import './style.css'
 import '../../components/Navbar2/NavBtn.css';
 import { Button } from '../../components/Navbar2/NavBtn';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { INVITED_WATCH_PARTIES, MY_PARTY_INVITES, MY_WATCHPARTIES } from '../../utils/queries';
 import {ACCEPT_PARTY, DENY_PARTY, CREATE_WATCHPARTY, WATCHPARTY_INVITE, SEND_INVITE} from '../../utils/mutations'
 // import Button from 'react-bootstrap/Button';
 // import Card from 'react-bootstrap/Card';
-
+import {bulmaCalendar} from 'bulma-calendar/dist/js/bulma-calendar.min.js';
+import {options} from 'bulma-calendar/dist/css/bulma-calendar.min.css'
 function PartyInvites() {
 
   // Set state for Watch Party Invites and invited parties
-  const [partyInviteState, setPartyInviteState] = useState([])
-  const [invitedPartiesState, setInvitedPartiesState] = useState([])
+  const [partyInviteState, setPartyInviteState] = useState(false)
+  const [invitedPartiesState, setInvitedPartiesState] = useState(false)
   const [hostPartyState, setHostParty] = useState(false)
-  const [hostedPartiesState, setHostedPartiesState] = useState([])
+  const [hostedPartiesState, setHostedPartiesState] = useState(false)
   const [inviteFormUsername, setInviteFormUsername] = useState("")
 
   // Search for party invites and invited parties
@@ -27,7 +28,13 @@ function PartyInvites() {
   const [denyParty] = useMutation(DENY_PARTY)
   const [inviteFriend] = useMutation(WATCHPARTY_INVITE)
   const  [sendInvite] = useMutation(SEND_INVITE)
-  
+  const [lazyPartiesSearch, lazyPartiesResults] = useLazyQuery(INVITED_WATCH_PARTIES, {
+    fetchPolicy: 'network-only'
+  })
+  const [lazyHostedSearch, lazyHostedResults] = useLazyQuery(MY_WATCHPARTIES, {
+    fetchPolicy: 'network-only'
+  })  
+
   // Mutation for creating a new watch party
   const [createWatchParty]  = useMutation(CREATE_WATCHPARTY)
   const [partyFormData, setPartyFormData] = useState({
@@ -48,9 +55,13 @@ function PartyInvites() {
       console.log("Party invite accepted")
       copyState = copyState.filter((item,index) => num !== index)
       setPartyInviteState(copyState)
+      lazyPartiesSearch().then(({data: lazyData}) => {
+        console.log(lazyData.invitedWatchParties)
+        setInvitedPartiesState(lazyData.invitedWatchParties)
+      })
     } catch {
       console.error(acceptParty.error)
-    }
+    } 
   }
 
   const handleDenyParty = (num) => {
@@ -65,6 +76,10 @@ function PartyInvites() {
       console.log("Party invite denied")
       copyState = copyState.filter((item,index) => num !== index)
       setPartyInviteState(copyState)
+      lazyPartiesSearch().then(({data: lazyData}) => {
+        console.log(lazyData.invitedWatchParties)
+        setInvitedPartiesState(lazyData.invitedWatchParties)
+      })
     } catch {
       console.error(denyParty.error)
     }
@@ -137,6 +152,10 @@ function PartyInvites() {
       }
       )
       setHostParty(false)
+      lazyHostedSearch().then(({data: lazyData}) => {
+        console.log(lazyData.myWatchParties)
+        setHostedPartiesState(lazyData.myWatchParties)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -145,6 +164,26 @@ function PartyInvites() {
   if (partyInvites.loading || invitedParties.loading) return 'Loading. . .'
   if (partyInvites.loading || invitedParties.loading) return `Error!`
   
+//   // Calendar Initialization
+//   var calendars = bulmaCalendar.attach('[type="date"]', options);
+
+// // Loop on each calendar initialized
+// for(var i = 0; i < calendars.length; i++) {
+// 	// Add listener to select event
+// 	calendars[i].on('select', date => {
+// 		console.log(date);
+// 	});
+// }
+
+// var element = document.getElementById('date-text');
+
+// if (element) {
+// 	// bulmaCalendar instance is available as element.bulmaCalendar
+// 	element.bulmaCalendar.on('select', function(datepicker) {
+// 		console.log(datepicker.data.value());
+// 	});
+// }
+
   return (
     <>
       <div className="columns p-4 has-background-white">
@@ -313,10 +352,10 @@ function PartyInvites() {
               {/* card section */}
               <div className="info-tiles">
                 <div className="tile has-text-centered">
-                  {!partyInviteState ? (
+                  {!partyInviteState? (
                     <div className="tile is-parent">
                       <article className="tile is-child box">
-                        <p className="title">No pending party invites. . .</p>
+                        <p className="title">No pending party invites</p>
                       </article>
                     </div>
                   ) : (
