@@ -261,7 +261,7 @@ function PartyInvites() {
                         <div className="field column is-half">
                             <label className="label pl-2 pt-3">Date:</label>
                             <input
-                              className="input is-small is-info"
+                              className="input is-small"
                               name="date"
                               id="date-text"
                               placeholder="What day is your watch party?"
@@ -272,7 +272,7 @@ function PartyInvites() {
                         <div className="field column is-half">
                           <label className="label pl-2 pt-3">Time:</label>
                           <input
-                            className="input is-small is-info"
+                            className="input is-small"
                             name="time"
                             id="time-text"
                             placeholder="When is your watch party?"
@@ -315,14 +315,16 @@ function PartyInvites() {
                         <label className="label pl-2 pt-3">
                           Type A Friends Username Below:
                         </label>
+                        <div className="column is-half">
                         <input
-                          className="textarea is-info"
+                          className="input is-small"
                           name="friend"
                           id="friend-text"
                           placeholder="Who do you want to invite?"
                           onChange={handleInviteUpdate}
                           value={inviteFormUsername}
                         />
+                      </div>
                       </div>
                       <div className="field">
                         <button
@@ -389,12 +391,13 @@ function PartyInvites() {
               <br />
               {/* card section */}
               <div className="info-tiles">
+                
                 <div className="tile has-text-centered">
                   {partyInviteState == false ? (
-                    <div className="tile is-parent">
-                      <article className="tile is-child box">
-                        <p className="title">No pending party invites</p>
-                      </article>
+                    <div className="column is-12 columns m-0 is-justify-content-center">
+                        <article className="message is-dark column is-12 card p-0">
+                          <p className="message-header">No pending party invites</p>
+                        </article>
                     </div>
                   ) : (
                     partyInviteState.map((partyInvite, index) => {
