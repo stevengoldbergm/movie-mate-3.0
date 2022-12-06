@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^1.1.3",
     "bulma": "^0.9.4",
+    "bulma-calendar": "^6.1.18",
     "graphql": "^15.4.0",
     "jwt-decode": "^2.2.0",
     "react": "^18.2.0",
