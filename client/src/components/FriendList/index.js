@@ -8,6 +8,7 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { ADD_FRIEND, DENY_FRIEND, CREATE_FRIEND_REQUEST } from '../../utils/mutations'
 import { ME } from '../../utils/queries'
 import Auth from '../../utils/auth';
+import avatar from "../Dashboard/imgs/placeholder_profile.jpeg"
 
 
 function FriendList() {
@@ -116,7 +117,8 @@ function FriendList() {
           // Make sure you remove displayed errors if the user is too lazy to click the X
           setShowAlert(false);
         }
-        
+      }).catch((error) => {
+        console.log(error);
       })
 
     } catch (error) {
@@ -193,20 +195,23 @@ function FriendList() {
 
     return (
       <>
-        <div className="columns p-4 has-background-white">
-          <div className="column is-12">
-            <section className="hero columns">
-              <div className="hero-body column is-12">
-                <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
-                  <div className="container">
-                    <h1 id="greeting" className="title is-size-4-mobile">
-                      Find and add friends here!
-                    </h1>
-                  </div>
+        <div className="columns is-multiline p-4 has-background-white">
+          {/* Add the header */}
+          <header className="column hero is-12">
+            <div className="box hero-body has-text-centered pt-0 has-background-light p-2 is-roundeds">
+              <div className="container is-flex is-flex-direction-row is-justify-content-space-between">
+                <div className="container">
+                  <h1 id="greeting" className="title is-fullwidth has-text-centered has-text-dark has-text-weight-bold is-size-4 p-0">
+                      Friends and Friend Requests
+                  </h1>
                 </div>
               </div>
+            </div>
+          </header>
+          <div className="column is-12">
+            <section className="hero columns">
               {/* Add in container here for everything below */}
-              <div className='container columns column is-multiline is-12'>
+              <div className='container columns column is-multiline is-12 is-justify-content-space-around'>
                 <div className='columns column is-9 is-multiline is-mobile'>
                 {/* form template */}
                   <div className="main-header columns is-multiline column is-12 m-0">
@@ -250,10 +255,10 @@ function FriendList() {
                     <br />
                     <br />
                     {lazySearchResults.data?.users[0]
-                      ? <article className="column is-12 tile is-child box">
-                          <p className="title">They're here!</p>
-                          <p className="subtitle">Do you want to add <strong>{lazySearchResults.data?.users[0].username}</strong> as a friend?</p>
-                          <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
+                      ? <article className="column columns is-multiline is-justify-content-center is-12 tile is-child box is-mobile">
+                          <p className="title pb-4">User Found!</p>
+                          <p className="subtitle has-text-centered">Do you want to add <strong>{lazySearchResults.data?.users[0].username}</strong> as a friend?</p>
+                          <div className="btn is-flex is-flex-direction-row is-justify-content-center">
                             <Button
                               type='click'
                               onClick={handleFriendRequest}
@@ -261,7 +266,8 @@ function FriendList() {
                               buttonStyle="btn--checkmark"
                               buttonSize="btn--yesfriends"
                             >
-                              Add user to Friends List <i className="fas fa-solid fa-check" />
+                              Send <strong className='has-text-light'>{lazySearchResults.data?.users[0].username}</strong> a friend request! 
+                              {/* <i className="fas fa-solid fa-check" /> */}
                               
                             </Button>
                           </div>
@@ -276,7 +282,7 @@ function FriendList() {
                   <br />
                   {/* card section */}
                   <div className="column is-12 info-tiles p-0">
-                    <div className="tile has-text-centered">
+                    <div className="columns is-multiline p-3 m-0 is-justify-content-space-around">
                       {!friendRequestState.length 
                       ? 
                         <div className="tile is-parent">
@@ -287,51 +293,59 @@ function FriendList() {
                       : (
                         friendRequestState.map((friendRequest, index) => {
                           return (
-                            <div className={`tile is-parent`} key={friendRequest._id}>
-                              <article className={`tile is-child box`}>
-                                <p className="title">{friendRequest.sender} wants to add you as a friend!</p>
-                                <p className="subtitle">Do you want to accept?</p>
-                                <div className="btn is-flex is-flex-direction-row is-justify-content-space-between">
-                                  <Button
+                            <>
+                              <article className="message is-dark column is-5 card p-0 my-4" key={friendRequest._id}>
+                                <div className="message-header is-justify-content-center">
+                                  <p className=''>{friendRequest.sender} wants to be your friend!</p>
+                                </div>
+                                <div className="message-body has-text-centered">
+                                  Do you want to accept <strong>{friendRequest.sender}'s</strong> friend request?
+                                </div>
+                                <div className='columns is-justify-content-space-around m-0 p-3 is-mobile'>
+                                  <button 
+                                    className='button is-dark column columns is-3 m-0 is-mobile'
                                     type='click'
                                     onClick={() => handleAcceptFriend(index)}
-                                    className="btn"
-                                    buttonStyle="btn--checkmark"
-                                    buttonSize="btn--yesfriends"
                                   >
-                                    <i className="fas fa-solid fa-check" />
-                                  </Button>
-                                  <Button
+                                    <i className="fas fa-solid fa-check"/>
+                                  </button>
+                                  <button 
+                                    className='button is-dark column columns is-3 m-0 is-mobile'
                                     type='click'
                                     onClick={() => handleDenyFriend(index)}
-                                    className="btn"
-                                    buttonStyle="btn--xmark"
-                                    buttonSize="btn--nofriends"
                                   >
-                                    ❌
-                                  </Button>
+                                    <p className='has-text-white has-text-weight-bold'>X</p>
+                                  </button>
                                 </div>
                               </article>
-                            </div>
+                            </>
                           )
                         })
                       )}
                     </div>
                   </div>
                 </div>
-              <div className='box columns is-multiline is-mobile column is-3 ml-1 mt-5 p-1'>
-                <aside className='column is-12 p-0'>
-                  <table className="card p-0 m-0 table is-fullwidth is-striped">
-                    <tbody id="table-body p-0 m-0">
-                      <tr>
-                        <td className='p-1 has-text-weight-bold'>Friends</td>
+              <div className='columns is-multiline is-mobile column is-3 mt-5 p-1'>
+                <aside className='columns column is-12 p-0 m-0'>
+                  <table className="card p-0 m-0 table is-fullwidth ">
+                    <tbody id="p-0 m-0 mb-auto">
+                      <tr className='p-1 pl-2 has-text-weight-bold is-flex'>
+                        <td className='column'>Friends</td>
                       </tr>
                       {meFriends?.length && 
                         meFriends.map((friend, index) => {
                           console.log(friend);
                           return (
-                            <tr key={index}>
-                              <td>{friend}</td>
+                            <tr key={index} className="is-capitalized p-1 is-flex">
+                              <td className='column is-flex'>
+                                <img
+                                  className="friend-icon mx-4 mb-1"
+                                  src={avatar}
+                                  alt="Profile Avatar"
+                                />
+                                {friend}
+                              </td>
+                              
                             </tr>
                           )
                         })

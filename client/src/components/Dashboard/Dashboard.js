@@ -71,13 +71,13 @@ const Dashboard = () => {
           </div>
           <div className="tile is-parent">
             <article className="tile is-child box">
-              <p className="title">Movie Count:</p>
+              <p className="title">My Parties:</p>
               <p className="subtitle">Coming Soon!</p>
             </article>
           </div>
           <div className="tile is-parent">
             <article className="tile is-child box">
-              <p className="title">Movie Mates:</p>
+              <p className="title">Friends:</p>
               <p className="subtitle">{meFriends}</p>
             </article>
           </div>

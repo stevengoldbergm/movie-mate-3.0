@@ -9,7 +9,6 @@ const UserReviews = () => {
   return (
       <>
         <div className="columns is-multiline p-4 has-background-white">
-          
           {/* Add the header */}
           <header className="column hero is-12">
               <div className="box hero-body has-text-centered pt-0 has-background-light p-2 is-roundeds">
@@ -48,11 +47,13 @@ const UserReviews = () => {
                       </div>
                       <hr/>
                       <div className='columns is-justify-content-space-around m-0  is-mobile'>
-                        <button className='button is-dark column columns is-3 m-0 is-mobile'>
+                        {/* <button className='button is-dark column columns is-3 m-0 is-mobile'>
                           <p>Edit</p>
-                        </button>
-                        <button className='button is-dark column columns is-3 m-0 is-mobile'>
-                          <p>Delete</p>
+                        </button> */}
+                        <button 
+                          className='button is-dark column columns is-3 m-0 is-mobile'
+                        >
+                            <p>Delete</p>
                         </button>
                       </div>
                       <br/>
