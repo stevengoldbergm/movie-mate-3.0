@@ -15,15 +15,15 @@
 Search movies, get details! Now with user-reviews, friends, and watch parties!
 
 <!-- image here -->
-![MM Home Page](../../../../../../C:/Users/Steve/Desktop/projects/movie-mate-3.0/client/src/assets/imgs/MovieMate3.0.png)
+![MM Home Page](client/src/assets/imgs/MovieMate3.0.png)
 
 Movie Mate allows you to search for movies by title, generating detailed results for just about any film. 
 
-![Alt text](../../../../../../C:/Users/Steve/Desktop/projects/movie-mate-3.0/client/src/assets/imgs/MovieMate3.0-3.png)
+![Alt text](client/src/assets/imgs/MovieMate3.0-3.png)
 
 Once you've selected a movie, check out the sleak new details page!
 
-![Movie Search](../../../../../../C:/Users/Steve/Desktop/projects/movie-mate-3.0/client/src/assets/imgs/MovieMate3.0-4.png)
+![Movie Search](client/src/assets/imgs/MovieMate3.0-4.png)
 
 
 ## Usage
@@ -33,7 +33,7 @@ Try out the launched app [HERE!](https://movie-mate-3.herokuapp.com/)
 
 To use Movie Mate 3.0, simply sign up for an account using your e-mail address, search for movies, add friends, write reviews, and set up some parties!
 
-![Friends and Friend Requests](../../../../../../C:/Users/Steve/Desktop/projects/movie-mate-3.0/client/src/assets/imgs/MovieMate3.0-2.png)
+![Friends and Friend Requests](client/src/assets/imgs/MovieMate3.0-2.png)
 
 ## License
 
